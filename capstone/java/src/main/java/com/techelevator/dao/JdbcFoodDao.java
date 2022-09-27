@@ -5,6 +5,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Repository
 public class JdbcFoodDao implements FoodDao{
 
@@ -48,6 +51,22 @@ public class JdbcFoodDao implements FoodDao{
                 modifiedFood.getFoodType(), modifiedFood.getSize(),
                 modifiedFood.getNumberOfServings(), modifiedFood.getMeal(),
                 modifiedFood.getCaloricAmount(), foodId) == 1;
+    }
+
+    @Override
+    public List<Food> listOfAllFoods() {
+
+        List<Food> foodList = new ArrayList<Food>();
+        String sql =
+                "SELECT food_id, food_name, type, size, " +
+                        "number_servings, meal, caloric_amount " +
+                        "FROM food ;";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
+        while( results.next() ) {
+            Food food = mapRowToFood(results);
+            foodList.add(food);
+        }
+        return foodList;
     }
 
 
