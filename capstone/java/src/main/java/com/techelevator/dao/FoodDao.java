@@ -4,8 +4,8 @@ import com.techelevator.model.Food;
 
 public interface FoodDao {
 
-    boolean addFood(Food food);
+    Food addFood(Food food);
 
-    boolean modifyFood(Food food);
+    boolean modifyFood(int foodId, Food modifiedFood);
 
 }
