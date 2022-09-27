@@ -3,18 +3,18 @@
       <div id="profileHeader">
           <img id="profilePic" src="../../public/Images/blank-profile-picture.webp">
           <div>
-            <h1>Username</h1>
+            <h1>Username : {{profile.username}}</h1>
             <img class="star" src='../../public/Images/star.png'/>
-            <h2>Longest Streak: ## </h2>
+            <h2>Longest Streak: {{profile.longestStreak}} </h2>
           </div>
       </div>
       <div id="profileDetails">
           <h3>Daily Calory Target: #### </h3>
-          <h3>Current Weight: ### </h3>
-          <h3>Goal Weight: ### </h3>
-          <h3>Height: ##</h3>
-          <h3>Age: ##</h3>
-          <h3>DOB: ##/##/###</h3>
+          <h3>Current Weight: {{profile.currentWeight}} </h3>
+          <h3>Goal Weight: {{profile.targetWeight}} </h3>
+          <h3>Height: {{profile.height}}</h3>
+          <h3>Age: {{profile.age}}</h3>
+          <h3>DOB: {{profile.birthday}}</h3>
           <button>Edit Profile</button>
       </div>
   </div>
@@ -29,7 +29,8 @@ export default {
         }
     },
     created() {
-        ProfileService.getProfile().then((response) => {
+        let username = this.$store.state.user.username;
+        ProfileService.getProfile(username).then((response) => {
             if(response.status==200) {
                 this.profile = response.data;
             }

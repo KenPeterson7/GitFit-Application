@@ -1,7 +1,6 @@
 package com.techelevator.dao;
 
 import com.techelevator.model.Profile;
-import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
@@ -41,13 +40,13 @@ public class JdbcProfileDao implements ProfileDao{
     }
 
     @Override
-    public Profile findProfileById(int profileId){
-        String sql = "select * from Profile where profile_id = ?;";
-        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, profileId);
+    public Profile findProfileByUsername(String username){
+        String sql = "select * from Profile where username = ?;";
+        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, username);
         if(rowSet.next()){
             return mapRowToProfile(rowSet);
         }
-        throw new ProviderNotFoundException("Profile " + profileId + " was not found.");
+        throw new ProviderNotFoundException("Profile " + username + " was not found.");
     }
 
     private Profile mapRowToProfile(SqlRowSet rs){

@@ -2,8 +2,8 @@ import axios from "axios";
 
 export default {
 
-    getProfile(id) {
-        axios.get(`profile/${id}`)
+    getProfile(username) {
+        axios.get(`profile/${username}`)
     },
 
     updateProfile(id, profile) {
