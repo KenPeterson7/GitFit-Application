@@ -24,9 +24,9 @@ public class ProfileController {
     public boolean updateProfile(@PathVariable("id") int profile_id, @Valid @RequestBody Profile profile){
         return profileDao.updateProfile(profile, profile_id);
     }
-    @RequestMapping(path = "/profile/{id}", method = RequestMethod.GET)
-    public Profile findProfile(@PathVariable("id") int profile_id){
-        return profileDao.findProfileById(profile_id);
+    @RequestMapping(path = "/profile/{username}", method = RequestMethod.GET)
+    public Profile findProfile(@PathVariable("username") String username){
+        return profileDao.findProfileByUsername(username);
     }
 
 }

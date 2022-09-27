@@ -8,5 +8,5 @@ public interface ProfileDao {
 
     boolean updateProfile(Profile profile, int profileId);
 
-    Profile findProfileById(int profileId);
+    Profile findProfileByUsername(String username);
 }
