@@ -18,7 +18,9 @@ public class JdbcProfileDao implements ProfileDao{
 
     @Override
     public boolean createProfile(Profile profile) {
-        String sql = "";
+        String sql = "insert into Profile(age, height, current_weight, desired_weight, birthday, profile_pic, current_star_streak, high_start_streak, username)\n" +
+                "values(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, profile);
         return true;
     }
 
@@ -29,6 +31,7 @@ public class JdbcProfileDao implements ProfileDao{
 
     private Profile mapRowToProfile(SqlRowSet rs){
         Profile profile = new Profile();
+        profile.setProfileId(rs.getInt("profile_id"));
         profile.setAge(rs.getInt("age"));
         profile.setHeight(rs.getInt("height"));
         profile.setCurrentWeight(rs.getInt("current_weight"));

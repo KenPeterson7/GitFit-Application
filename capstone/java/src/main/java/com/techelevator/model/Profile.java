@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 public class Profile {
 
+    private int profileId;
     private int age;
     private int height;
     private int currentWeight;
@@ -14,7 +15,8 @@ public class Profile {
     private int highStarStreak;
     private String username;
 
-    public Profile(int age, int height, int currentWeight, int desiredWeight, LocalDate birthday, String profilePic, int starStreak, int highStarStreak, String username) {
+    public Profile(int profileId, int age, int height, int currentWeight, int desiredWeight, LocalDate birthday, String profilePic, int starStreak, int highStarStreak, String username) {
+        this.profileId = profileId;
         this.age = age;
         this.height = height;
         this.currentWeight = currentWeight;
@@ -98,5 +100,13 @@ public class Profile {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public int getProfileId() {
+        return profileId;
+    }
+
+    public void setProfileId(int profileId) {
+        this.profileId = profileId;
     }
 }
