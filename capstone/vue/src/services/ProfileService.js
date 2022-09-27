@@ -3,14 +3,14 @@ import axios from "axios";
 export default {
 
     getProfile(username) {
-        axios.get(`profile/${username}`)
+        return axios.get(`/profile/${username}`)
     },
 
     updateProfile(id, profile) {
-        axios.put(`profile/${id}`, profile)
+        return axios.put(`/profile/${id}`, profile)
     },
 
     addProfile(profile) {
-        axios.post('profile', profile)
+        return axios.post('/profile', profile)
     }
 }
