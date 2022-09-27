@@ -1,12 +1,93 @@
 <template>
   <div class="home">
-    <h1>Home</h1>
-    <p>You must be authenticated to see this</p>
+    <nav>
+      <h3 v-on:click="clickHome()" v-bind:class="{selected: homeSelected}">Home</h3>
+      <h3 v-on:click="clickProfile()" v-bind:class="{selected: profileSelected}">Profile</h3>
+      <h3 v-on:click="clickLogMeal()" v-bind:class="{selected: logMealSelected}">Log a Meal</h3>
+      <h3 v-on:click="clickLogWorkout()" v-bind:class="{selected: logWorkoutSelected}">Log a Workout</h3>
+      <h3>Another Thing</h3>
+      <h3>Something Else</h3>
+    </nav>
+    <div id="componentDiv">
+      
+      <home-page v-if="homeSelected" />
+      <profile v-if="profileSelected"/>
+      <log-meal v-if="logMealSelected"/>
+      <log-workout v-if="logWorkoutSelected"/>
+      
+    </div>
+    
   </div>
 </template>
 
 <script>
+import HomePage from '../components/HomePage.vue';
+import LogWorkout from '../components/LogWorkout.vue';
+import Profile from '../components/Profile.vue';
+import LogMeal from '../components/LogMeal.vue'
 export default {
-  name: "home"
+  components: { Profile, HomePage, LogWorkout, LogMeal},
+  name: "home",
+  data() {
+    return {
+      homeSelected: true,
+      profileSelected: false,
+      logMealSelected: false,
+      logWorkoutSelected: false
+    }
+  },
+  methods: {
+    clickHome(){
+      this.homeSelected = true;
+      this.profileSelected = false;
+      this.logMealSelected = false;
+      this.logWorkoutSelected = false;
+    },
+    clickProfile(){
+      this.homeSelected = false;
+      this.profileSelected = true;
+      this.logMealSelected = false;
+      this.logWorkoutSelected = false;
+    },clickLogMeal(){
+      this.homeSelected = false;
+      this.profileSelected = false;
+      this.logMealSelected = true;
+      this.logWorkoutSelected = false;
+    },clickLogWorkout(){
+      this.homeSelected = false;
+      this.profileSelected = false;
+      this.logMealSelected = false;
+      this.logWorkoutSelected = true;
+    }
+  }
+  
 };
 </script>
+
+<style scoped>
+.home{
+  display: flex
+}
+
+.home nav {
+  
+  min-width: 150px;
+  border-right: 1px;
+  border-right-style: solid;
+  background-color: rgb(0, 125, 255);
+  color: whitesmoke;
+}
+
+h3 {
+  padding-left: 20px;
+}
+
+#componentDiv{
+  flex-grow: 8;
+  background-color: lightgray;
+}
+
+.selected{
+  background-color: rgb(0, 67, 127);
+}
+</style>
