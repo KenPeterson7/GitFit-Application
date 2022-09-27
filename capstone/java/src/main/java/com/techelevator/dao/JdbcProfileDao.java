@@ -1,6 +1,7 @@
 package com.techelevator.dao;
 
 import com.techelevator.model.Profile;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
@@ -17,16 +18,24 @@ public class JdbcProfileDao implements ProfileDao{
     }
 
     @Override
-    public boolean createProfile(Profile profile) {
+    public Profile createProfile(Profile profile) {
         String sql = "insert into Profile(age, height, current_weight, desired_weight, birthday, profile_pic, current_star_streak, high_start_streak, username)\n" +
-                "values(?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, profile);
-        return true;
+                "values(?, ?, ?, ?, ?, ?::bytea, ?, ?, ?) returning profile_id";
+        Integer newProfileId = jdbcTemplate.queryForObject(sql, Integer.class, profile.getAge(), profile.getHeight(), profile.getCurrentWeight(),
+                profile.getDesiredWeight(), profile.getBirthday(), profile.getProfilePic(), profile.getStarStreak(), profile.getHighStarStreak(),
+                profile.getUsername());
+
+        profile.setProfileId(newProfileId);
+        return profile;
+
     }
 
     @Override
-    public boolean updateProfile(Profile profile) {
-        return false;
+    public boolean updateProfile(Profile profile, int profileId) {
+        String sql = "Update Profile set age = ?, height = ?, current_weight = ?, desired_weight = ?, birthday = ?, \n" +
+                "profile_pic = ?, current_star_streak = ?, high_start_streak = ?, username = ? \n" +
+                "where profile_id = ?";
+        return jdbcTemplate.update(sql, profile, profileId) == 1;
     }
 
     private Profile mapRowToProfile(SqlRowSet rs){

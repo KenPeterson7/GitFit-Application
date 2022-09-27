@@ -4,7 +4,7 @@ import com.techelevator.model.Profile;
 
 public interface ProfileDao {
 
-    boolean createProfile(Profile profile);
+    Profile createProfile(Profile profile);
 
-    boolean updateProfile(Profile profile);
+    boolean updateProfile(Profile profile, int profileId);
 }
