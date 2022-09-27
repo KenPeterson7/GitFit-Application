@@ -3,7 +3,12 @@ package com.techelevator.dao;
 import com.techelevator.model.Food;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
+import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
+import java.util.List;
+
+@Repository
 public class JdbcFoodDao implements FoodDao{
 
     private JdbcTemplate jdbcTemplate;
@@ -13,10 +18,11 @@ public class JdbcFoodDao implements FoodDao{
     }
 
     @Override
-    public boolean addFood(Food food) {
-        String sql = "INSERT INTO food (food_name, food_type, size, " +
+    public Food addFood(Food food) {
+        String sql =
+                "INSERT INTO food (food_name, type, size, " +
                 "number_servings, meal, caloric_amount) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?) " +
+                "VALUES (?, ?, ?, ?, ?, ?) " +
                 "RETURNING food_id ;";
 
         Integer newId = jdbcTemplate.queryForObject(sql, Integer.class,
@@ -27,19 +33,48 @@ public class JdbcFoodDao implements FoodDao{
                 food.getMeal(),
                 food.getCaloricAmount());
 
-        return false;
+        food.setFoodId(newId);
+
+        return food;
     }
 
     @Override
-    public boolean modifyFood(Food food) {
-        return false;
+    public boolean modifyFood(int foodId, Food modifiedFood) {
+
+        String sql =
+                "UPDATE food " +
+                        "SET food_name = ?, type = ?, size = ?, " +
+                        "number_servings = ?, meal = ?, caloric_amount = ? " +
+                        "WHERE food_id = ? ";
+
+        return jdbcTemplate.update(sql, modifiedFood.getFoodName(),
+                modifiedFood.getFoodType(), modifiedFood.getSize(),
+                modifiedFood.getNumberOfServings(), modifiedFood.getMeal(),
+                modifiedFood.getCaloricAmount(), foodId) == 1;
     }
+
+    @Override
+    public List<Food> listOfAllFoods() {
+
+        List<Food> foodList = new ArrayList<Food>();
+        String sql =
+                "SELECT food_id, food_name, type, size, " +
+                        "number_servings, meal, caloric_amount " +
+                        "FROM food ;";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
+        while( results.next() ) {
+            Food food = mapRowToFood(results);
+            foodList.add(food);
+        }
+        return foodList;
+    }
+
 
     private Food mapRowToFood(SqlRowSet rs) {
         Food food = new Food();
         food.setFoodId(rs.getInt("food_id"));
         food.setFoodName(rs.getString("food_name"));
-        food.setFoodType(rs.getString("food_type"));
+        food.setFoodType(rs.getString("type"));
         food.setSize(rs.getDouble("size"));
         food.setNumberOfServings(rs.getInt("number_servings"));
         food.setMeal(rs.getString("meal"));
