@@ -3,7 +3,6 @@ package com.techelevator.controller;
 import com.techelevator.dao.ProfileDao;
 import com.techelevator.model.Profile;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
 
 @CrossOrigin
@@ -22,15 +21,12 @@ public class ProfileController {
     }
 
     @RequestMapping(path = "/profile/{id}", method = RequestMethod.PUT)
-    public boolean updateProfile(@PathVariable("profile_id") int profileId, @Valid @RequestBody Profile profile){
-        return profileDao.updateProfile(profile, profileId);
+    public boolean updateProfile(@PathVariable("id") int profile_id, @Valid @RequestBody Profile profile){
+        return profileDao.updateProfile(profile, profile_id);
+    }
+    @RequestMapping(path = "/profile/{id}", method = RequestMethod.GET)
+    public Profile findProfile(@PathVariable("id") int profile_id){
+        return profileDao.findProfileById(profile_id);
     }
 
-
-
-//    @RequestMapping(path = "/food/{id}", method = RequestMethod.PUT)
-//    public boolean modifyFood(@PathVariable("foodId") int foodId, @Valid @RequestBody Food modifiedFood) {
-//
-//        return foodDao.modifyFood(foodId, modifiedFood);
-//    }
 }

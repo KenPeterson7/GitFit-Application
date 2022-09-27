@@ -6,6 +6,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
 
+import java.nio.file.ProviderNotFoundException;
 import java.util.Objects;
 
 @Repository
@@ -33,9 +34,20 @@ public class JdbcProfileDao implements ProfileDao{
     @Override
     public boolean updateProfile(Profile profile, int profileId) {
         String sql = "Update Profile set age = ?, height = ?, current_weight = ?, desired_weight = ?, birthday = ?, \n" +
-                "profile_pic = ?, current_star_streak = ?, high_start_streak = ?, username = ? \n" +
+                "profile_pic = ?::bytea, current_star_streak = ?, high_start_streak = ?, username = ? \n" +
                 "where profile_id = ?";
-        return jdbcTemplate.update(sql, profile, profileId) == 1;
+        return jdbcTemplate.update(sql, profile.getAge(), profile.getHeight(), profile.getCurrentWeight(), profile.getDesiredWeight(),
+                profile.getBirthday(), profile.getProfilePic(), profile.getStarStreak(), profile.getHighStarStreak(), profile.getUsername(), profileId) == 1;
+    }
+
+    @Override
+    public Profile findProfileById(int profileId){
+        String sql = "select * from Profile where profile_id = ?;";
+        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, profileId);
+        if(rowSet.next()){
+            return mapRowToProfile(rowSet);
+        }
+        throw new ProviderNotFoundException("Profile " + profileId + " was not found.");
     }
 
     private Profile mapRowToProfile(SqlRowSet rs){
@@ -48,7 +60,7 @@ public class JdbcProfileDao implements ProfileDao{
         profile.setBirthday(Objects.requireNonNull(rs.getDate("birthday")).toLocalDate());
         profile.setProfilePic(rs.getString("profile_pic"));
         profile.setStarStreak(rs.getInt("current_star_streak"));
-        profile.setHighStarStreak(rs.getInt("high_star_streak"));
+        profile.setHighStarStreak(rs.getInt("high_start_streak"));
         profile.setUsername(rs.getString("username"));
         return profile;
     }
