@@ -1,6 +1,6 @@
 <template>
   <div id="mealPage">
-    <div id="myMeals" v-if="!showForm">
+    <div id="myMeals">
     <p>Your Food Diary For: {{ new Date()}} </p>
     <h4>Breakfast</h4>
       <table v-for="(food, index) in breakfastFoods" v-bind:key="index">
@@ -27,43 +27,23 @@
       </table>
       <button v-on:click="addFood('Snacks')">Add Food</button>
       </div>
-
-      <div id="newFoodForm" v-if="showForm">
-        <form v-on:submit.prevent="displayFood(newFood)">
-          <label for="foodName"> Food Name: </label>
-          <input type="text" id="foodName" v-model="newFood.foodName">
-          <label for="mealType"> Meal: </label>
-          <select id="mealType" v-model="newFood.mealType">
-            <option>Breakfast</option>
-            <option>Lunch</option>
-            <option>Dinner</option>
-            <option>Snacks</option>
-         </select>
-         <label for="calories"> Calories: </label>
-         <input type="text" id="calories" v-model="newFood.calories">
-         <label for="size"> Size: </label>
-         <select id="size" v-model="newFood.size">
-           <option>8 Ounces</option>
-         </select>
-         <label for="servings"> Number of Servings: </label>
-         <input type="number" id="servings" v-model="newFood.servings">
-         <button type="submit" v-on:click="displayFood(newFood)">Save</button>
-         <button v-on:click="showForm=false">Cancel</button>
-
-
-
-
-        </form>
-
+      <div id="newFood">
+        <new-food-form v-if="showForm" v-bind:mealType="mealType"/>
       </div>
+      <div id="cancelBtn" v-if="showForm">
+        <button v-on:click="cancel()">Cancel</button>
+      </div>
+
+     
  </div>
 
 
 </template>
 
 <script>
-//import FoodService from "../services/FoodService";
+import NewFoodForm from './NewFoodForm.vue';
 export default {
+  components: { NewFoodForm },
   name: "log-meal",
   data(){
     
@@ -72,38 +52,27 @@ export default {
       lunchFoods: [],
       dinnerFoods: [],
       snackFoods: [],
-      newFood: {},
       showForm: false,
+      mealType: "",
+      
+     
+    
     }
   },
   methods: {
       addFood(meal){
-        this.showForm = true;
-        this.newFood.mealType = meal;
+        this.mealType = meal;
+        this.showForm=true;
       },
-      displayFood(food){
-        this.showForm = false;
-        this.breakfastFoods.push(food);
-        
-      },
-      logFood(newFood){
-        this.FoodService.addFood(newFood).then((response) => {
-          if(response.status==200){
-            //maybe say food added?
-          }
-        })
+      cancel(){
+        this.showForm=false;
       }
+
   },
 
 }
 </script>
 
 <style>
-#newFoodForm form{
-    display:flex;
-    flex-direction: column;
-    margin: 20px;
-    
-}
 
 </style>
