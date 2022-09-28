@@ -29,7 +29,6 @@ public class FoodController {
 
     @RequestMapping(path = "/food/{id}", method = RequestMethod.PUT)
     public boolean modifyFood(@PathVariable("id") int foodId, @Valid @RequestBody Food modifiedFood) {
-
         return foodDao.modifyFood(foodId, modifiedFood);
     }
 

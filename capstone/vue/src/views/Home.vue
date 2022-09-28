@@ -1,10 +1,10 @@
 <template>
   <div class="home">
     <nav>
-      <h3 v-on:click="clickHome()" v-bind:class="{selected: homeSelected}">Home</h3>
-      <h3 v-on:click="clickProfile()" v-bind:class="{selected: profileSelected}">Profile</h3>
-      <h3 v-on:click="clickLogMeal()" v-bind:class="{selected: logMealSelected}">Log a Meal</h3>
-      <h3 v-on:click="clickLogWorkout()" v-bind:class="{selected: logWorkoutSelected}">Log a Workout</h3>
+      <button v-on:click="clickHome()" v-bind:class="{selected: homeSelected}">Home</button><br>
+      <button v-on:click="clickProfile()" v-bind:class="{selected: profileSelected}">Profile</button><br>
+      <button v-on:click="clickLogMeal()" v-bind:class="{selected: logMealSelected}">Log a Meal</button><br>
+      <button v-on:click="clickLogWorkout()" v-bind:class="{selected: logWorkoutSelected}">Log a Workout</button><br>
       <h3>Another Thing</h3>
       <h3>Something Else</h3>
     </nav>
@@ -66,20 +66,25 @@ export default {
 
 <style scoped>
 .home{
-  display: flex
+  display: flex;
 }
 
 .home nav {
-  
   min-width: 150px;
   border-right: 1px;
   border-right-style: solid;
   background-color: rgb(0, 125, 255);
   color: whitesmoke;
+  height: 900px;
+  border-radius: 5px;
+  text-align: center;
+  
+  
 }
 
 h3 {
   padding-left: 20px;
+  padding-right: 20px;
 }
 
 #componentDiv{
@@ -89,5 +94,18 @@ h3 {
 
 .selected{
   background-color: rgb(0, 67, 127);
+  color: white;
+}
+
+div {
+    margin-left: 2.5px;
+}
+
+nav button {
+  margin: 15px;
+  width: 75%;
+  color: blue;
+  border-radius: 5px;
+  
 }
 </style>
