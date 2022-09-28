@@ -4,7 +4,7 @@
       <div id="profileHeader">
           <img id="profilePic" src="../../public/Images/blank-profile-picture.webp">
           <div>
-            <h1>{{profile.displayName}}</h1>
+            <h1>Name: {{profile.displayName}}</h1>
             <img class="star" v-for="n in numberOfStarsToDisplay" v-bind:key="n" src='../../public/Images/star.png'/>
             <h2>Longest Streak: {{profile.highStarStreak}} </h2>
           </div>
@@ -26,7 +26,7 @@
       
       </div>
       <div id="editForm" v-if="editing">
-          <form v-on:submit.prevent="updateProfile(updateProfile)">
+          <form v-on:submit.prevent="updateProfile(editedProfile)">
               <label for="displayName">Display Name: </label>
               <input type="text" id="displayName" v-model="editedProfile.displayName" />
               <label for="birthday">Birthday: </label>
@@ -41,13 +41,16 @@
               <option>Sedentary</option>
               <option>Light</option>
               <option>Moderate</option>
-              <option>Active</option>
+              <option>High</option>
+              <option>Extreme</option>
               </select>
-              <label for="calorieGoal">Daily Calorie Target: </label>
-              <input type="text" id="calorieGoal" v-model="editedProfile.calorieGoal" />
-              <button type="submit">Save</button>
+              <!-- <label for="calorieGoal">Daily Calorie Target: </label>
+              <input type="number" id="calorieGoal" v-model="editedProfile.calorieGoal" /> -->
+              <h6>Suggested Calorie Goal: {{calorieGoal()}}</h6>
+              <button type="submit" >Save</button>
               <button v-on:click="editing=false">Cancel</button>
           </form>
+            
       </div>
   </div>
 </template>
@@ -79,29 +82,7 @@ export default {
         return 1;
       }
     },
-    calorieGoals() {
-      let options = {};
-      let BMR;
-      if (this.profile.gender == "male") {
-        BMR =
-          66.5 +
-          6.1875 * this.profile.currentWeight +
-          12.7 * this.profile.height -
-          6.75 * this.profile.age;
-      }
-      if (this.profile.gender == "female") {
-        BMR =
-          655.1 +
-          4.3 * this.profile.currentWeight +
-          4.7 * this.profile.height -
-          4.676 * this.profile.age;
-      }
-      options.sedentary = 1.2 * BMR;
-      options.light = 1.375 * BMR;
-      options.moderate = 1.55 * BMR;
-      options.active = 1.725 * BMR;
-      return options;
-    },
+    
   },
   methods: {
     addProfile() {},
@@ -110,12 +91,50 @@ export default {
         this.editedProfile = this.profile;
     },
     updateProfile(profile) {
-        this.ProfileService.updateProfile(profile.id, profile).then((response)=>{
-            if(response.status==200) {
-                //do something
+        ProfileService.updateProfile(profile.profileId, profile).then((response)=>{
+            if(response.status==201) {
+                this.profile = this.editedProfile;
+                
             }
+            this.editing = false;
         })
-    }
+    },
+    calorieGoal() {
+      let goal;
+      let BMR;
+      let activityLevel = this.editedProfile.activityLevel;
+      if (this.editedProfile.gender == "M") {
+        BMR =
+          66.5 +
+          6.1875 * this.editedProfile.currentWeight +
+          12.7 * this.editedProfile.height -
+          6.75 * this.editedProfile.age;
+      }
+      if (this.profile.gender == "F") {
+        BMR =
+          655.1 +
+          4.3 * this.editedProfile.currentWeight +
+          4.7 * this.editedProfile.height -
+          4.676 * this.editedProfile.age;
+      }
+      if (activityLevel=='Sedentary') {
+          goal = BMR * 1.2;
+      }
+      if (activityLevel=='Light') {
+          goal = BMR * 1.375;
+      }
+      if (activityLevel=='Moderate') {
+          goal = BMR * 1.55;
+      }
+      if (activityLevel=='High') {
+          goal = BMR * 1.725
+      }
+      if (activityLevel=='Extreme') {
+          goal = BMR * 1.9
+      }
+
+      return Math.round(goal);
+    },
   },
 };
 </script>
@@ -132,6 +151,7 @@ export default {
 
 .star {
   height: 75px;
+  margin-bottom: 5px;
 }
 
 #profileDetails {
