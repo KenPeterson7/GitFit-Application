@@ -4,7 +4,7 @@
       <div id="profileHeader">
           <img id="profilePic" src="../../public/Images/blank-profile-picture.webp">
           <div>
-            <h1>{{profile.displayName}}</h1>
+            <h1>Name: {{profile.displayName}}</h1>
             <img class="star" v-for="n in numberOfStarsToDisplay" v-bind:key="n" src='../../public/Images/star.png'/>
             <h2>Longest Streak: {{profile.highStarStreak}} </h2>
           </div>
@@ -132,6 +132,7 @@ export default {
 
 .star {
   height: 75px;
+  margin-bottom: 5px;
 }
 
 #profileDetails {
