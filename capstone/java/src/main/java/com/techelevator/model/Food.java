@@ -7,16 +7,16 @@ public class Food {
     private String foodType;
     private double size;
     private int numberOfServings;
-    private String meal;
+    private String mealType;
     private int caloricAmount;
 
-    public Food(int foodId, String foodName, String foodType, double size, int numberOfServings, String meal, int caloricAmount) {
+    public Food(int foodId, String foodName, String foodType, double size, int numberOfServings, String mealType, int caloricAmount) {
         this.foodId = foodId;
         this.foodName = foodName;
         this.foodType = foodType;
         this.size = size;
         this.numberOfServings = numberOfServings;
-        this.meal = meal;
+        this.mealType = mealType;
         this.caloricAmount = caloricAmount;
     }
 
@@ -64,12 +64,12 @@ public class Food {
         this.numberOfServings = numberOfServings;
     }
 
-    public String getMeal() {
-        return meal;
+    public String getMealType() {
+        return mealType;
     }
 
-    public void setMeal(String meal) {
-        this.meal = meal;
+    public void setMealType(String mealType) {
+        this.mealType = mealType;
     }
 
     public int getCaloricAmount() {

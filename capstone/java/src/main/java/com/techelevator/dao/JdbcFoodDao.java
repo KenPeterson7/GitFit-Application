@@ -20,8 +20,8 @@ public class JdbcFoodDao implements FoodDao{
     @Override
     public Food addFood(Food food) {
         String sql =
-                "INSERT INTO food (food_name, type, size, " +
-                "number_servings, meal, caloric_amount) " +
+                "INSERT INTO food (food_name, food_type, size, " +
+                "number_servings, meal_type, caloric_amount) " +
                 "VALUES (?, ?, ?, ?, ?, ?) " +
                 "RETURNING food_id ;";
 
@@ -30,7 +30,7 @@ public class JdbcFoodDao implements FoodDao{
                 food.getFoodType(),
                 food.getSize(),
                 food.getNumberOfServings(),
-                food.getMeal(),
+                food.getMealType(),
                 food.getCaloricAmount());
 
         food.setFoodId(newId);
@@ -43,13 +43,13 @@ public class JdbcFoodDao implements FoodDao{
 
         String sql =
                 "UPDATE food " +
-                        "SET food_name = ?, type = ?, size = ?, " +
-                        "number_servings = ?, meal = ?, caloric_amount = ? " +
+                        "SET food_name = ?, food_type = ?, size = ?, " +
+                        "number_servings = ?, meal_type = ?, caloric_amount = ? " +
                         "WHERE food_id = ? ";
 
         return jdbcTemplate.update(sql, modifiedFood.getFoodName(),
                 modifiedFood.getFoodType(), modifiedFood.getSize(),
-                modifiedFood.getNumberOfServings(), modifiedFood.getMeal(),
+                modifiedFood.getNumberOfServings(), modifiedFood.getMealType(),
                 modifiedFood.getCaloricAmount(), foodId) == 1;
     }
 
@@ -58,8 +58,8 @@ public class JdbcFoodDao implements FoodDao{
 
         List<Food> foodList = new ArrayList<Food>();
         String sql =
-                "SELECT food_id, food_name, type, size, " +
-                        "number_servings, meal, caloric_amount " +
+                "SELECT food_id, food_name, food_type, size, " +
+                        "number_servings, meal_type, caloric_amount " +
                         "FROM food ;";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
         while( results.next() ) {
@@ -74,10 +74,10 @@ public class JdbcFoodDao implements FoodDao{
         Food food = new Food();
         food.setFoodId(rs.getInt("food_id"));
         food.setFoodName(rs.getString("food_name"));
-        food.setFoodType(rs.getString("type"));
+        food.setFoodType(rs.getString("food_type"));
         food.setSize(rs.getDouble("size"));
         food.setNumberOfServings(rs.getInt("number_servings"));
-        food.setMeal(rs.getString("meal"));
+        food.setMealType(rs.getString("meal_type"));
         food.setCaloricAmount(rs.getInt("caloric_amount"));
         return food;
     }
