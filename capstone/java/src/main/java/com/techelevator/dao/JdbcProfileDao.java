@@ -19,11 +19,12 @@ public class JdbcProfileDao implements ProfileDao{
 
     @Override
     public Profile createProfile(Profile profile) {
-        String sql = "insert into Profile(age, height, current_weight, desired_weight, birthday, profile_pic, current_star_streak, high_start_streak, username)\n" +
-                "values(?, ?, ?, ?, ?, ?::bytea, ?, ?, ?) returning profile_id";
+        String sql = "insert into Profile(age, height, current_weight, desired_weight, birthday, profile_pic, current_star_streak, high_start_streak, " +
+                "username, displayName, gender, activity_level)\n" +
+                "values(?, ?, ?, ?, ?, ?::bytea, ?, ?, ?, ?, ?, ?) returning profile_id";
         Integer newProfileId = jdbcTemplate.queryForObject(sql, Integer.class, profile.getAge(), profile.getHeight(), profile.getCurrentWeight(),
                 profile.getDesiredWeight(), profile.getBirthday(), profile.getProfilePic(), profile.getStarStreak(), profile.getHighStarStreak(),
-                profile.getUsername());
+                profile.getUsername(), profile.getDisplayName(), profile.getGender(), profile.getActivityLevel());
 
         profile.setProfileId(newProfileId);
         return profile;
@@ -33,10 +34,11 @@ public class JdbcProfileDao implements ProfileDao{
     @Override
     public boolean updateProfile(Profile profile, int profileId) {
         String sql = "Update Profile set age = ?, height = ?, current_weight = ?, desired_weight = ?, birthday = ?, \n" +
-                "profile_pic = ?::bytea, current_star_streak = ?, high_start_streak = ?, username = ? \n" +
+                "profile_pic = ?::bytea, current_star_streak = ?, high_start_streak = ?, username = ?, displayname = ?, gender = ?, activity_level = ? \n" +
                 "where profile_id = ?";
         return jdbcTemplate.update(sql, profile.getAge(), profile.getHeight(), profile.getCurrentWeight(), profile.getDesiredWeight(),
-                profile.getBirthday(), profile.getProfilePic(), profile.getStarStreak(), profile.getHighStarStreak(), profile.getUsername(), profileId) == 1;
+                profile.getBirthday(), profile.getProfilePic(), profile.getStarStreak(), profile.getHighStarStreak(), profile.getUsername(),
+                profile.getDisplayName(), profile.getGender(), profile.getActivityLevel(), profileId) == 1;
     }
 
     @Override
@@ -61,6 +63,9 @@ public class JdbcProfileDao implements ProfileDao{
         profile.setStarStreak(rs.getInt("current_star_streak"));
         profile.setHighStarStreak(rs.getInt("high_start_streak"));
         profile.setUsername(rs.getString("username"));
+        profile.setDisplayName(rs.getString("displayname"));
+        profile.setGender(rs.getString("gender"));
+        profile.setActivityLevel(rs.getString("activity_level"));
         return profile;
     }
 }

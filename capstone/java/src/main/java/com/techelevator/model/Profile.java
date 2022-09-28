@@ -3,7 +3,6 @@ package com.techelevator.model;
 import java.time.LocalDate;
 
 public class Profile {
-
     private int profileId;
     private int age;
     private int height;
@@ -15,7 +14,13 @@ public class Profile {
     private int highStarStreak;
     private String username;
 
-    public Profile(int profileId, int age, int height, int currentWeight, int desiredWeight, LocalDate birthday, String profilePic, int starStreak, int highStarStreak, String username) {
+    private String displayName;
+
+    private String gender;
+
+    private String activityLevel;
+
+    public Profile(int profileId, int age, int height, int currentWeight, int desiredWeight, LocalDate birthday, String profilePic, int starStreak, int highStarStreak, String username, String displayName, String gender, String activityLevel) {
         this.profileId = profileId;
         this.age = age;
         this.height = height;
@@ -26,6 +31,9 @@ public class Profile {
         this.starStreak = starStreak;
         this.highStarStreak = highStarStreak;
         this.username = username;
+        this.displayName = displayName;
+        this.gender = gender;
+        this.activityLevel = activityLevel;
     }
 
     public Profile() {}
@@ -108,5 +116,29 @@ public class Profile {
 
     public void setProfileId(int profileId) {
         this.profileId = profileId;
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getActivityLevel() {
+        return activityLevel;
+    }
+
+    public void setActivityLevel(String activityLevel) {
+        this.activityLevel = activityLevel;
     }
 }
