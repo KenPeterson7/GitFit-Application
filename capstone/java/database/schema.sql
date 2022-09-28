@@ -1,16 +1,16 @@
 BEGIN TRANSACTION;
 
 DROP TABLE IF EXISTS users, profile, food, goal, meal, food_meal, workout, daily_intake;
-DROP SEQUENCE IF EXISTS seq_user_id, seq_profile_id, seq_food_id, seq_goal_id, seq_meal_id, seq_workout_id, seq_daily_intake_id;
+DROP SEQUENCE IF EXISTS seq_profile_id, seq_food_id, seq_goal_id, seq_meal_id, seq_workout_id, seq_daily_intake_id;
 
 
 CREATE TABLE users (
-	user_id SERIAL NOT NULL,
-	username varchar(50) NOT NULL UNIQUE,
-	password_hash varchar(200) NOT NULL,
+ 	user_id SERIAL NOT NULL,
+ 	username varchar(50) NOT NULL UNIQUE,
+ 	password_hash varchar(200) NOT NULL,
 	role varchar(50) NOT NULL,
 	CONSTRAINT PK_user PRIMARY KEY (user_id)
-);
+ );
 
 CREATE SEQUENCE seq_profile_id
   INCREMENT BY 1
@@ -27,6 +27,9 @@ CREATE TABLE profile (
 	current_star_streak int NOT NULL,
 	high_start_streak int NOT NULL,
 	username varchar(50) NOT NULL UNIQUE,
+	displayname varchar(50),
+	gender char(1),
+	activity_level varchar(50) NOT NULL,
 	CONSTRAINT PK_profile PRIMARY KEY (profile_id),
 	CONSTRAINT FK_username FOREIGN KEY (username) REFERENCES users(username)
 );
@@ -50,21 +53,21 @@ CREATE SEQUENCE seq_food_id
 CREATE TABLE food(
 	food_id int NOT NULL DEFAULT nextval('seq_food_id'),
 	food_name  varchar(50),
-	type varchar(50),
+	food_type varchar(50),
 	size numeric NOT NULL,
 	number_servings int NOT NULL,
-	meal varchar(50),
+	meal_type varchar(50),
 	caloric_amount int NOT NULL,
 	CONSTRAINT PK_food PRIMARY KEY (food_id)
 	);
-
 CREATE SEQUENCE seq_meal_id
   INCREMENT BY 1
   START WITH 5001
   NO MAXVALUE;
 CREATE TABLE meal(
 	meal_id int NOT NULL DEFAULT nextval('seq_meal_id'),
-	meal_name varchar(50),
+	meal_type varchar(50),
+	meal_date date NOT NULL,
 	CONSTRAINT PK_meal PRIMARY KEY (meal_id)
 	);
 	
@@ -102,6 +105,41 @@ CREATE TABLE workout(
 	CONSTRAINT PK_workout PRIMARY KEY (workout_id)
 	);
 	
+INSERT INTO users (username,password_hash,role) VALUES ('user','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER');
+INSERT INTO users (username,password_hash,role) VALUES ('admin','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_ADMIN');
+INSERT INTO users (username,password_hash,role) VALUES ('user2','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER');
+INSERT INTO users (username,password_hash,role) VALUES ('user3','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER');
+INSERT INTO users (username,password_hash,role) VALUES ('user4','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER');
+
+insert into Profile(age, height, current_weight, desired_weight, birthday, profile_pic, current_star_streak, high_start_streak, username, displayname, gender, activity_level)
+values(25, 72, 225, 210, '1997-01-01', pg_read_binary_file('C:/Users/Student/Desktop/Capstone_Images/logo1.png')::bytea, 1, 5, 'user', 'Tester', 'M', 'High');
+
+INSERT INTO food (food_name, food_type, size, number_servings, meal_type, caloric_amount)
+VALUES ('steak', 'meat', 25, 1, 'dinner', 500);
+	
+	
+-- CREATE USER final_capstone_owner
+-- WITH PASSWORD 'finalcapstone';
+	
+GRANT ALL
+ON ALL TABLES IN SCHEMA public
+TO final_capstone_owner;
+
+GRANT ALL
+ON ALL SEQUENCES IN SCHEMA public
+TO final_capstone_owner;
+
+-- CREATE USER final_capstone_appuser
+-- WITH PASSWORD 'finalcapstone';
+
+GRANT SELECT, INSERT, UPDATE, DELETE
+ON ALL TABLES IN SCHEMA public
+TO final_capstone_appuser;
+
+GRANT USAGE, SELECT
+ON ALL SEQUENCES IN SCHEMA public
+TO final_capstone_appuser;
+
 -- ROLLBACK;
 
 COMMIT TRANSACTION;
