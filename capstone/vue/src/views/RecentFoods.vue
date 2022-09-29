@@ -43,6 +43,7 @@
 
 <script>
 import FoodService from "../services/FoodService";
+import FoodMealService from "../services/FoodMealService"
 export default {
   name: "recentFoods",
   data() {
@@ -92,6 +93,12 @@ export default {
   addFood(){
        this.showMealSelection= false
        this.showAddCancelBtns = false
+       FoodMealService.addFoodMeal(this.mealFoodObject).then((response) => {
+           if(response.status === 2000){
+               this.mealFoodObject.mealId =0
+               this.mealFoodObject.foodId=0
+           }
+       })
   },
   cancel(){
        this.showMealSelection= false

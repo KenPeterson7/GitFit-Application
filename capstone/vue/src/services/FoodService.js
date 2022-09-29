@@ -9,5 +9,6 @@ export default {
     addFood(food){
         return axios.post('/food', food)
     }
+    
 
 }
