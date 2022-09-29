@@ -6,7 +6,7 @@
         <thead>
           <th>Food-Type</th>
           <th>Calories</th>
-          <th>Size</th>
+          <th>Size </th>
           <th>Number-Of-Servings</th>
         </thead>
       </table>
@@ -43,7 +43,7 @@
       </table>
       <button v-on:click="addFood('Lunch')">Add Food</button>
       <h4>DINNER</h4>
-
+      <meal-table v-bind:foodList="dinnerFoods"/>
       <table
         id="dinnerTable"
         v-for="(food, index) in dinnerFoods"
@@ -95,9 +95,8 @@
         <label for="calories"> Calories: </label>
         <input type="text" id="calories" v-model="newFood.caloricAmount" />
         <label for="size"> Size: </label>
-        <select id="size" v-model="newFood.size">
-          <option>8</option>
-        </select>
+        <input type="text" id="size" v-model="newFood.size"/>
+        
         <label for="servings"> Number of Servings: </label>
         <input type="number" id="servings" v-model="newFood.numberOfServings" />
         <button type="submit" v-on:click="logFood(newFood)">Save</button>
@@ -109,10 +108,13 @@
 
 <script>
 import FoodService from "../services/FoodService";
+import MealTable from './MealTable.vue';
 
 export default {
   name: "log-meal",
-  computed: {},
+  components: {
+    MealTable
+    },
 
   data() {
     return {
@@ -128,15 +130,20 @@ export default {
     };
   },
   created() {
-    FoodService.getFood().then((response) => {
+   this.updateDinnerList();
+
+  },
+
+  methods: {
+
+    updateDinnerList(){
+      FoodService.getFood().then((response) => {
       if (response.status == 200) {
         this.dinnerFoods = response.data;
         return this.dinnerFoods;
       }
     });
-  },
-
-  methods: {
+    },
   
     addFood(meal) {
       this.newFood.mealType = meal;
@@ -146,6 +153,8 @@ export default {
       FoodService.addFood(newFood).then((response) => {
         if (response.status == 200) {
           this.showForm = false;
+          this.updateDinnerList();
+
         }
       });
     },
