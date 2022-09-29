@@ -10,7 +10,7 @@
           <th>Number-Of-Servings</th>
         </thead>
       </table>
-      <h4>Breakfast</h4>
+      <h4>BREAKFAST</h4>
 
       <table
         id="breakfastTable"
@@ -27,7 +27,7 @@
         </div>
       </table>
       <button v-on:click="addFood('Breakfast')">Add Food</button>
-      <h4>Lunch</h4>
+      <h4>LUNCH</h4>
       <table
         id="lunchTable"
         v-for="(food, index) in lunchFoods"
@@ -42,7 +42,7 @@
         </div>
       </table>
       <button v-on:click="addFood('Lunch')">Add Food</button>
-      <h4>Dinner</h4>
+      <h4>DINNER</h4>
 
       <table
         id="dinnerTable"
@@ -63,7 +63,7 @@
         </div>
       </table>
       <button v-on:click="addFood('Dinner')">Add Food</button>
-      <h4>Snacks</h4>
+      <h4>SNACKS</h4>
       <table
         id="snackTable"
         v-for="(food, index) in snackFoods"
@@ -201,7 +201,8 @@ export default {
   flex-direction: row;
 }
 #leftColumns {
-  margin-left: 21%;
+  display: table;
+ margin-left: 21%;
 
 }
 td {
