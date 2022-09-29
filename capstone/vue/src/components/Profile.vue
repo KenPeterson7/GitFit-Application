@@ -167,9 +167,15 @@ export default {
   padding: 10px;
 }
 
+<<<<<<< HEAD
 /* #star-container{
     position: relative;
     width: 75px;
+=======
+#star-container{
+    /* position: relative;
+    width: 75px; */
+>>>>>>> main
     height: 75px;
 } */
 
