@@ -59,7 +59,7 @@
         </div> 
         <div id="rightButtons">
        <button>Edit Food</button>
-        <button id="delete">Delete Food</button>
+        <button id="delete" >Delete Food</button>
         </div>
       </table>
       <button v-on:click="addFood('Dinner')">Add Food</button>
@@ -99,7 +99,7 @@
           <option>8</option>
         </select>
         <label for="servings"> Number of Servings: </label>
-        <input type="number" id="servings" v-model="newFood.numberServings" />
+        <input type="number" id="servings" v-model="newFood.numberOfServings" />
         <button type="submit" v-on:click="logFood(newFood)">Save</button>
         <button v-on:click="cancel()">Cancel</button>
       </form>
@@ -160,7 +160,9 @@ export default {
 #newFoodForm form {
   display: flex;
   flex-direction: column;
-  margin: 20px;
+  margin-top: 50px;
+  margin-right: 400px;
+  margin-left: 400px;
 }
 #newFoodForm form label {
   margin-top: 10px;
@@ -168,11 +170,12 @@ export default {
 
 #newFoodForm form button {
   margin-top: 10px;
+  
 }
 #header {
   margin-top: 20px;
   display: flex;
-  color: rgb(14, 14, 206);
+  color:blue;
   justify-content: center;
 }
 #headerTable {
@@ -213,6 +216,11 @@ margin-left: 15%;
 #delete{
  color: red;
  
+}
+button{
+  border-radius: 4px;
+  color: blue;
+  
 }
 
 </style>
