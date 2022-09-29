@@ -3,6 +3,11 @@ import axios from "axios";
 export default {
 
     getFood() {
-        axios.get('Food')
+       return axios.get('/food')
+    },
+    addFood(food){
+        return axios.post('/food', food)
     }
+
+
 }
