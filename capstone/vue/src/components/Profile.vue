@@ -1,11 +1,14 @@
 <template>
   <div>
-      <div id="profileMain" v-if="!editing">
+      <div id="profileMain" v-if="!editing && profileExists">
       <div id="profileHeader">
           <img id="profilePic" src="../../public/Images/blank-profile-picture.webp">
           <div>
             <h1>Name: {{profile.displayName}}</h1>
+            <div id="star-container">
             <img class="star" v-for="n in numberOfStarsToDisplay" v-bind:key="n" src='../../public/Images/star.png'/>
+            <p id="starNumber">{{starNumber}}</p>
+            </div>
             <h2>Longest Streak: {{profile.highStarStreak}} </h2>
           </div>
       </div>
@@ -25,7 +28,7 @@
       </div>
       
       </div>
-      <div id="editForm" v-if="editing">
+      <div id="editForm" v-if="editing && profileExists">
           <form v-on:submit.prevent="updateProfile(editedProfile)">
               <label for="displayName">Display Name: </label>
               <input type="text" id="displayName" v-model="editedProfile.displayName" />
@@ -52,12 +55,15 @@
           </form>
             
       </div>
+      <create-profile v-if="!profileExists" />
   </div>
 </template>
 
 <script>
 import ProfileService from "../services/ProfileService";
+import CreateProfile from './CreateProfile.vue';
 export default {
+  components: { CreateProfile },
   data() {
     return {
       profile: {},
@@ -76,16 +82,28 @@ export default {
   computed: {
     numberOfStarsToDisplay() {
       let stars = this.profile.starStreak;
-      if (stars < 6) {
+      if (stars < 6 && stars > 0) {
         return stars;
       } else {
         return 1;
       }
     },
+    starNumber() {
+        let stars = this.profile.starStreak;
+      if (stars < 6 && stars > 0) {
+        return '';
+      } else {
+        return stars;
+      }
+    },
+    profileExists() {
+        return Object.keys(this.profile).length!==0
+    },
+    
     
   },
   methods: {
-    addProfile() {},
+    
     editProfile() {
         this.editing = true;
         this.editedProfile = this.profile;
@@ -147,6 +165,19 @@ export default {
 #profilePic {
   max-height: 200px;
   padding: 10px;
+}
+
+#star-container{
+    position: relative;
+    width: 75px;
+    height: 75px;
+}
+
+#star-container p{
+    position: absolute;
+    top: 15%;
+    left: 36%;
+    font-size: 40px;
 }
 
 .star {
