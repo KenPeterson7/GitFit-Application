@@ -22,13 +22,14 @@ public class JdbcMealDao implements MealDao{
     @Override
     public Meal addMeal(Meal meal) {
         String sql =
-                "INSERT INTO meal (meal_type, meal_date) " +
-                        "VALUES(?, ?) " +
+                "INSERT INTO meal (meal_type, meal_date, profile_id) " +
+                        "VALUES(?, ?, ?) " +
                         "RETURNING meal_id ;";
 
         Integer newId = jdbcTemplate.queryForObject(sql, Integer.class,
             meal.getMealType(),
-            meal.getMealDate());
+            meal.getMealDate(),
+            meal.getProfileId());
 
         meal.setMealId(newId);
 
@@ -40,11 +41,12 @@ public class JdbcMealDao implements MealDao{
 
         String sql =
                 "UPDATE meal " +
-                        "SET meal_type = ?, meal_date = ?" +
+                        "SET meal_type = ?, meal_date = ?, profile_id " +
                         "WHERE meal_id = ? ";
 
         return jdbcTemplate.update(sql,
-                modifiedMeal.getMealType(), modifiedMeal.getMealDate(), mealId) == 1;
+                modifiedMeal.getMealType(),
+                modifiedMeal.getMealDate(), modifiedMeal.getProfileId(), mealId) == 1;
     }
 
     @Override
@@ -66,6 +68,7 @@ public class JdbcMealDao implements MealDao{
     private Meal mapRowToMeal(SqlRowSet rs) {
         Meal meal = new Meal();
         meal.setMealId(rs.getInt("meal_id"));
+        meal.setProfileId(rs.getInt("profile_id"));
         meal.setMealType(rs.getString("meal_type"));
         meal.setMealDate(Objects.requireNonNull(rs.getDate("meal_date")).toLocalDate());
         return meal;

@@ -5,18 +5,16 @@ public class Food {
     private int foodId;
     private String foodName;
     private String foodType;
-    private double size;
+    private String size;
     private int numberOfServings;
-    private String mealType;
     private int caloricAmount;
 
-    public Food(int foodId, String foodName, String foodType, double size, int numberOfServings, String mealType, int caloricAmount) {
+    public Food(int foodId, String foodName, String foodType, String size, int numberOfServings, int caloricAmount) {
         this.foodId = foodId;
         this.foodName = foodName;
         this.foodType = foodType;
         this.size = size;
         this.numberOfServings = numberOfServings;
-        this.mealType = mealType;
         this.caloricAmount = caloricAmount;
     }
 
@@ -48,11 +46,11 @@ public class Food {
         this.foodType = foodType;
     }
 
-    public double getSize() {
+    public String getSize() {
         return size;
     }
 
-    public void setSize(double size) {
+    public void setSize(String size) {
         this.size = size;
     }
 
@@ -64,13 +62,6 @@ public class Food {
         this.numberOfServings = numberOfServings;
     }
 
-    public String getMealType() {
-        return mealType;
-    }
-
-    public void setMealType(String mealType) {
-        this.mealType = mealType;
-    }
 
     public int getCaloricAmount() {
         return caloricAmount;

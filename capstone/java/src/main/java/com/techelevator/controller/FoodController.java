@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -32,9 +33,46 @@ public class FoodController {
         return foodDao.modifyFood(foodId, modifiedFood);
     }
 
-    @RequestMapping(path = "/food", method = RequestMethod.GET)
-    public List<Food> getListOfAllFood() {
-        return foodDao.listOfAllFoods();
+    @RequestMapping(path = "/food/user/{username}", method = RequestMethod.GET)
+    public List<Food> getListOfAllFoodsByUsername(@PathVariable("username") String username) {
+
+        return foodDao.listOfAllFoodsByUsername(username);
     }
+
+    @RequestMapping(path = "/food/date/{date}", method = RequestMethod.GET)
+    public List<Food> getListOfAllFoodsByDate(@PathVariable("date")LocalDate mealDate) {
+
+        return foodDao.listOfAllFoodsByDate(mealDate);
+    }
+
+    @RequestMapping(path = "/food/{id}", method = RequestMethod.DELETE)
+    public void deleteFood(@PathVariable("id") int foodId) {
+        foodDao.deleteFood(foodId);
+    }
+
+//    @RequestMapping(path = "/food/breakfast", method = RequestMethod.GET)
+//    public List<Food> getListOfAllBreakfastFoods() {
+//
+//        return foodDao.listOfAllBreakfastFoods();
+//    }
+//
+//    @RequestMapping(path = "/food/lunch", method = RequestMethod.GET)
+//    public List<Food> getListOfAlLunchFoods() {
+//
+//        return foodDao.listOfAllLunchFoods();
+//    }
+//
+//    @RequestMapping(path = "/food/dinner", method = RequestMethod.GET)
+//    public List<Food> getListOfAllDinnerFoods() {
+//
+//        return foodDao.listOfAllDinnerFoods();
+//    }
+//
+//    @RequestMapping(path = "/food/snack", method = RequestMethod.GET)
+//    public List<Food> getListOfAllSnackFood() {
+//
+//        return foodDao.listOfAllSnackFoods();
+//    }
+
 
 }
