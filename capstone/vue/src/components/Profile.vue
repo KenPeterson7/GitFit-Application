@@ -167,11 +167,11 @@ export default {
   padding: 10px;
 }
 
-#star-container{
+/* #star-container{
     position: relative;
     width: 75px;
     height: 75px;
-}
+} */
 
 #star-container p{
     position: absolute;
