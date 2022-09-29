@@ -19,6 +19,10 @@ public class JdbcWorkoutDao implements WorkoutDao{
 
     @Override
     public Workout addWorkout(Workout workout) {
+
+//        String sql =
+//                "INSERT INTO workout (name_of_workout, type_of_workout, duration";
+
         return null;
     }
 
@@ -32,11 +36,13 @@ public class JdbcWorkoutDao implements WorkoutDao{
         return null;
     }
 
-//    private Workout mapRowToWorkout(SqlRowSet rs ){
-//        Workout workout = new Workout();
-//        workout.setWorkoutId(rs.getInt("workout_id"));
-//        workout.getString("workout_name");
-//
-//    }
+    private Workout mapRowToWorkout(SqlRowSet rs ){
+        Workout workout = new Workout();
+        workout.setWorkoutId(rs.getInt("workout_id"));
+        workout.setNameOfWorkout(rs.getString("name_of_workout"));
+        workout.setTypeOfWorkout(rs.getString("type_of_workout"));
+        workout.setDuration(rs.getInt("duration"));
+        return workout;
+    }
 
 }
