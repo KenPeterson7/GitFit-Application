@@ -168,8 +168,8 @@ export default {
 }
 
 #star-container{
-    position: relative;
-    width: 75px;
+    /* position: relative;
+    width: 75px; */
     height: 75px;
 }
 

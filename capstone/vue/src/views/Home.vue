@@ -67,6 +67,7 @@ export default {
 <style scoped>
 .home{
   display: flex;
+  height: 700px;
 }
 
 .home nav {
@@ -75,7 +76,7 @@ export default {
   border-right-style: solid;
   background-color: rgb(0, 125, 255);
   color: whitesmoke;
-  height: 900px;
+  
   border-radius: 5px;
   text-align: center;
   
@@ -89,7 +90,11 @@ h3 {
 
 #componentDiv{
   flex-grow: 8;
+  background-image: url("../../public/Images/gym-background2.png");
   background-color: lightgray;
+  background-blend-mode: screen;  
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 .selected{

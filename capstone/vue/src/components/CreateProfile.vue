@@ -40,7 +40,7 @@
           <select id="activityLevel" v-model="newProfile.activityLevel">
               <option>-</option>
               <option>Sedentary</option>
-              <option>Low</option>
+              <option>Light</option>
               <option>Moderate</option>
               <option>High</option>
               <option>Extreme</option>
