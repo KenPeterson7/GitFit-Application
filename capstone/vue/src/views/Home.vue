@@ -1,13 +1,13 @@
 <template>
   <div class="home">
-    <nav>
+    <!-- <nav>
       <button v-on:click="clickHome()" v-bind:class="{selected: homeSelected}">Home</button><br>
       <button v-on:click="clickProfile()" v-bind:class="{selected: profileSelected}">Profile</button><br>
       <button v-on:click="clickLogMeal()" v-bind:class="{selected: logMealSelected}">Log a Meal</button><br>
       <button v-on:click="clickLogWorkout()" v-bind:class="{selected: logWorkoutSelected}">Log a Workout</button><br>
       <h3>Another Thing</h3>
       <h3>Something Else</h3>
-    </nav>
+    </nav> -->
     <div id="componentDiv">
       
       <home-page v-if="homeSelected" />
@@ -22,9 +22,9 @@
 
 <script>
 import HomePage from '../components/HomePage.vue';
-import LogWorkout from '../components/LogWorkout.vue';
-import Profile from '../components/Profile.vue';
-import LogMeal from '../components/LogMeal.vue'
+import LogWorkout from './LogWorkout.vue';
+import Profile from './Profile.vue';
+import LogMeal from './LogMeal.vue'
 export default {
   components: { Profile, HomePage, LogWorkout, LogMeal},
   name: "home",

@@ -5,7 +5,9 @@ import Login from '../views/Login.vue'
 import Logout from '../views/Logout.vue'
 import Register from '../views/Register.vue'
 import store from '../store/index'
-import LogMeal from '../components/LogMeal.vue'
+import LogMeal from '../views/LogMeal.vue'
+import Profile from '../views/Profile.vue'
+import LogWorkout from '../views/LogWorkout.vue'
 
 
 Vue.use(Router)
@@ -64,6 +66,23 @@ const router = new Router({
       }
 
     },
+    {
+      path:"/profile",
+      name: 'profile',
+      component: Profile,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path:"/workout",
+      name: 'workout',
+      component: LogWorkout,
+      meta: {
+        requiresAuth: true
+      }
+    }
+
     
 
   ]

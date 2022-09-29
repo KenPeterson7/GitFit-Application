@@ -61,7 +61,7 @@
 
 <script>
 import ProfileService from "../services/ProfileService";
-import CreateProfile from './CreateProfile.vue';
+import CreateProfile from '../components/CreateProfile.vue';
 export default {
   components: { CreateProfile },
   data() {

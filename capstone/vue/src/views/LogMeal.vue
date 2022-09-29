@@ -108,7 +108,7 @@
 
 <script>
 import FoodService from "../services/FoodService";
-import MealTable from './MealTable.vue';
+import MealTable from '../components/MealTable.vue';
 
 export default {
   name: "log-meal",
