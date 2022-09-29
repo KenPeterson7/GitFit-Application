@@ -5,9 +5,11 @@ import Login from '../views/Login.vue'
 import Logout from '../views/Logout.vue'
 import Register from '../views/Register.vue'
 import store from '../store/index'
-import LogMeal from '../views/LogMeal.vue'
+import LogMeal from '../views/LogMeal2.vue'
 import Profile from '../views/Profile.vue'
 import LogWorkout from '../views/LogWorkout.vue'
+import RecentFoods from '../views/RecentFoods.vue'
+//import FoodForm from '../views/AddFoodForm.vue'
 
 
 Vue.use(Router)
@@ -78,6 +80,14 @@ const router = new Router({
       path:"/workout",
       name: 'workout',
       component: LogWorkout,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/recentFoods',
+      name: 'recentFoods',
+      component: RecentFoods,
       meta: {
         requiresAuth: true
       }
