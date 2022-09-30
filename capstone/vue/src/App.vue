@@ -54,7 +54,10 @@
         </router-link>
       </nav>
       <div class="router-view">
-        <router-view />
+        <div class="inner-router-view">
+          <router-view />
+        </div>
+        
       </div>
     </div>
   </div>
@@ -99,7 +102,11 @@ export default {
   background-blend-mode: screen;
   background-size: cover;
   background-repeat: no-repeat;
-  height: 700px;
+  display:flex;
+  flex-direction: column;
+}
+.inner-router-view{
+  height: fit-content;
 }
 
 nav button {

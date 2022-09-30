@@ -11,6 +11,8 @@ Vue.use(Vuex)
  */
 const currentToken = localStorage.getItem('token')
 const currentUser = JSON.parse(localStorage.getItem('user'));
+const currentProfile = JSON.parse(localStorage.getItem('profile'));
+const currentGoal = JSON.parse(localStorage.getItem('goal'));
 
 if(currentToken != null) {
   axios.defaults.headers.common['Authorization'] = `Bearer ${currentToken}`;
@@ -20,8 +22,8 @@ export default new Vuex.Store({
   state: {
     token: currentToken || '',
     user: currentUser || {},
-    profile: null,
-    goal: null,
+    profile: currentProfile || {},
+    goal: currentGoal || {},
 
     
   },
@@ -39,6 +41,8 @@ export default new Vuex.Store({
     LOGOUT(state) {
       localStorage.removeItem('token');
       localStorage.removeItem('user');
+      localStorage.removeItem('profile');
+      localStorage.removeItem('goal');
       state.token = '';
       state.user = {};
       state.profile = null;
@@ -48,9 +52,11 @@ export default new Vuex.Store({
     },
     SET_CURRENT_PROFILE(state, profile) {
       state.profile = profile;
+      localStorage.setItem('profile',JSON.stringify(profile));
     },
     SET_CURRENT_GOAL(state, goal) {
-      state.goal = goal;
+      state.goal = goal; 
+      localStorage.setItem('goal',JSON.stringify(goal));
     }
   }
 })
