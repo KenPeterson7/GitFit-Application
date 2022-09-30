@@ -1,15 +1,15 @@
 <template>
   <div id="mealPage">
-    <p id="header">
+    <h3 id="header">
       My Meals For:
       {{
-        new Date().getMonth() +
+        new Date().getMonth()+1 +
         "/" +
         new Date().getDate() +
         "/" +
         new Date().getFullYear()
       }}
-    </p>
+    </h3>
     <table id="headerTable">
       <thead>
         <th>Food-Type</th>
@@ -19,17 +19,17 @@
       </thead>
     </table>
     <h4>BREAKFAST</h4>
-    <display-meals v-bind:foodList="breakfastFoods"/>
-   
+    <display-meals v-bind:foodList="breakfastFoods" v-bind:mealType="'Breakfast'"/>
+      
     <h4>LUNCH</h4>
-       <display-meals v-bind:foodList="lunchFoods"/>
+       <display-meals v-bind:foodList="lunchFoods" v-bind:mealType="'Lunch'"/>
  
     <h4>DINNER</h4>
-    <display-meals v-bind:foodList="dinnerFoods"/>
+    <display-meals v-bind:foodList="dinnerFoods" v-bind:mealType="'Dinner'"/>
   
 
     <h4>SNACKS</h4>
-       <display-meals v-bind:foodList="snackFoods"/>
+       <display-meals v-bind:foodList="snackFoods" v-bind:mealType="'Snacks'"/>
     <router-link v-bind:to="{ name: 'recentFoods' }"
       ><button id="add">Add Food</button></router-link
     >
@@ -39,6 +39,7 @@
 <script>
 import FoodService from "../services/FoodService";
 import DisplayMeals from "../components/DisplayMeals.vue"
+
 
 export default {
   components: { DisplayMeals },
@@ -50,25 +51,65 @@ export default {
       lunchFoods: [],
       dinnerFoods: [],
       snackFoods: [],
+       month: 0,
+      date:
+        new Date().getFullYear() +
+        "-" +
+        0 +
+        this.getMonth() +
+        "-" +
+        new Date().getDate(),
     };
   },
   created() {
+    this.updateBreakfastList();
+    this.updateLunchList();
     this.updateDinnerList();
+    this.updateSnacksList();
   },
 
   methods: {
+     getMonth() {
+      this.month = new Date().getMonth();
+      return this.month + 1;
+    },
+    updateBreakfastList() {
+      FoodService.getFoodByUserMealDate(this.$store.state.user.username, this.date, 'Breakfast').then((response)=>{
+        if (response.status == 200){
+          this.breakfastFoods = response.data;
+          return this.breakfastFoods;
+        }
+      })
+       
+    },
+    updateLunchList() {
+      FoodService.getFoodByUserMealDate(this.$store.state.user.username, this.date, 'Lunch').then((response)=>{
+        if (response.status == 200){
+          this.lunchFoods = response.data;
+          return this.lunchFoods;
+        }
+      })
+       
+    },
     updateDinnerList() {
-        //get food by username, date, mealtype
-      FoodService.getFoodByUsername(this.$store.state.user.username).then((response) => {
-        if (response.status == 200) {
+      FoodService.getFoodByUserMealDate(this.$store.state.user.username, this.date, 'Dinner').then((response)=>{
+        if (response.status == 200){
           this.dinnerFoods = response.data;
           return this.dinnerFoods;
         }
-      });
+      })
+       
     },
-    editFood(){
-     
-    }
+    updateSnacksList() {
+      FoodService.getFoodByUserMealDate(this.$store.state.user.username, this.date, 'Snacks').then((response)=>{
+        if (response.status == 200){
+          this.snackFoods = response.data;
+          return this.snackFoods;
+        }
+      })
+       
+    },
+ 
   },
 };
 </script>
