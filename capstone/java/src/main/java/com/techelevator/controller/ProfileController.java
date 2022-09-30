@@ -29,4 +29,13 @@ public class ProfileController {
         return profileDao.findProfileByUsername(username);
     }
 
+    @RequestMapping(path = "/profile/currentStar/{id}", method = RequestMethod.PUT)
+    public boolean updateCurrentStar(@PathVariable("id") int profileId, @Valid @RequestBody Profile profile){
+        return profileDao.updateCurrentStar(profile, profileId);
+    }
+    @RequestMapping(path = "/profile/highestStar/{id}", method = RequestMethod.PUT)
+    public boolean updateHighestStar(@PathVariable("id") int profileId, @Valid @RequestBody Profile profile){
+        return profileDao.updateHighestStar(profile, profileId);
+    }
+
 }
