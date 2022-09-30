@@ -25,6 +25,7 @@ public class FoodMealController {
     public boolean addFoodMeal(@Valid @RequestBody FoodMeal foodmeal){
         return foodMealDao.addFoodMeal(foodmeal.getMealId(), foodmeal.getFoodId());
     }
+
     @RequestMapping(path = "/{mid}/{fid}", method = RequestMethod.DELETE)
     public boolean deleteFoodMeal(@PathVariable("mid") int meal_id, @PathVariable("fid") int food_id){
         return foodMealDao.deleteFoodMeal(meal_id, food_id);

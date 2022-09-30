@@ -13,8 +13,6 @@ public interface MealDao {
 
     List<Meal> listOfAllMeals();
 
-
     int findMealIdByMeal(String mealType, LocalDate mealDate, int profileId);
-
 
 }
