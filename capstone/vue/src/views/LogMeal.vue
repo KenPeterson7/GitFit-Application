@@ -20,7 +20,7 @@
     </table>
     <h4>BREAKFAST</h4>
     <display-meals v-bind:foodList="breakfastFoods" v-bind:mealType="'Breakfast'"/>
-   
+      
     <h4>LUNCH</h4>
        <display-meals v-bind:foodList="lunchFoods" v-bind:mealType="'Lunch'"/>
  

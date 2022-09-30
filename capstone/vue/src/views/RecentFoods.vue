@@ -36,12 +36,13 @@
       <label for="selection"
         >Please Choose The Meal You Would Like To Add Your Food To</label
       >
-      <select id="selection" v-model="mealType" v-on:click="assignMealType()">
+      <select id="selection" v-model="meal.mealType" >
         <option>Breakfast</option>
         <option>Lunch</option>
         <option>Dinner</option>
         <option>Snacks</option>
       </select>
+      <button v-on:click="assignMealType()">plz workkkkk</button>
     </div>
     <div id="addCancel" v-if="showAddCancelBtns">
         <button v-on:click="addFood()">Save Food</button>
@@ -54,6 +55,7 @@
 </template>
 
 <script>
+import MealService from '../services/MealService'
 import FoodService from "../services/FoodService";
 import FoodMealService from "../services/FoodMealService"
 export default {
@@ -63,12 +65,28 @@ export default {
       mySavedFoods: [],
       showMealSelection: false,
       showAddCancelBtns: false,
-        mealType: "",
+     
       mealFoodObject: {
           mealId: 0, 
           foodId: 0,
       },
       addFoodBanner: false,
+      date:  new Date().getFullYear() +
+        "-" +
+        0 +
+        this.getMonth() +
+        "-" +
+        new Date().getDate(),
+      meal: {
+        profileId: this.$store.state.profile.profileId,
+        mealType: "",
+        mealDate: new Date().getFullYear() +
+        "-" +
+        0 +
+        this.getMonth() +
+        "-" +
+        new Date().getDate(),
+      }
 
     };
 
@@ -77,6 +95,10 @@ export default {
     this.updateList();
   },
   methods: {
+     getMonth() {
+      this.month = new Date().getMonth();
+      return this.month + 1;
+    },
     updateList() {
       FoodService.getFoodByUsername(this.$store.state.user.username).then((response) => {
         if (response.status == 200) {
@@ -89,23 +111,24 @@ export default {
     },
     addSavedFood(foodId){
         this.showMealSelection=true;
+           this.showAddCancelBtns = true;
         this.mealFoodObject.foodId = foodId;
 
     } ,
     assignMealType(){
-      this.showAddCancelBtns = true;
-      if (this.mealType ==='Breakfast'){
-          this.mealFoodObject.mealId = 5001
-      }
-      else if (this.mealType === "Lunch"){
-          this.mealFoodObject.mealId = 5002
-      }
-      else if(this.mealType === 'Dinner'){
-          this.mealFoodObject.mealId = 5003
-      }
-      else if(this.mealType === 'Snacks'){
-          this.mealFoodObject.mealId = 5004
-      }
+   
+       MealService.getMealIdByMealDetails(this.meal.mealType, this.date,
+        this.$store.state.profile.profileId).then((response)=> {
+          if(response.status==200){
+            this.mealFoodObject.mealId = response.data;
+            return;
+          }
+          
+            MealService.addMeal(this.meal)
+            this.assignMealType()
+
+          
+        })
   },
   addFood(){
     //check and see if there is a meal id for this profile, date, meal type. if not,
@@ -113,12 +136,7 @@ export default {
     //set the returned meal id to mealFoodObject.mealId
        this.showMealSelection= false
        this.showAddCancelBtns = false
-       FoodMealService.addFoodMeal(this.mealFoodObject).then((response) => {
-           if(response.status === 200){
-               this.mealFoodObject.mealId =0
-               this.mealFoodObject.foodId=0
-           }
-       })
+       FoodMealService.addFoodMeal(this.mealFoodObject)
   },
   cancel(){
        this.showMealSelection= false

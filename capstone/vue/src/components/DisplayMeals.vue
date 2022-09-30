@@ -70,7 +70,7 @@
 <script>
 import MealService from "../services/MealService";
 import FoodService from "../services/FoodService";
-import FoodMealService from '../services/FoodMealService'
+import FoodMealService from "../services/FoodMealService";
 export default {
   props: ["foodList", "mealType"],
   data() {
@@ -121,16 +121,15 @@ export default {
       ).then((response) => {
         if (response.status == 200) {
           this.foodMeal.mealId = response.data;
+          this.foodMeal.foodId = foodId;
+          FoodMealService.deleteFoodMeal(
+            this.foodMeal.mealId,
+            this.foodMeal.foodId
+       ); 
+       alert('Your food has been deleted successfully')
+       location.reload()
         }
       });
-
-      //  assign that returned meal id to foodmeal.mealId
-
-      //delete where mealId =foodmeal.mealId and foodId= foodId
-      this.foodMeal.foodId = foodId;
-      FoodMealService.deleteFoodMeal(this.foodMeal.mealId, this.foodMeal.foodId)
-       
-   
     },
   },
 };
