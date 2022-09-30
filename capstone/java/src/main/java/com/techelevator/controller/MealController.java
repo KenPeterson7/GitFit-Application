@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -35,6 +36,17 @@ public class MealController {
     @RequestMapping(path = "/meal", method = RequestMethod.GET)
     public List<Meal> getListOfAllMeal() {
         return mealDao.listOfAllMeals();
+    }
+
+
+    @RequestMapping(path = "/meal/{mealType}/{mealDate}/{pid}", method = RequestMethod.GET)
+    public int getMealIdByMeal(@PathVariable("mealType") String mealType,
+                               @PathVariable("mealDate") String mealDate,
+                               @PathVariable("pid") int profileId) {
+
+        LocalDate date = LocalDate.parse(mealDate);
+
+        return mealDao.findMealIdByMeal(mealType,date, profileId);
     }
 
 }
