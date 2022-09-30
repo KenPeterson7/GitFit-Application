@@ -12,6 +12,7 @@ import RecentFoods from '../views/RecentFoods.vue'
 import FoodForm from '../views/AddFoodForm.vue'
 
 
+
 Vue.use(Router)
 
 /**
@@ -99,7 +100,9 @@ const router = new Router({
       meta: {
         requiresAuth: true
       }
-    }
+    },
+
+
 
     
 

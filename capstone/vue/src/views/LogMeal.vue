@@ -1,7 +1,7 @@
 <template>
   <div id="mealPage">
     <p id="header">
-      Your Food Diary For:
+      My Meals For:
       {{
         new Date().getMonth() +
         "/" +
@@ -19,81 +19,17 @@
       </thead>
     </table>
     <h4>BREAKFAST</h4>
-    <table
-      id="breakfastTable"
-      v-for="(food, index) in breakfastFoods"
-      v-bind:key="index"
-    >
-      <td>{{ food.foodName }}</td>
-      <div id="leftColumns">
-        <td>{{ food.foodType }}</td>
-        <td>{{ food.caloricAmount }}</td>
-        <td>{{ food.size }}</td>
-        <td>{{ food.numberOfServings }}</td>
-      </div>
-      <div id="rightButtons">
-        <button>Edit Food</button>
-        <button id="delete">Delete Food</button>
-      </div>
-    </table>
+    <display-meals v-bind:foodList="breakfastFoods"/>
    
     <h4>LUNCH</h4>
-    <table
-      id="lunchTable"
-      v-for="(food, index) in lunchFoods"
-      v-bind:key="index"
-    >
-      <td>{{ food.foodName }}</td>
-      <div id="leftColumns">
-        <td>{{ food.foodType }}</td>
-        <td>{{ food.caloricAmount }}</td>
-        <td>{{ food.size }}</td>
-        <td>{{ food.numberOfServings }}</td>
-      </div>
-      <div id="rightButtons">
-        <button>Edit Food</button>
-        <button id="delete">Delete Food</button>
-      </div>
-    </table>
+       <display-meals v-bind:foodList="lunchFoods"/>
  
     <h4>DINNER</h4>
+    <display-meals v-bind:foodList="dinnerFoods"/>
   
-    <table
-      id="dinnerTable"
-      v-for="(food, index) in dinnerFoods"
-      v-bind:key="index"
-    >
-      <td>{{ food.foodName }}</td>
-      <div id="leftColumns">
-        <td>{{ food.foodType }}</td>
-        <td>{{ food.caloricAmount }}</td>
-        <td>{{ food.size }}</td>
-        <td>{{ food.numberOfServings }}</td>
-      </div>
-      <div id="rightButtons">
-        <button>Edit Food</button>
-        <button id="delete">Delete Food</button>
-      </div>
-    </table>
 
     <h4>SNACKS</h4>
-    <table
-      id="snackTable"
-      v-for="(food, index) in snackFoods"
-      v-bind:key="index"
-    >
-      <td>{{ food.foodName }}</td>
-      <div id="leftColumns">
-        <td>{{ food.foodType }}</td>
-        <td>{{ food.caloricAmount }}</td>
-        <td>{{ food.size }}</td>
-        <td>{{ food.numberOfServings }}</td>
-      </div>
-      <div id="rightButtons">
-        <button>Edit Food</button>
-        <button id="delete">Delete Food</button>
-      </div>
-    </table>
+       <display-meals v-bind:foodList="snackFoods"/>
     <router-link v-bind:to="{ name: 'recentFoods' }"
       ><button id="add">Add Food</button></router-link
     >
@@ -102,7 +38,10 @@
 
 <script>
 import FoodService from "../services/FoodService";
+import DisplayMeals from "../components/DisplayMeals.vue"
+
 export default {
+  components: { DisplayMeals },
   name: "log-meal2",
 
   data() {
@@ -127,6 +66,9 @@ export default {
         }
       });
     },
+    editFood(){
+     
+    }
   },
 };
 </script>
@@ -134,9 +76,9 @@ export default {
 <style scoped>
 #header {
   margin-top: 20px;
-  display: flex;
+ text-align: center;
   color:blue;
-  justify-content: center;
+
 }
 #headerTable {
   margin-left: 30%;
@@ -144,40 +86,7 @@ export default {
 #headerTable th {
   padding-right: 50px;
 }
-#breakfastTable {
-  display: flex;
-  flex-direction: row;
-}
-#lunchTable {
-  display: flex;
-  flex-direction: row;
-}
-#dinnerTable {
-  display: flex;
-  flex-direction: row;
-}
-#snackTable {
-  display: flex;
-  flex-direction: row;
-}
-#leftColumns {
-  display: table;
- margin-left: 21%;
 
-}
-td {
- 
-  padding-right: 80px;
-}
-#rightButtons{
-
-margin-left: 15%;
-
-}
-#delete{
- color: red;
- 
-}
 button{
   border-radius: 4px;
   color: blue;

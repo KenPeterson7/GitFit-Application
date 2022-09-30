@@ -22,9 +22,16 @@
         </tr>
       </tbody>
     </table>
+    <div id="navBtns">
+   <router-link v-bind:to="{name: 'myMeals'}">
+<button id="returnBtn">Back To My Meals</button>
+    </router-link>
     <router-link v-bind:to="{name: 'addFoodForm'}">
+    
     <button id="addBtn">Add New Food</button>
     </router-link>
+    </div>
+ 
     <div id="mealSelection" v-if="showMealSelection">
       <label for="selection"
         >Please Choose The Meal You Would Like To Add Your Food To</label
@@ -128,9 +135,15 @@ th {
   padding-right: 30px;
   padding-top: 20px;
 }
-#addBtn {
-  margin-top: 60px;
-  margin-left: 85%;
-  margin-bottom: 20px;
+#navBtns{
+    margin-top: 20px;
+    margin-left: 76%;
+    padding: 10px;
+}
+
+button{
+  border-radius: 4px;
+  color: blue;
+  
 }
 </style>

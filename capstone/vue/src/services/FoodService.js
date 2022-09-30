@@ -9,6 +9,9 @@ export default {
     
     addFood(food){
         return axios.post('/food', food)
+    },
+    updateFood(id, food){
+        return axios.put(`/food/${id}`, food)
     }
     
 
