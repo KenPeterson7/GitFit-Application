@@ -1,6 +1,6 @@
 <template>
   <div id="recentFoods">
-    <h1>SAVED FOODS</h1>
+    <h3>SAVED FOODS</h3>
 
     <table id="headerTable">
       <thead>
@@ -22,7 +22,9 @@
         </tr>
       </tbody>
     </table>
+    <router-link v-bind:to="{name: 'addFoodForm'}">
     <button id="addBtn">Add New Food</button>
+    </router-link>
     <div id="mealSelection" v-if="showMealSelection">
       <label for="selection"
         >Please Choose The Meal You Would Like To Add Your Food To</label
@@ -37,6 +39,9 @@
     <div id="addCancel" v-if="showAddCancelBtns">
         <button v-on:click="addFood()">Save Food</button>
         <button v-on:click="cancel()">Cancel</button>
+    </div>
+    <div id="foodBanner" v-if="addFoodBanner">
+        <h3>You do not have any food saved. Click ADD FOOD to begin your journey!</h3>
     </div>
   </div>
 </template>
@@ -56,6 +61,8 @@ export default {
           mealId: 0, 
           foodId: 0,
       },
+      addFoodBanner: false,
+
     };
 
   },
@@ -64,9 +71,12 @@ export default {
   },
   methods: {
     updateList() {
-      FoodService.getFood().then((response) => {
+      FoodService.getFoodByUsername(this.$store.state.user.username).then((response) => {
         if (response.status == 200) {
           this.mySavedFoods = response.data;
+        }
+        if(this.mySavedFoods.length < 1){
+            this.addFoodBanner = true
         }
       });
     },
@@ -94,7 +104,7 @@ export default {
        this.showMealSelection= false
        this.showAddCancelBtns = false
        FoodMealService.addFoodMeal(this.mealFoodObject).then((response) => {
-           if(response.status === 2000){
+           if(response.status === 200){
                this.mealFoodObject.mealId =0
                this.mealFoodObject.foodId=0
            }
@@ -111,7 +121,7 @@ export default {
 
 
 <style scoped>
-h1 {
+h3 {
   text-align: center;
 }
 th {
@@ -121,5 +131,6 @@ th {
 #addBtn {
   margin-top: 60px;
   margin-left: 85%;
+  margin-bottom: 20px;
 }
 </style>

@@ -2,8 +2,9 @@ import axios from "axios";
 
 export default {
 
-    getFood() {
-        return axios.get('/food')
+    getFoodByUsername(username) {
+        return axios.get(`/food/user/${username}`)
+     
     },
     
     addFood(food){
