@@ -20,6 +20,12 @@ public class JdbcFoodMealDao implements FoodMealDao{
         return jdbcTemplate.update(sql, mealId, foodId) == 1;
     }
 
+    @Override
+    public boolean deleteFoodMeal(int mealId, int foodId) {
+        String sql ="delete from food_meal where meal_id = ? and food_id = ?";
+        return jdbcTemplate.update(sql, mealId, foodId) == 1;
+    }
+
     private FoodMeal mapRowToFoodMeal(SqlRowSet rs){
         FoodMeal foodMeal = new FoodMeal();
         foodMeal.setMealId(rs.getInt("meal_id"));
