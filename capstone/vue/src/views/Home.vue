@@ -1,48 +1,75 @@
 <template>
   <div class="home">
-    
     <div id="componentDiv">
-      
-      <home-page />
-      
-      
+      <h1>{{ getName() }}</h1>
+      <h2>Calories Remaining: {{ getRemainingCalories() }}</h2>
+      <div>
+        <h2>Recent Meals:</h2>
+        <ul>
+          <li>Meal A</li>
+          <li>Meal B</li>
+          <li>Meal C</li>
+        </ul>
+      </div>
+      <div>
+        <h2>Recent Activities:</h2>
+        <ul>
+          <li>Activity A</li>
+          <li>Activity B</li>
+          <li>Activity C</li>
+        </ul>
+      </div>
     </div>
-    
   </div>
 </template>
 
 <script>
-import HomePage from '../components/HomePage.vue';
-import ProfileService from '../services/ProfileService'
+import ProfileService from "../services/ProfileService";
 
 export default {
-  components: { HomePage },
+  components: {},
   name: "home",
   data() {
     return {
-      
-    }
+      name: this.$store.state.profile.displayName,
+      caloriesRemaining: this.$store.state.goal.daily_caloric_goal,
+    };
   },
   created() {
-    this.populateStore()
+    this.populateStore();
   },
   methods: {
-    populateStore(){
-      ProfileService.getProfile(this.$store.state.user.username).then((response) => {
-        
-        this.$store.commit("SET_CURRENT_PROFILE", response.data);
-        
-        
-      })
+    populateStore() {
+      ProfileService.getProfile(this.$store.state.user.username).then(
+        (response) => {
+          this.$store.commit("SET_CURRENT_PROFILE", response.data);
+          if (this.$store.state.profile == "") {
+            this.$router.push("/profile");
+          } else {
+            this.populateGoal();
+          }
+        }
+      );
+    },
+    populateGoal() {
+      ProfileService.getGoal(this.$store.state.profile.profileId).then(
+        (response) => {
+          this.$store.commit("SET_CURRENT_GOAL", response.data);
+        }
+      );
+    },
+    getName() {
+      return this.$store.state.profile.displayName
+    },
+    getRemainingCalories() {
+      return this.$store.state.goal.daily_caloric_goal
     }
-    
-  }
-  
+  },
 };
 </script>
 
 <style scoped>
-.home{
+.home {
   display: flex;
   height: 700px;
 }
@@ -53,11 +80,13 @@ export default {
   border-right-style: solid;
   background-color: rgb(0, 125, 255);
   color: whitesmoke;
-  
+
   border-radius: 5px;
   text-align: center;
-  
-  
+}
+
+h1 {
+  text-decoration: underline;
 }
 
 h3 {
@@ -65,22 +94,22 @@ h3 {
   padding-right: 20px;
 }
 
-#componentDiv{
+#componentDiv {
   flex-grow: 8;
   background-image: url("../../public/Images/gym-background2.png");
   background-color: lightgray;
-  background-blend-mode: screen;  
+  background-blend-mode: screen;
   background-size: cover;
   background-repeat: no-repeat;
 }
 
-.selected{
+.selected {
   background-color: rgb(0, 67, 127);
   color: white;
 }
 
 div {
-    margin-left: 2.5px;
+  margin-left: 2.5px;
 }
 
 nav button {
@@ -88,6 +117,5 @@ nav button {
   width: 75%;
   color: blue;
   border-radius: 5px;
-  
 }
 </style>
