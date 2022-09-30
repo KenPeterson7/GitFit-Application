@@ -15,7 +15,9 @@
         </div>
         <div id="rightButtons">
           <button v-on:click="editFood(food)">Edit Food</button>
-          <button id="delete">Delete Food</button>
+          <button id="delete" v-on:click="deleteFood(food.foodId)">
+            Delete Food
+          </button>
         </div>
       </table>
     </div>
@@ -45,7 +47,6 @@
           v-model="clickedFood.numberOfServings"
         />
 
-  
         <button type="submit" v-on:click="saveEditedFood(clickedFood)">
           Save
         </button>
@@ -57,13 +58,13 @@
 
 <script>
 import FoodService from "../services/FoodService";
-export default {  
-props: ["foodList"],
+export default {
+  props: ["foodList"],
   data() {
     return {
       showForm: false,
       clickedFood: {},
-    
+
       foodMeal: {
         foodId: 0,
         mealId: 0,
@@ -76,7 +77,7 @@ props: ["foodList"],
       this.showForm = true;
       this.clickedFood = food;
     },
-   
+
     saveEditedFood(food) {
       FoodService.updateFood(food.foodId, food).then((response) => {
         if (response.status == 200) {
@@ -86,6 +87,13 @@ props: ["foodList"],
     },
     cancel() {
       this.showForm = false;
+    },
+    deleteFood(foodId) {
+      //check and see if meal has an entry for that meal type, profile id, date
+      // if yes, assign that returned meal id to foodmeal.mealId
+      //if not enter an entry to the meal table and return that id
+      //delete where mealId =foodmeal.mealId and foodId= foodId
+      this.foodMeal.foodId=foodId
     },
   },
 };
@@ -113,5 +121,4 @@ button {
   border-radius: 4px;
   color: blue;
 }
-
 </style>

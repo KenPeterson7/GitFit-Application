@@ -108,6 +108,9 @@ export default {
       }
   },
   addFood(){
+    //check and see if there is a meal id for this profile, date, meal type. if not,
+    //insert profileid, mealtype, and date and return meal id
+    //set the returned meal id to mealFoodObject.mealId
        this.showMealSelection= false
        this.showAddCancelBtns = false
        FoodMealService.addFoodMeal(this.mealFoodObject).then((response) => {

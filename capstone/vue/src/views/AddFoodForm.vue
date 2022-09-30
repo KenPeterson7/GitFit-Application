@@ -57,7 +57,11 @@ export default {
         logFood(newFood){
             FoodService.addFood(newFood).then((response) => {
                 if (response.status === 200){
-                    //add food to food_meal table
+                  
+                    //check and see if meal has an entry for that meal type, profile id, date
+                    // if yes, assign that returned meal id to foodmeal.mealId
+                    //if not enter an entry to the meal table and return that id
+                    //send in the food id and meal id to the meal_food table
                 }
             })
         },
