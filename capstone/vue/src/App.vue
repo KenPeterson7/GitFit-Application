@@ -6,46 +6,51 @@
           src="../public/Images/LogoText.png"
       /></router-link>
       <!-- &nbsp;|&nbsp; -->
-      <router-link
+      <!-- <router-link
         id="logoutBtn"
         v-bind:to="{ name: 'logout' }"
         v-if="$store.state.token != ''"
         ><h3>Logout</h3></router-link
-      >
+      > -->
     </div>
     <div class="main-view">
-      <nav v-if="isLoggedIn()">
-        <router-link v-bind:to="{name: 'home'}">
-        <button
-          v-on:click="clickHome()"
-          v-bind:class="{ selected: homeSelected }"
-        >
-          Home
-        </button>
+      <nav v-if="Object.keys(this.$store.state.user).length != 0">
+        <router-link v-bind:to="{ name: 'home' }">
+          <button
+            v-bind:class="{ selected: this.$router.currentRoute.path == '/' }"
+          >
+            Home
+          </button>
         </router-link>
-        <router-link v-bind:to="{name: 'profile'}">
-        <button
-          v-on:click="clickProfile()"
-          v-bind:class="{ selected: profileSelected }"
-        >
-          Profile
-        </button>
+        <router-link v-bind:to="{ name: 'profile' }">
+          <button
+            v-bind:class="{
+              selected: this.$router.currentRoute.path == '/profile',
+            }"
+          >
+            Profile
+          </button>
         </router-link>
-        <router-link v-bind:to="{name: 'myMeals'}">
-        <button
-          v-on:click="clickLogMeal()"
-          v-bind:class="{ selected: logMealSelected }"
-        >
-          Log a Meal
-        </button>
+        <router-link v-bind:to="{ name: 'myMeals' }">
+          <button
+            v-bind:class="{
+              selected: this.$router.currentRoute.path == '/myMeals',
+            }"
+          >
+            Log a Meal
+          </button>
         </router-link>
-        <router-link v-bind:to="{name: 'workout'}">
-        <button
-          v-on:click="clickLogWorkout()"
-          v-bind:class="{ selected: logWorkoutSelected }"
-        >
-          Log a Workout
-        </button>
+        <router-link v-bind:to="{ name: 'workout' }">
+          <button
+            v-bind:class="{
+              selected: this.$router.currentRoute.path == '/workout',
+            }"
+          >
+            Log a Workout
+          </button>
+        </router-link>
+        <router-link v-bind:to="{ name: 'logout' }">
+          <button>Logout</button>
         </router-link>
       </nav>
       <div class="router-view">
@@ -60,11 +65,7 @@ export default {
   data() {
     return {};
   },
-  methods: {
-    isLoggedIn() {
-      return this.$store.state.loggedIn;
-    },
-  },
+  methods: {},
 };
 </script>
 
@@ -93,6 +94,12 @@ export default {
 
 .router-view {
   flex-grow: 1;
+  background-image: url("../public/Images/gym-background2.png");
+  background-color: lightgray;
+  background-blend-mode: screen;
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 700px;
 }
 
 nav button {

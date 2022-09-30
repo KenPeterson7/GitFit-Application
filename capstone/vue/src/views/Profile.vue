@@ -13,7 +13,7 @@
           </div>
       </div>
       <div id="profileDetails">
-          <h3>Daily Calorie Target: {{profile.calorieGoal}} </h3>
+          <h3>Daily Calorie Target: {{goal.daily_caloric_goal}} </h3>
           <h3>Current Weight: {{profile.currentWeight}} </h3>
           <h3>Goal Weight: {{profile.desiredWeight}} </h3>
           <h3>Activity Level: {{profile.activityLevel}}</h3>
@@ -47,28 +47,33 @@
               <option>High</option>
               <option>Extreme</option>
               </select>
-              <!-- <label for="calorieGoal">Daily Calorie Target: </label>
-              <input type="number" id="calorieGoal" v-model="editedProfile.calorieGoal" /> -->
+              <label for="calorieGoal">Daily Calorie Target: </label>
+              <input type="number" id="calorieGoal" v-model="editedGoal.daily_caloric_goal" />
               <h6>Suggested Calorie Goal: {{calorieGoal()}}</h6>
               <button type="submit" >Save</button>
               <button v-on:click="editing=false">Cancel</button>
           </form>
             
       </div>
-      <create-profile v-if="!profileExists" />
+      <div v-if="!profileExists">
+        <create-profile/>
+      </div>
   </div>
 </template>
 
 <script>
-import ProfileService from "../services/ProfileService";
 import CreateProfile from '../components/CreateProfile.vue';
+import ProfileService from "../services/ProfileService";
+
 export default {
-  components: { CreateProfile },
+  components: {CreateProfile  },
   data() {
     return {
       profile: {},
       editedProfile: {},
       editing: false,
+      goal: {},
+      editedGoal: {}
     };
   },
   created() {
@@ -76,8 +81,10 @@ export default {
     ProfileService.getProfile(username).then((response) => {
       if (response.status == 200) {
         this.profile = response.data;
+        this.getGoal();
       }
     });
+    
   },
   computed: {
     numberOfStarsToDisplay() {
@@ -107,6 +114,7 @@ export default {
     editProfile() {
         this.editing = true;
         this.editedProfile = this.profile;
+        this.editedGoal = this.goal;
     },
     updateProfile(profile) {
         ProfileService.updateProfile(profile.profileId, profile).then((response)=>{
@@ -114,8 +122,20 @@ export default {
                 this.profile = this.editedProfile;
                 
             }
+            ProfileService.updateGoal(this.profile.profileId,this.editedGoal).then((response) => {
+                  if (response.status==201) {
+                    this.goal = this.editedGoal;
+                  }
+                })
             this.editing = false;
         })
+    },
+    getGoal() {
+      ProfileService.getGoal(this.profile.profileId).then((response) => {
+        if (response.status == 200) {
+          this.goal = response.data;
+        }
+      })
     },
     calorieGoal() {
       let goal;
@@ -204,4 +224,6 @@ export default {
 #editForm form button {
     margin-top: 10px;
 }
+
+
 </style>
