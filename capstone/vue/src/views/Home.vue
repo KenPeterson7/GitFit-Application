@@ -1,71 +1,75 @@
 <template>
   <div class="home">
-    <!-- <nav>
-      <button v-on:click="clickHome()" v-bind:class="{selected: homeSelected}">Home</button><br>
-      <button v-on:click="clickProfile()" v-bind:class="{selected: profileSelected}">Profile</button><br>
-      <button v-on:click="clickLogMeal()" v-bind:class="{selected: logMealSelected}">Log a Meal</button><br>
-      <button v-on:click="clickLogWorkout()" v-bind:class="{selected: logWorkoutSelected}">Log a Workout</button><br>
-      <h3>Another Thing</h3>
-      <h3>Something Else</h3>
-    </nav> -->
     <div id="componentDiv">
-      
-      <home-page v-if="homeSelected" />
-      <profile v-if="profileSelected"/>
-      <log-meal v-if="logMealSelected"/>
-      <log-workout v-if="logWorkoutSelected"/>
-      
+      <h1>{{ getName() }}</h1>
+      <h2>Calories Remaining: {{ getRemainingCalories() }}</h2>
+      <div>
+        <h2>Recent Meals:</h2>
+        <ul>
+          <li>Meal A</li>
+          <li>Meal B</li>
+          <li>Meal C</li>
+        </ul>
+      </div>
+      <div>
+        <h2>Recent Activities:</h2>
+        <ul>
+          <li>Activity A</li>
+          <li>Activity B</li>
+          <li>Activity C</li>
+        </ul>
+      </div>
     </div>
-    
   </div>
 </template>
 
 <script>
-import HomePage from '../components/HomePage.vue';
-import LogWorkout from './LogWorkout.vue';
-import Profile from './Profile.vue';
-import LogMeal from './LogMeal.vue'
+import ProfileService from "../services/ProfileService";
+
 export default {
-  components: { Profile, HomePage, LogWorkout, LogMeal},
+  components: {},
   name: "home",
   data() {
     return {
-      homeSelected: true,
-      profileSelected: false,
-      logMealSelected: false,
-      logWorkoutSelected: false
-    }
+      name: this.$store.state.profile.displayName,
+      caloriesRemaining: this.$store.state.goal.daily_caloric_goal,
+    };
+  },
+  created() {
+    this.populateStore();
   },
   methods: {
-    clickHome(){
-      this.homeSelected = true;
-      this.profileSelected = false;
-      this.logMealSelected = false;
-      this.logWorkoutSelected = false;
+    populateStore() {
+      ProfileService.getProfile(this.$store.state.user.username).then(
+        (response) => {
+          this.$store.commit("SET_CURRENT_PROFILE", response.data);
+          if (this.$store.state.profile == "") {
+            this.$router.push("/profile");
+          } else {
+            this.populateGoal();
+          }
+        }
+      );
     },
-    clickProfile(){
-      this.homeSelected = false;
-      this.profileSelected = true;
-      this.logMealSelected = false;
-      this.logWorkoutSelected = false;
-    },clickLogMeal(){
-      this.homeSelected = false;
-      this.profileSelected = false;
-      this.logMealSelected = true;
-      this.logWorkoutSelected = false;
-    },clickLogWorkout(){
-      this.homeSelected = false;
-      this.profileSelected = false;
-      this.logMealSelected = false;
-      this.logWorkoutSelected = true;
+    populateGoal() {
+      ProfileService.getGoal(this.$store.state.profile.profileId).then(
+        (response) => {
+          this.$store.commit("SET_CURRENT_GOAL", response.data);
+        }
+      );
+    },
+    getName() {
+      return this.$store.state.profile.displayName
+    },
+    getRemainingCalories() {
+      return this.$store.state.goal.daily_caloric_goal
     }
-  }
-  
+  },
 };
 </script>
 
 <style scoped>
-.home{
+.home {
   display: flex;
   height: 700px;
 }
@@ -76,11 +80,13 @@ export default {
   border-right-style: solid;
   background-color: rgb(0, 125, 255);
   color: whitesmoke;
-  
+
   border-radius: 5px;
   text-align: center;
-  
-  
+}
+
+h1 {
+  text-decoration: underline;
 }
 
 h3 {
@@ -88,22 +94,22 @@ h3 {
   padding-right: 20px;
 }
 
-#componentDiv{
+#componentDiv {
   flex-grow: 8;
   background-image: url("../../public/Images/gym-background2.png");
   background-color: lightgray;
-  background-blend-mode: screen;  
+  background-blend-mode: screen;
   background-size: cover;
   background-repeat: no-repeat;
 }
 
-.selected{
+.selected {
   background-color: rgb(0, 67, 127);
   color: white;
 }
 
 div {
-    margin-left: 2.5px;
+  margin-left: 2.5px;
 }
 
 nav button {
@@ -111,6 +117,5 @@ nav button {
   width: 75%;
   color: blue;
   border-radius: 5px;
-  
 }
 </style>

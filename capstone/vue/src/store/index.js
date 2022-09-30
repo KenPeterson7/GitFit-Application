@@ -20,7 +20,10 @@ export default new Vuex.Store({
   state: {
     token: currentToken || '',
     user: currentUser || {},
-    loggedIn: false
+    profile: null,
+    goal: null,
+
+    
   },
   mutations: {
     SET_AUTH_TOKEN(state, token) {
@@ -31,15 +34,23 @@ export default new Vuex.Store({
     SET_USER(state, user) {
       state.user = user;
       localStorage.setItem('user',JSON.stringify(user));
-      state.loggedIn = true;
+      
     },
     LOGOUT(state) {
       localStorage.removeItem('token');
       localStorage.removeItem('user');
       state.token = '';
       state.user = {};
+      state.profile = null;
+      state.goal = null;
       axios.defaults.headers.common = {};
-      state.loggedIn = false
+      
+    },
+    SET_CURRENT_PROFILE(state, profile) {
+      state.profile = profile;
+    },
+    SET_CURRENT_GOAL(state, goal) {
+      state.goal = goal;
     }
   }
 })
