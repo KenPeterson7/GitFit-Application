@@ -8,6 +8,9 @@ import store from '../store/index'
 import LogMeal from '../views/LogMeal.vue'
 import Profile from '../views/Profile.vue'
 import LogWorkout from '../views/LogWorkout.vue'
+import RecentFoods from '../views/RecentFoods.vue'
+import FoodForm from '../views/AddFoodForm.vue'
+
 
 
 Vue.use(Router)
@@ -81,7 +84,25 @@ const router = new Router({
       meta: {
         requiresAuth: true
       }
-    }
+    },
+    {
+      path: '/recentFoods',
+      name: 'recentFoods',
+      component: RecentFoods,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/addFoodForm',
+      name: 'addFoodForm',
+      component: FoodForm,
+      meta: {
+        requiresAuth: true
+      }
+    },
+
+
 
     
 

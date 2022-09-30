@@ -12,4 +12,6 @@ public interface MealDao {
 
     List<Meal> listOfAllMeals();
 
+
+
 }
