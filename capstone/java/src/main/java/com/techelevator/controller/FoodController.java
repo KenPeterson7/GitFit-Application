@@ -40,9 +40,11 @@ public class FoodController {
     }
 
     @RequestMapping(path = "/food/date/{date}", method = RequestMethod.GET)
-    public List<Food> getListOfAllFoodsByDate(@PathVariable("date")LocalDate mealDate) {
+    public List<Food> getListOfAllFoodsByDate(@PathVariable("date")String mealDate) {
 
-        return foodDao.listOfAllFoodsByDate(mealDate);
+        LocalDate date = LocalDate.parse(mealDate);
+
+        return foodDao.listOfAllFoodsByDate(date);
     }
 
     @RequestMapping(path = "/food/{id}", method = RequestMethod.DELETE)
