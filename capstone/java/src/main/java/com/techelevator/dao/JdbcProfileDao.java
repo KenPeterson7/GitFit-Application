@@ -48,6 +48,7 @@ public class JdbcProfileDao implements ProfileDao{
         if(rowSet.next()){
             return mapRowToProfile(rowSet);
         }
+        //TODO:change type of exception?, have else return an empty profile
         throw new ProviderNotFoundException("Profile " + username + " was not found.");
     }
 
