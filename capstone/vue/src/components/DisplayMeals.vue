@@ -6,17 +6,30 @@
         v-for="(food, index) in foodList"
         v-bind:key="index"
       >
-        <td>{{ food.foodName }}</td>
-        <div id="leftColumns">
+        <thead id="header">
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </thead>
+        <tbody>
+          <td>{{ food.foodName }}</td>
+
           <td>{{ food.foodType }}</td>
           <td>{{ food.caloricAmount }}</td>
           <td>{{ food.size }}</td>
           <td>{{ food.numberOfServings }}</td>
-        </div>
-        <div id="rightButtons">
-          <button v-on:click="editFood(food)">Edit Food</button>
-          <button id="delete">Delete Food</button>
-        </div>
+
+          <td><button v-on:click="editFood(food)">Edit Food</button></td>
+          <td>
+            <button id="delete" v-on:click="deleteFood(food.foodId)">
+              Delete Food
+            </button>
+          </td>
+        </tbody>
       </table>
     </div>
     <div id="editForm" v-if="showForm">
@@ -45,16 +58,6 @@
           v-model="clickedFood.numberOfServings"
         />
 
-        <label for="selection"
-          >Please Choose The Meal You Would Like To Add Your Edited Food
-          To:</label
-        >
-        <select id="selection" v-model="mealType" v-on:click="assignMealType()">
-          <option>Breakfast</option>
-          <option>Lunch</option>
-          <option>Dinner</option>
-          <option>Snacks</option>
-        </select>
         <button type="submit" v-on:click="saveEditedFood(clickedFood)">
           Save
         </button>
@@ -65,37 +68,41 @@
 </template>
 
 <script>
+import MealService from "../services/MealService";
 import FoodService from "../services/FoodService";
-export default {  
-props: ["foodList"],
+import FoodMealService from '../services/FoodMealService'
+export default {
+  props: ["foodList", "mealType"],
   data() {
     return {
       showForm: false,
       clickedFood: {},
-      mealType: "",
+
       foodMeal: {
         foodId: 0,
         mealId: 0,
       },
+      month: 0,
+      date:
+        new Date().getFullYear() +
+        "-" +
+        0 +
+        this.getMonth() +
+        "-" +
+        new Date().getDate(),
     };
   },
 
   methods: {
+    getMonth() {
+      this.month = new Date().getMonth();
+      return this.month + 1;
+    },
     editFood(food) {
       this.showForm = true;
       this.clickedFood = food;
     },
-    assignMealType() {
-      if (this.mealType === "Breakfast") {
-        this.foodMeal.mealId = 5001;
-      } else if (this.mealType === "Lunch") {
-        this.foodMeal.mealId = 5002;
-      } else if (this.mealType === "Dinner") {
-        this.foodMeal.mealId = 5003;
-      } else if (this.mealType === "Snacks") {
-        this.foodMeal.mealId = 5004;
-      }
-    },
+
     saveEditedFood(food) {
       FoodService.updateFood(food.foodId, food).then((response) => {
         if (response.status == 200) {
@@ -106,6 +113,25 @@ props: ["foodList"],
     cancel() {
       this.showForm = false;
     },
+    deleteFood(foodId) {
+      MealService.getMealIdByMealDetails(
+        this.mealType,
+        this.date,
+        this.$store.state.profile.profileId
+      ).then((response) => {
+        if (response.status == 200) {
+          this.foodMeal.mealId = response.data;
+        }
+      });
+
+      //  assign that returned meal id to foodmeal.mealId
+
+      //delete where mealId =foodmeal.mealId and foodId= foodId
+      this.foodMeal.foodId = foodId;
+      FoodMealService.deleteFoodMeal(this.foodMeal.mealId, this.foodMeal.foodId)
+       
+   
+    },
   },
 };
 </script>
@@ -115,16 +141,7 @@ table {
   display: flex;
   flex-direction: row;
 }
-#leftColumns {
-  display: table;
-  margin-left: 22%;
-}
-td {
-  padding-right: 80px;
-}
-#rightButtons {
-  margin-left: 10%;
-}
+
 #delete {
   color: red;
 }
@@ -132,5 +149,7 @@ button {
   border-radius: 4px;
   color: blue;
 }
-
+td {
+  margin-left: 20%;
+}
 </style>
