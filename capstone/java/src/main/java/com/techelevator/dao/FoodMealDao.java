@@ -6,4 +6,6 @@ public interface FoodMealDao {
 
     boolean addFoodMeal(int mealId, int foodId);
 
+    boolean deleteFoodMeal(int mealId, int foodId);
+
 }
