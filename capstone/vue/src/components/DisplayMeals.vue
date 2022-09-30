@@ -45,16 +45,7 @@
           v-model="clickedFood.numberOfServings"
         />
 
-        <label for="selection"
-          >Please Choose The Meal You Would Like To Add Your Edited Food
-          To:</label
-        >
-        <select id="selection" v-model="mealType" v-on:click="assignMealType()">
-          <option>Breakfast</option>
-          <option>Lunch</option>
-          <option>Dinner</option>
-          <option>Snacks</option>
-        </select>
+  
         <button type="submit" v-on:click="saveEditedFood(clickedFood)">
           Save
         </button>
@@ -72,7 +63,7 @@ props: ["foodList"],
     return {
       showForm: false,
       clickedFood: {},
-      mealType: "",
+    
       foodMeal: {
         foodId: 0,
         mealId: 0,
@@ -85,17 +76,7 @@ props: ["foodList"],
       this.showForm = true;
       this.clickedFood = food;
     },
-    assignMealType() {
-      if (this.mealType === "Breakfast") {
-        this.foodMeal.mealId = 5001;
-      } else if (this.mealType === "Lunch") {
-        this.foodMeal.mealId = 5002;
-      } else if (this.mealType === "Dinner") {
-        this.foodMeal.mealId = 5003;
-      } else if (this.mealType === "Snacks") {
-        this.foodMeal.mealId = 5004;
-      }
-    },
+   
     saveEditedFood(food) {
       FoodService.updateFood(food.foodId, food).then((response) => {
         if (response.status == 200) {

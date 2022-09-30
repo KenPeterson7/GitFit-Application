@@ -3,7 +3,7 @@
     <p id="header">
       My Meals For:
       {{
-        new Date().getMonth() +
+        new Date().getMonth()+1 +
         "/" +
         new Date().getDate() +
         "/" +
