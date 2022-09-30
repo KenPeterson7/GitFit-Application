@@ -68,9 +68,10 @@
 </template>
 
 <script>
+import MealService from "../services/MealService"
 import FoodService from "../services/FoodService";
 export default {
-  props: ["foodList"],
+  props: ["foodList", "mealType"],
   data() {
     return {
       showForm: false,
@@ -80,10 +81,16 @@ export default {
         foodId: 0,
         mealId: 0,
       },
+      month: 0,
+      date: new Date().getFullYear() + "-" + this.getMonth()+ "-" + new Date().getDate()
     };
   },
 
   methods: {
+    getMonth(){
+      this.month =  new Date().getMonth()
+      return this.month +1
+    },
     editFood(food) {
       this.showForm = true;
       this.clickedFood = food;
@@ -100,9 +107,14 @@ export default {
       this.showForm = false;
     },
     deleteFood(foodId) {
-      //check and see if meal has an entry for that meal type, profile id, date
-      // if yes, assign that returned meal id to foodmeal.mealId
-      //if not enter an entry to the meal table and return that id
+      MealService.getMealIdByMealDetails(this.mealType, this.date, this.$store.state.profile.profileId ).then((response) => {
+        if(response.status == 200){
+          this.foodMeal.mealId = response.data
+        }
+      })
+    
+      //  assign that returned meal id to foodmeal.mealId
+  
       //delete where mealId =foodmeal.mealId and foodId= foodId
       this.foodMeal.foodId=foodId
     },

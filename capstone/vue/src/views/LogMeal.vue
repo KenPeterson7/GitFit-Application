@@ -19,17 +19,17 @@
       </thead>
     </table>
     <h4>BREAKFAST</h4>
-    <display-meals v-bind:foodList="breakfastFoods"/>
+    <display-meals v-bind:foodList="breakfastFoods" v-bind:mealType="'Breakfast'"/>
    
     <h4>LUNCH</h4>
-       <display-meals v-bind:foodList="lunchFoods"/>
+       <display-meals v-bind:foodList="lunchFoods" v-bind:mealType="'Lunch'"/>
  
     <h4>DINNER</h4>
-    <display-meals v-bind:foodList="dinnerFoods"/>
+    <display-meals v-bind:foodList="dinnerFoods" v-bind:mealType="'Dinner'"/>
   
 
     <h4>SNACKS</h4>
-       <display-meals v-bind:foodList="snackFoods"/>
+       <display-meals v-bind:foodList="snackFoods" v-bind:mealType="'Snacks'"/>
     <router-link v-bind:to="{ name: 'recentFoods' }"
       ><button id="add">Add Food</button></router-link
     >
@@ -39,6 +39,7 @@
 <script>
 import FoodService from "../services/FoodService";
 import DisplayMeals from "../components/DisplayMeals.vue"
+
 
 export default {
   components: { DisplayMeals },
@@ -66,9 +67,7 @@ export default {
         }
       });
     },
-    editFood(){
-     
-    }
+ 
   },
 };
 </script>
