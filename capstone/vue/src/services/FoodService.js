@@ -12,7 +12,11 @@ export default {
     },
     updateFood(id, food){
         return axios.put(`/food/${id}`, food)
+    },
+    getFoodByUserMealDate(username, md, mt){
+        return axios.get(`/food/${username}/${md}/${mt}`)
     }
+
     
 
 }

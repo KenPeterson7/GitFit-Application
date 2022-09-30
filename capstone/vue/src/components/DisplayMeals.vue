@@ -6,29 +6,29 @@
         v-for="(food, index) in foodList"
         v-bind:key="index"
       >
-           <thead id="header">
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-      </thead>
-      <tbody>
-        <td>{{ food.foodName }}</td>
-       
+        <thead id="header">
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </thead>
+        <tbody>
+          <td>{{ food.foodName }}</td>
+
           <td>{{ food.foodType }}</td>
           <td>{{ food.caloricAmount }}</td>
           <td>{{ food.size }}</td>
           <td>{{ food.numberOfServings }}</td>
-   
-       
-         <td><button v-on:click="editFood(food)">Edit Food</button></td> 
-         <td> <button id="delete" v-on:click="deleteFood(food.foodId)">
-            Delete Food
-          </button></td>
-     
+
+          <td><button v-on:click="editFood(food)">Edit Food</button></td>
+          <td>
+            <button id="delete" v-on:click="deleteFood(food.foodId)">
+              Delete Food
+            </button>
+          </td>
         </tbody>
       </table>
     </div>
@@ -68,8 +68,9 @@
 </template>
 
 <script>
-import MealService from "../services/MealService"
+import MealService from "../services/MealService";
 import FoodService from "../services/FoodService";
+import FoodMealService from '../services/FoodMealService'
 export default {
   props: ["foodList", "mealType"],
   data() {
@@ -82,14 +83,20 @@ export default {
         mealId: 0,
       },
       month: 0,
-      date: new Date().getFullYear() + "-" + this.getMonth()+ "-" + new Date().getDate()
+      date:
+        new Date().getFullYear() +
+        "-" +
+        0 +
+        this.getMonth() +
+        "-" +
+        new Date().getDate(),
     };
   },
 
   methods: {
-    getMonth(){
-      this.month =  new Date().getMonth()
-      return this.month +1
+    getMonth() {
+      this.month = new Date().getMonth();
+      return this.month + 1;
     },
     editFood(food) {
       this.showForm = true;
@@ -107,16 +114,23 @@ export default {
       this.showForm = false;
     },
     deleteFood(foodId) {
-      MealService.getMealIdByMealDetails(this.mealType, this.date, this.$store.state.profile.profileId ).then((response) => {
-        if(response.status == 200){
-          this.foodMeal.mealId = response.data
+      MealService.getMealIdByMealDetails(
+        this.mealType,
+        this.date,
+        this.$store.state.profile.profileId
+      ).then((response) => {
+        if (response.status == 200) {
+          this.foodMeal.mealId = response.data;
         }
-      })
-    
+      });
+
       //  assign that returned meal id to foodmeal.mealId
-  
+
       //delete where mealId =foodmeal.mealId and foodId= foodId
-      this.foodMeal.foodId=foodId
+      this.foodMeal.foodId = foodId;
+      FoodMealService.deleteFoodMeal(this.foodMeal.mealId, this.foodMeal.foodId)
+       
+   
     },
   },
 };
@@ -135,10 +149,7 @@ button {
   border-radius: 4px;
   color: blue;
 }
-td{
-  margin-left: 20%
+td {
+  margin-left: 20%;
 }
-
-
-
 </style>

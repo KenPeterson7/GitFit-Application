@@ -51,21 +51,63 @@ export default {
       lunchFoods: [],
       dinnerFoods: [],
       snackFoods: [],
+       month: 0,
+      date:
+        new Date().getFullYear() +
+        "-" +
+        0 +
+        this.getMonth() +
+        "-" +
+        new Date().getDate(),
     };
   },
   created() {
+    this.updateBreakfastList();
+    this.updateLunchList();
     this.updateDinnerList();
+    this.updateSnacksList();
   },
 
   methods: {
+     getMonth() {
+      this.month = new Date().getMonth();
+      return this.month + 1;
+    },
+    updateBreakfastList() {
+      FoodService.getFoodByUserMealDate(this.$store.state.user.username, this.date, 'Breakfast').then((response)=>{
+        if (response.status == 200){
+          this.breakfastFoods = response.data;
+          return this.breakfastFoods;
+        }
+      })
+       
+    },
+    updateLunchList() {
+      FoodService.getFoodByUserMealDate(this.$store.state.user.username, this.date, 'Lunch').then((response)=>{
+        if (response.status == 200){
+          this.lunchFoods = response.data;
+          return this.lunchFoods;
+        }
+      })
+       
+    },
     updateDinnerList() {
-        //get food by username, date, mealtype
-      FoodService.getFoodByUsername(this.$store.state.user.username).then((response) => {
-        if (response.status == 200) {
+      FoodService.getFoodByUserMealDate(this.$store.state.user.username, this.date, 'Dinner').then((response)=>{
+        if (response.status == 200){
           this.dinnerFoods = response.data;
           return this.dinnerFoods;
         }
-      });
+      })
+       
+    },
+    updateSnacksList() {
+      FoodService.getFoodByUserMealDate(this.$store.state.user.username, this.date, 'Snacks').then((response)=>{
+        if (response.status == 200){
+          this.snackFoods = response.data;
+          return this.snackFoods;
+        }
+      })
+       
     },
  
   },

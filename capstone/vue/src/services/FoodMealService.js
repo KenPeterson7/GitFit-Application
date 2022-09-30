@@ -5,7 +5,7 @@ export default {
         return axios.post('/foodmeal', foodmeal)
     },
     deleteFoodMeal( mealId, foodId){
-        return axios.delete(`/${mealId}/${foodId}`)
+        return axios.delete(`/foodmeal/${mealId}/${foodId}`)
     }
 
 }
