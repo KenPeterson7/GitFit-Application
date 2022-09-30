@@ -49,7 +49,8 @@ public class JdbcProfileDao implements ProfileDao{
             return mapRowToProfile(rowSet);
         }
         //TODO:change type of exception?, have else return an empty profile
-        throw new ProviderNotFoundException("Profile " + username + " was not found.");
+        //throw new ProviderNotFoundException("Profile " + username + " was not found.");
+        else return null;
     }
 
     private Profile mapRowToProfile(SqlRowSet rs){
