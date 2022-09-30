@@ -132,6 +132,7 @@ export default {
 
 <style scoped>
 h3 {
+  margin-top: 20px;
   text-align: center;
 }
 th {

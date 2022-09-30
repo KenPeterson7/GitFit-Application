@@ -6,19 +6,30 @@
         v-for="(food, index) in foodList"
         v-bind:key="index"
       >
+           <thead id="header">
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </thead>
+      <tbody>
         <td>{{ food.foodName }}</td>
-        <div id="leftColumns">
+       
           <td>{{ food.foodType }}</td>
           <td>{{ food.caloricAmount }}</td>
           <td>{{ food.size }}</td>
           <td>{{ food.numberOfServings }}</td>
-        </div>
-        <div id="rightButtons">
-          <button v-on:click="editFood(food)">Edit Food</button>
-          <button id="delete" v-on:click="deleteFood(food.foodId)">
+   
+       
+         <td><button v-on:click="editFood(food)">Edit Food</button></td> 
+         <td> <button id="delete" v-on:click="deleteFood(food.foodId)">
             Delete Food
-          </button>
-        </div>
+          </button></td>
+     
+        </tbody>
       </table>
     </div>
     <div id="editForm" v-if="showForm">
@@ -104,16 +115,7 @@ table {
   display: flex;
   flex-direction: row;
 }
-#leftColumns {
-  display: table;
-  margin-left: 22%;
-}
-td {
-  padding-right: 80px;
-}
-#rightButtons {
-  margin-left: 10%;
-}
+
 #delete {
   color: red;
 }
@@ -121,4 +123,10 @@ button {
   border-radius: 4px;
   color: blue;
 }
+td{
+  margin-left: 20%
+}
+
+
+
 </style>

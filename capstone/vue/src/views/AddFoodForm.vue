@@ -105,6 +105,7 @@ export default {
   
 }
 h3{
+    margin-top: 20px;
     text-align: center;
 }
 </style>

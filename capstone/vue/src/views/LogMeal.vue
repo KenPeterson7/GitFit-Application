@@ -1,6 +1,6 @@
 <template>
   <div id="mealPage">
-    <p id="header">
+    <h3 id="header">
       My Meals For:
       {{
         new Date().getMonth()+1 +
@@ -9,7 +9,7 @@
         "/" +
         new Date().getFullYear()
       }}
-    </p>
+    </h3>
     <table id="headerTable">
       <thead>
         <th>Food-Type</th>
