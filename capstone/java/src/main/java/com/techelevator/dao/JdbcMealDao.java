@@ -5,6 +5,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -63,6 +64,22 @@ public class JdbcMealDao implements MealDao{
             mealList.add(meal);
         }
         return mealList;
+    }
+
+    @Override
+    public int findMealIdByMeal(String mealType, LocalDate mealDate, int profileId) {
+
+        String sql =
+                "SELECT meal_id " +
+                        "FROM meal " +
+                        "WHERE meal_type = ? AND meal_date = ? " +
+                        "AND profile_id = ? ;";
+
+        int mealId;
+        mealId = jdbcTemplate.queryForObject(sql, int.class,
+                mealType, mealDate, profileId);
+
+        return mealId;
     }
 
     private Meal mapRowToMeal(SqlRowSet rs) {

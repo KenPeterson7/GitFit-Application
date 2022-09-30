@@ -37,4 +37,10 @@ public class MealController {
         return mealDao.listOfAllMeals();
     }
 
+
+    @RequestMapping(path = "/meal/{mealType}", method = RequestMethod.GET)
+    public int getMealIdByMeal(@PathVariable("mealObject") Meal meal) {
+        return mealDao.findMealIdByMeal(meal.getMealType(), meal.getMealDate(), meal.getProfileId());
+    }
+
 }
