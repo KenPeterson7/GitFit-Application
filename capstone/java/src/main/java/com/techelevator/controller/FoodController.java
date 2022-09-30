@@ -46,7 +46,12 @@ public class FoodController {
 
         return foodDao.listOfAllFoodsByDate(date);
     }
+@RequestMapping(path = "/food/{username}/{md}/{mt}", method = RequestMethod.GET)
+    public List<Food> listOfFoodsByUsernameDateMealType(@PathVariable("username") String username, @PathVariable("md") String date, @PathVariable("mt") String mealType){
+    LocalDate newDate = LocalDate.parse(date);
 
+    return foodDao.listOfFoodsByUserNameDateMealType(username, newDate, mealType);
+    }
     @RequestMapping(path = "/food/{id}", method = RequestMethod.DELETE)
     public void deleteFood(@PathVariable("id") int foodId) {
         foodDao.deleteFood(foodId);

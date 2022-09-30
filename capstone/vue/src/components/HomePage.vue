@@ -1,7 +1,7 @@
 <template>
   <div id="homepage">
-    <h1>Username</h1>
-    <h2>Calories Remaining: ####</h2>
+    <h1>{{name}}</h1>
+    <h2>Calories Remaining: {{caloriesRemaining}}</h2>
     <div>
       <h2>Recent Meals:</h2>
       <ul>
@@ -22,7 +22,14 @@
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      name: this.$store.state.profile.displayName,
+      caloriesRemaining: this.$store.state.goal.daily_caloric_goal
+    }
+  }
+};
 </script>
 
 <style scoped>

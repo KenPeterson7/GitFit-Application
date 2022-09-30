@@ -99,6 +99,22 @@ public class JdbcFoodDao implements FoodDao{
         return jdbcTemplate.update(sql, foodId) == 1;
     }
 
+    @Override
+    public List<Food> listOfFoodsByUserNameDateMealType(String username, LocalDate date, String mealType) {
+        List<Food> newFoodList = new ArrayList<Food>();
+        String sql = "select * from food\n" +
+                "join food_meal on food_meal.food_id = food.food_id\n" +
+                "join meal on meal.meal_id = food_meal.meal_id\n" +
+                "join profile on profile.profile_id = meal.profile_id\n" +
+                "where profile.username = ? and meal_date = ? and meal_type = ?";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, username, date, mealType);
+        while( results.next() ) {
+            Food food = mapRowToFood(results);
+            newFoodList.add(food);
+        }
+        return newFoodList;
+    }
+
 //    @Override
 //    public List<Food> listOfAllBreakfastFoods() {
 //
