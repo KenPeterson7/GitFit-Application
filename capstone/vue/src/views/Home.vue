@@ -1,19 +1,10 @@
 <template>
   <div class="home">
-    <!-- <nav>
-      <button v-on:click="clickHome()" v-bind:class="{selected: homeSelected}">Home</button><br>
-      <button v-on:click="clickProfile()" v-bind:class="{selected: profileSelected}">Profile</button><br>
-      <button v-on:click="clickLogMeal()" v-bind:class="{selected: logMealSelected}">Log a Meal</button><br>
-      <button v-on:click="clickLogWorkout()" v-bind:class="{selected: logWorkoutSelected}">Log a Workout</button><br>
-      <h3>Another Thing</h3>
-      <h3>Something Else</h3>
-    </nav> -->
+    
     <div id="componentDiv">
       
-      <home-page v-if="homeSelected" />
-      <profile v-if="profileSelected"/>
-      <log-meal v-if="logMealSelected"/>
-      <log-workout v-if="logWorkoutSelected"/>
+      <home-page />
+      
       
     </div>
     
@@ -22,43 +13,29 @@
 
 <script>
 import HomePage from '../components/HomePage.vue';
-import LogWorkout from './LogWorkout.vue';
-import Profile from './Profile.vue';
-import LogMeal from './LogMeal.vue'
+import ProfileService from '../services/ProfileService'
+
 export default {
-  components: { Profile, HomePage, LogWorkout, LogMeal},
+  components: { HomePage },
   name: "home",
   data() {
     return {
-      homeSelected: true,
-      profileSelected: false,
-      logMealSelected: false,
-      logWorkoutSelected: false
+      
     }
   },
+  created() {
+    this.populateStore()
+  },
   methods: {
-    clickHome(){
-      this.homeSelected = true;
-      this.profileSelected = false;
-      this.logMealSelected = false;
-      this.logWorkoutSelected = false;
-    },
-    clickProfile(){
-      this.homeSelected = false;
-      this.profileSelected = true;
-      this.logMealSelected = false;
-      this.logWorkoutSelected = false;
-    },clickLogMeal(){
-      this.homeSelected = false;
-      this.profileSelected = false;
-      this.logMealSelected = true;
-      this.logWorkoutSelected = false;
-    },clickLogWorkout(){
-      this.homeSelected = false;
-      this.profileSelected = false;
-      this.logMealSelected = false;
-      this.logWorkoutSelected = true;
+    populateStore(){
+      ProfileService.getProfile(this.$store.state.user.username).then((response) => {
+        
+        this.$store.commit("SET_CURRENT_PROFILE", response.data);
+        
+        
+      })
     }
+    
   }
   
 };
