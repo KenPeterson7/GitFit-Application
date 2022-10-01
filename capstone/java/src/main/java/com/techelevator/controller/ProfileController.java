@@ -2,6 +2,7 @@ package com.techelevator.controller;
 
 import com.techelevator.dao.ProfileDao;
 import com.techelevator.model.Profile;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
@@ -15,6 +16,7 @@ public class ProfileController {
         this.profileDao = profileDao;
     }
 
+    @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(path = "/profile", method = RequestMethod.POST)
     public Profile addProfile(@Valid @RequestBody Profile profile){
         return profileDao.createProfile(profile);

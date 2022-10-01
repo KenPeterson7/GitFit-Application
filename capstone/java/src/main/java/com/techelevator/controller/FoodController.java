@@ -4,6 +4,7 @@ package com.techelevator.controller;
 import com.techelevator.dao.FoodDao;
 import com.techelevator.model.Food;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -22,6 +23,7 @@ public class FoodController {
         this.foodDao = foodDao;
     }
 
+    @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(path = "/food", method = RequestMethod.POST)
     public Food addFood(@Valid @RequestBody Food food) {
 
@@ -55,6 +57,11 @@ public class FoodController {
     @RequestMapping(path = "/food/{id}", method = RequestMethod.DELETE)
     public void deleteFood(@PathVariable("id") int foodId) {
         foodDao.deleteFood(foodId);
+    }
+
+    @RequestMapping(path = "/food/{foodName}", method = RequestMethod.GET)
+    public int getFoodIdByFoodName(@PathVariable("foodName") String foodName) {
+        return foodDao.findFoodIdByFood(foodName);
     }
 
 //    @RequestMapping(path = "/food/breakfast", method = RequestMethod.GET)
