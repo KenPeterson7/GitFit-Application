@@ -99,6 +99,7 @@ CREATE TABLE workout(
    type_of_workout varchar(100),
    duration numeric,
    workout_date date NOT NULL,
+   calories_burned numeric NOT NULL,
    CONSTRAINT PK_workout PRIMARY KEY (workout_id),
    CONSTRAINT FK_profile_id FOREIGN KEY (profile_id) REFERENCES profile(profile_id)
    );
@@ -147,10 +148,10 @@ insert into food_meal(meal_id, food_id) values(5002, 4002);
 insert into food_meal(meal_id, food_id) values(5003, 4003);
 insert into food_meal(meal_id, food_id) values(5004, 4004);
 
-insert into workout(profile_id, name_of_workout, type_of_workout, duration, workout_date) values(2001, 'Run', 'Cardio', 45, '2022-09-29');
-insert into workout(profile_id, name_of_workout, type_of_workout, duration, workout_date) values(2001, 'Full Body Workout', 'Strength Training', 90, '2022-09-30');
-insert into workout(profile_id, name_of_workout, type_of_workout, duration, workout_date) values(2002, 'Biking', 'Cardio', 120, '2022-09-29');
-insert into workout(profile_id, name_of_workout, type_of_workout, duration, workout_date) values(2002, 'Yoga', 'Anaerobic', 60, '2022-09-30');
+insert into workout(profile_id, name_of_workout, type_of_workout, duration, workout_date, calories_burned) values(2001, 'Run', 'Cardio', 45, '2022-09-29', 250);
+insert into workout(profile_id, name_of_workout, type_of_workout, duration, workout_date, calories_burned) values(2001, 'Full Body Workout', 'Strength Training', 90, '2022-09-30', 355.55);
+insert into workout(profile_id, name_of_workout, type_of_workout, duration, workout_date, calories_burned) values(2002, 'Biking', 'Cardio', 120, '2022-09-29', 472.99);
+insert into workout(profile_id, name_of_workout, type_of_workout, duration, workout_date, calories_burned) values(2002, 'Yoga', 'Anaerobic', 60, '2022-09-30', 321.2);
 
 
 -- CREATE USER final_capstone_owner
