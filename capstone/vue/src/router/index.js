@@ -10,6 +10,7 @@ import Profile from '../views/Profile.vue'
 import LogWorkout from '../views/LogWorkout.vue'
 import RecentFoods from '../views/RecentFoods.vue'
 import FoodForm from '../views/AddFoodForm.vue'
+import ChangePassword from '../views/ChangePassword.vue'
 
 
 
@@ -101,6 +102,15 @@ const router = new Router({
         requiresAuth: true
       }
     },
+    {
+      path: '/profile/password',
+      name: 'changePassword',
+      component: ChangePassword,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    
 
 
 

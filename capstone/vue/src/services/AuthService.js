@@ -8,6 +8,9 @@ export default {
 
   register(user) {
     return axios.post('/register', user)
+  },
+  updatePassword(user) {
+    return axios.put('/profile/password',user)
   }
 
 }

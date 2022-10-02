@@ -2,10 +2,12 @@
   <div>
     <div id="profileMain" v-if="!editing && profileExists">
       <div id="profileHeader">
+        <router-link v-bind:to="{name: 'profilePicture'}">
         <img
           id="profilePic"
           src="../../public/Images/blank-profile-picture.webp"
         />
+        </router-link>
         <div>
           <h1>Name: {{ profile.displayName }}</h1>
           <div id="star-container">
@@ -32,7 +34,7 @@
         <h3>DOB: {{ profile.birthday }}</h3>
         <div>
           <button v-on:click="editProfile()">Edit Profile</button>
-          <button>Change Password</button>
+          <router-link v-bind:to="{name: 'changePassword'}"><button>Change Password</button></router-link>
         </div>
       </div>
     </div>
