@@ -2,6 +2,7 @@ package com.techelevator.controller;
 
 import com.techelevator.dao.ProfileDao;
 import com.techelevator.model.Profile;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
@@ -15,6 +16,7 @@ public class ProfileController {
         this.profileDao = profileDao;
     }
 
+    @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(path = "/profile", method = RequestMethod.POST)
     public Profile addProfile(@Valid @RequestBody Profile profile){
         return profileDao.createProfile(profile);
@@ -27,6 +29,15 @@ public class ProfileController {
     @RequestMapping(path = "/profile/{username}", method = RequestMethod.GET)
     public Profile findProfile(@PathVariable("username") String username){
         return profileDao.findProfileByUsername(username);
+    }
+
+    @RequestMapping(path = "/profile/currentStar/{id}", method = RequestMethod.PUT)
+    public boolean updateCurrentStar(@PathVariable("id") int profileId, @Valid @RequestBody Profile profile){
+        return profileDao.updateCurrentStar(profile, profileId);
+    }
+    @RequestMapping(path = "/profile/highestStar/{id}", method = RequestMethod.PUT)
+    public boolean updateHighestStar(@PathVariable("id") int profileId, @Valid @RequestBody Profile profile){
+        return profileDao.updateHighestStar(profile, profileId);
     }
 
 }

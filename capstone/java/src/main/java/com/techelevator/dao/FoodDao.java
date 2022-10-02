@@ -18,6 +18,10 @@ public interface FoodDao {
     boolean deleteFood(int foodId);
 
     List<Food> listOfFoodsByUserNameDateMealType(String username, LocalDate date, String mealType);
+
+    int findFoodIdByFood(String foodName);
+
+
 //
 //    List<Food> listOfAllLunchFoods();
 //

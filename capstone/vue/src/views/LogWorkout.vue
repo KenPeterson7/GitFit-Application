@@ -1,9 +1,11 @@
 <template>
-  <div>Coming Soon</div>
+  <workout />
 </template>
 
 <script>
+import Workout from '../components/Workout.vue'
 export default {
+  components: { Workout },
 
 }
 </script>

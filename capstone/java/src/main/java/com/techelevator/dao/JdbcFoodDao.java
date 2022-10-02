@@ -81,7 +81,6 @@ public class JdbcFoodDao implements FoodDao{
                         "FROM food " +
                         "JOIN food_meal ON food_meal.food_id = food.food_id " +
                         "JOIN meal ON meal.meal_id = food_meal.meal_id " +
-                        "JOIN profile ON profile.profile_id = meal.profile_id " +
                         "WHERE meal.meal_date = ? ;";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, mealDate);
         while( results.next() ) {
@@ -114,6 +113,21 @@ public class JdbcFoodDao implements FoodDao{
         }
         return newFoodList;
     }
+
+    @Override
+    public int findFoodIdByFood(String foodName) {
+
+        String sql =
+                "SELECT food_id " +
+                        "FROM food " +
+                        "WHERE food_name = ? ;";
+
+        int foodId;
+        foodId = jdbcTemplate.queryForObject(sql, int.class, foodName);
+
+        return foodId;
+    }
+
 
 //    @Override
 //    public List<Food> listOfAllBreakfastFoods() {

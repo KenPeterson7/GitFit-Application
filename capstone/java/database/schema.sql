@@ -47,7 +47,7 @@ CREATE SEQUENCE seq_food_id
   NO MAXVALUE;
 CREATE TABLE food(
    food_id int NOT NULL DEFAULT nextval('seq_food_id'),
-   food_name  varchar(50),
+   food_name  varchar(50) UNIQUE,
    food_type varchar(50),
    size varchar(50) NOT NULL,
    number_servings int NOT NULL,
@@ -81,7 +81,7 @@ CREATE SEQUENCE seq_daily_intake_id
   NO MAXVALUE;
 CREATE TABLE daily_intake(
    daily_intake_id int NOT NULL DEFAULT nextval('seq_daily_intake_id'),
-   profile_id int,
+   profile_id int NOT NULL,
    log_date date,
    total_calories int NOT NULL,
    CONSTRAINT PK_daily_intake PRIMARY KEY (daily_intake_id),
@@ -94,10 +94,13 @@ CREATE SEQUENCE seq_workout_id
   NO MAXVALUE;
 CREATE TABLE workout(
    workout_id int NOT NULL DEFAULT nextval('seq_workout_id'),
+   profile_id int NOT NULL,
    name_of_workout varchar(100),
    type_of_workout varchar(100),
    duration numeric,
-   CONSTRAINT PK_workout PRIMARY KEY (workout_id)
+   workout_date date NOT NULL,
+   CONSTRAINT PK_workout PRIMARY KEY (workout_id),
+   CONSTRAINT FK_profile_id FOREIGN KEY (profile_id) REFERENCES profile(profile_id)
    );
 
 INSERT INTO users (username,password_hash,role) VALUES ('user','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER');
@@ -111,6 +114,12 @@ INSERT INTO users (username,password_hash,role) VALUES ('user4','$2a$08$UkVvwpUL
 insert into Profile(age, height, current_weight, desired_weight, birthday, profile_pic, current_star_streak, high_start_streak, username, displayname, gender, activity_level)
 values(25, 72, 225, 210, '1997-01-01', '', 1, 5, 'user', 'Tester', 'M', 'High');
 
+insert into Profile(age, height, current_weight, desired_weight, birthday, profile_pic, current_star_streak, high_start_streak, username, displayname, gender, activity_level)
+values(35, 60, 280, 250, '1987-01-01', '', 3, 3, 'user2', 'Display Name Test', 'F', 'Low');
+
+insert into Profile(age, height, current_weight, desired_weight, birthday, profile_pic, current_star_streak, high_start_streak, username, displayname, gender, activity_level)
+values(22, 81, 262, 215, '2000-01-01', '', 0, 4, 'user3', 'Tech Fitness Display Test', 'M', 'Medium');
+
 INSERT INTO food (food_name, food_type, size, number_servings, caloric_amount)
 VALUES ('steak', 'meat', '50', 1, 500);
 INSERT INTO food (food_name, food_type, size, number_servings, caloric_amount)
@@ -121,22 +130,27 @@ INSERT INTO food (food_name, food_type, size, number_servings, caloric_amount)
 VALUES ('pear', 'fruit', '10', 1, 40);
 
 INSERT INTO meal (meal_type, meal_date, profile_id)
-VALUES ('dinner', '2022-09-29', 2001);
+VALUES ('breakfast', '2022-09-29', 2001);
 INSERT INTO meal (meal_type, meal_date, profile_id)
 VALUES ('lunch', '2022-09-29', 2001);
 INSERT INTO meal (meal_type, meal_date, profile_id)
 VALUES ('dinner', '2022-09-30', 2001);
 INSERT INTO meal (meal_type, meal_date, profile_id)
-VALUES ('dinner', '2022-09-30', 2001);
+VALUES ('snacks', '2022-09-30', 2001);
 
 insert into goal(profile_id, daily_caloric_goal) values(2001, 300);
--- insert into goal(profile_id, daily_caloric_goal) values(2002, 350);
--- insert into goal(profile_id, daily_caloric_goal) values(2003, 400);
+insert into goal(profile_id, daily_caloric_goal) values(2002, 350);
+insert into goal(profile_id, daily_caloric_goal) values(2003, 400);
 
 insert into food_meal(meal_id, food_id) values(5001, 4001);
 insert into food_meal(meal_id, food_id) values(5002, 4002);
 insert into food_meal(meal_id, food_id) values(5003, 4003);
 insert into food_meal(meal_id, food_id) values(5004, 4004);
+
+insert into workout(profile_id, name_of_workout, type_of_workout, duration, workout_date) values(2001, 'Run', 'Cardio', 45, '2022-09-29');
+insert into workout(profile_id, name_of_workout, type_of_workout, duration, workout_date) values(2001, 'Full Body Workout', 'Strength Training', 90, '2022-09-30');
+insert into workout(profile_id, name_of_workout, type_of_workout, duration, workout_date) values(2002, 'Biking', 'Cardio', 120, '2022-09-29');
+insert into workout(profile_id, name_of_workout, type_of_workout, duration, workout_date) values(2002, 'Yoga', 'Anaerobic', 60, '2022-09-30');
 
 
 -- CREATE USER final_capstone_owner

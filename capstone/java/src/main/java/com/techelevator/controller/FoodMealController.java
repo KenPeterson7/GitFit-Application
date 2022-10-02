@@ -10,7 +10,7 @@ import javax.validation.Valid;
 
 @CrossOrigin
 @RestController
-@PreAuthorize("isAuthenticated()")
+//@PreAuthorize("isAuthenticated()")
 @RequestMapping(path = "/foodmeal")
 public class FoodMealController {
 

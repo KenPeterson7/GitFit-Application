@@ -53,6 +53,25 @@ public class JdbcProfileDao implements ProfileDao{
         else return null;
     }
 
+    @Override
+    public boolean updateCurrentStar(Profile profile, int profileId) {
+        String sql = "Update Profile set age = ?, height = ?, current_weight = ?, desired_weight = ?, birthday = ?, \n" +
+                "profile_pic = ?::bytea, current_star_streak = ?, high_start_streak = ?, username = ?, displayname = ?, gender = ?, activity_level = ? \n" +
+                "where profile_id = ?";
+        return jdbcTemplate.update(sql, profile.getAge(), profile.getHeight(), profile.getCurrentWeight(), profile.getDesiredWeight(), profile.getBirthday(), profile.getProfilePic(),
+                profile.getStarStreak(), profile.getHighStarStreak(), profile.getUsername(), profile.getDisplayName(), profile.getGender(), profile.getActivityLevel(), profileId) == 1;
+
+    }
+
+    @Override
+    public boolean updateHighestStar(Profile profile, int profileId) {
+        String sql = "Update Profile set age = ?, height = ?, current_weight = ?, desired_weight = ?, birthday = ?, \n" +
+                "profile_pic = ?::bytea, current_star_streak = ?, high_start_streak = ?, username = ?, displayname = ?, gender = ?, activity_level = ? \n" +
+                "where profile_id = ?";
+        return jdbcTemplate.update(sql, profile.getAge(), profile.getHeight(), profile.getCurrentWeight(), profile.getDesiredWeight(), profile.getBirthday(), profile.getProfilePic(),
+                profile.getStarStreak(), profile.getHighStarStreak(), profile.getUsername(), profile.getDisplayName(), profile.getGender(), profile.getActivityLevel(), profileId) == 1;
+    }
+
     private Profile mapRowToProfile(SqlRowSet rs){
         Profile profile = new Profile();
         profile.setProfileId(rs.getInt("profile_id"));

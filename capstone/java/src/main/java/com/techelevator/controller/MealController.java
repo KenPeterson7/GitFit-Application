@@ -4,6 +4,7 @@ package com.techelevator.controller;
 import com.techelevator.dao.MealDao;
 import com.techelevator.model.Meal;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -22,6 +23,7 @@ public class MealController {
         this.mealDao = mealDao;
     }
 
+    @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(path = "/meal", method = RequestMethod.POST)
     public Meal addMeal(@Valid @RequestBody Meal meal) {
 
