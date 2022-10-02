@@ -60,4 +60,10 @@ public class WorkoutController {
         return workoutDao.getWorkoutByWorkoutId(workoutId);
     }
 
+    @RequestMapping(path = "/workout/user/recent/{username}", method = RequestMethod.GET)
+    public List<Workout> getListOfAllWorkoutsByLastFiveDates(@PathVariable("username") String username) {
+
+        return workoutDao.listOfAllWorkoutsByLastFiveDates(username);
+    }
+
 }

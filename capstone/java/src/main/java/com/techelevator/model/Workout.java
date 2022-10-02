@@ -10,14 +10,16 @@ public class Workout {
     private int duration;
     private LocalDate workoutDate;
     private int profileId;
+    private double caloriesBurned;
 
-    public Workout(int workoutId, String nameOfWorkout, String typeOfWorkout, int duration, LocalDate workoutDate, int profileId) {
+    public Workout(int workoutId, String nameOfWorkout, String typeOfWorkout, int duration, LocalDate workoutDate, int profileId, int caloriesBurned) {
         this.workoutId = workoutId;
         this.nameOfWorkout = nameOfWorkout;
         this.typeOfWorkout = typeOfWorkout;
         this.duration = duration;
         this.workoutDate = workoutDate;
         this.profileId = profileId;
+        this.caloriesBurned = caloriesBurned;
     }
 
     public Workout() {
@@ -70,5 +72,13 @@ public class Workout {
 
     public void setWorkoutDate(LocalDate workoutDate) {
         this.workoutDate = workoutDate;
+    }
+
+    public double getCaloriesBurned() {
+        return caloriesBurned;
+    }
+
+    public void setCaloriesBurned(double caloriesBurned) {
+        this.caloriesBurned = caloriesBurned;
     }
 }

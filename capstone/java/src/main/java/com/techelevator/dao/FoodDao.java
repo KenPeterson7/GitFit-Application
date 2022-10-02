@@ -21,6 +21,8 @@ public interface FoodDao {
 
     int findFoodIdByFood(String foodName);
 
+    List<Food> listOfLastFiveMeals(String username, String mealType);
+
 
 //
 //    List<Food> listOfAllLunchFoods();
