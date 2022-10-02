@@ -1,6 +1,6 @@
 <template>
   <div id="changePassword" class="text-center mb-3 w-25 col-lg-6 offset-lg-4">
-    <form class="form-register" @submit.prevent="updatePassword">
+    <form class="form-register" @submit.prevent="updatePassword()">
       <h1 class="h3 mb-3 font-weight-normal">Change Password</h1>
       <div class="alert alert-danger" role="alert" v-if="registrationErrors">
         {{ registrationErrorMsg }}
@@ -54,8 +54,10 @@ export default {
         this.registrationErrors = true;
         this.registrationErrorMsg = 'Password & Confirm Password do not match.';
       } else {
+          let user = this.$store.state.user;
+          user.password = this.user.password;
         authService
-          .updatePassword(this.user)
+          .updatePassword(user)
           .then((response) => {
             if (response.status == 200) {
               this.$router.push({

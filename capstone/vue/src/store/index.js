@@ -57,6 +57,9 @@ export default new Vuex.Store({
     SET_CURRENT_GOAL(state, goal) {
       state.goal = goal; 
       localStorage.setItem('goal',JSON.stringify(goal));
+    },
+    UPDATE_PROFILE_PICTURE(state, picture) {
+      state.profile.profilePic = picture;
     }
   }
 })
