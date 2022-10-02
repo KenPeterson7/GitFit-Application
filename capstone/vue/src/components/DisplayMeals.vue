@@ -3,8 +3,7 @@
     <div id="foodTable">
       <table
         id="foodTable"
-        v-for="(food, index) in foodList"
-        v-bind:key="index"
+       
       >
         <thead id="header">
           <th></th>
@@ -16,19 +15,23 @@
           <th></th>
         </thead>
         <tbody>
-          <td>{{ food.foodName }}</td>
+          <tr  v-for="(food, index) in foodList"
+        v-bind:key="index">
+        <td class="first">{{ food.foodName }}</td>
+      
 
           <td>{{ food.foodType }}</td>
           <td>{{ food.caloricAmount }}</td>
           <td>{{ food.size }}</td>
-          <td>{{ food.numberOfServings }}</td>
+          <td class="last">{{ food.numberOfServings }}</td>
 
-          <td><button v-on:click="editFood(food)">Edit Food</button></td>
-          <td>
+          <button v-on:click="editFood(food)">Edit Food</button>
+          
             <button id="delete" v-on:click="deleteFood(food.foodId)">
               Delete Food
             </button>
-          </td>
+          
+          </tr>
         </tbody>
       </table>
     </div>
@@ -86,9 +89,9 @@ export default {
       date:
         new Date().getFullYear() +
         "-" +
-        0 +
+        
         this.getMonth() +
-        "-" +
+        "-" + 0 +
         new Date().getDate(),
     };
   },
@@ -136,19 +139,25 @@ export default {
 </script>
 
 <style scoped>
-table {
-  display: flex;
-  flex-direction: row;
-}
 
 #delete {
   color: red;
 }
 button {
+
   border-radius: 4px;
   color: blue;
 }
-td {
-  margin-left: 20%;
+.first{
+padding-left: 30px;
+  padding-right: 320px;
+
 }
+td{
+  padding-right: 85px;
+}
+.last{
+  padding-right: 200px;
+}
+
 </style>

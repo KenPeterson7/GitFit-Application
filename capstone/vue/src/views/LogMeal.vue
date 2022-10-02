@@ -4,9 +4,9 @@
       My Meals For:
       {{
         new Date().getMonth()+1 +
-        "/" +
+        "/" + 0 +
         new Date().getDate() +
-        "/" +
+        "/" + 
         new Date().getFullYear()
       }}
     </h3>
@@ -33,6 +33,8 @@
     <router-link v-bind:to="{ name: 'recentFoods' }"
       ><button id="add">Add Food</button></router-link
     >
+    <button v-on:click="updateCalories()"> See Calories Consumed:</button>
+    <p v-if="seeCalories">  {{this.calories}}</p>
   </div>
 </template>
 
@@ -47,6 +49,8 @@ export default {
 
   data() {
     return {
+      seeCalories: false,
+      calories: 0,
       breakfastFoods: [],
       lunchFoods: [],
       dinnerFoods: [],
@@ -55,9 +59,9 @@ export default {
       date:
         new Date().getFullYear() +
         "-" +
-        0 +
+        
         this.getMonth() +
-        "-" +
+        "-" + 0 +
         new Date().getDate(),
     };
   },
@@ -66,6 +70,8 @@ export default {
     this.updateLunchList();
     this.updateDinnerList();
     this.updateSnacksList();
+   
+ 
   },
 
   methods: {
@@ -109,6 +115,22 @@ export default {
       })
        
     },
+    updateCalories(){
+      this.breakfastFoods.forEach((food)=> {
+        this.calories += food.caloricAmount
+       
+      })
+      this.lunchFoods.forEach((food)=> {
+        this.calories+= food.caloricAmount
+      })
+       this.dinnerFoods.forEach((food)=> {
+        this.calories+= food.caloricAmount
+      })
+       this.snackFoods.forEach((food)=> {
+        this.calories+= food.caloricAmount
+      })
+      this.seeCalories = true
+    }
  
   },
 };
@@ -135,6 +157,7 @@ button{
 }
 #add{
  margin-left: 45%;
+ margin-top: 30px;
 }
 
 

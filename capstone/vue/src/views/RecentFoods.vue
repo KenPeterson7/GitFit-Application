@@ -23,41 +23,42 @@
       </tbody>
     </table>
     <div id="navBtns">
-   <router-link v-bind:to="{name: 'myMeals'}">
-<button id="returnBtn">Back To My Meals</button>
-    </router-link>
-    <router-link v-bind:to="{name: 'addFoodForm'}">
-    
-    <button id="addBtn">Add New Food</button>
-    </router-link>
+      <router-link v-bind:to="{ name: 'myMeals' }">
+        <button id="returnBtn">Back To My Meals</button>
+      </router-link>
+      <router-link v-bind:to="{ name: 'addFoodForm' }">
+        <button id="addBtn">Add New Food</button>
+      </router-link>
     </div>
- 
+
     <div id="mealSelection" v-if="showMealSelection">
       <label for="selection"
         >Please Choose The Meal You Would Like To Add Your Food To</label
       >
-      <select id="selection" v-model="meal.mealType" >
+      <select id="selection" v-model="meal.mealType">
         <option>Breakfast</option>
         <option>Lunch</option>
         <option>Dinner</option>
         <option>Snacks</option>
       </select>
-      <button v-on:click="assignMealType()">plz workkkkk</button>
+      <button v-on:click="assignMealType()">Confirm</button>
     </div>
     <div id="addCancel" v-if="showAddCancelBtns">
-        <button v-on:click="addFood()">Save Food</button>
-        <button v-on:click="cancel()">Cancel</button>
+      <button v-on:click="addFood()">Save Food</button>
+      <button v-on:click="cancel()">Cancel</button>
     </div>
     <div id="foodBanner" v-if="addFoodBanner">
-        <h3>You do not have any food saved. Click ADD FOOD to begin your journey!</h3>
+      <h3>
+        You do not have any food saved. Click ADD FOOD to begin your journey!
+      </h3>
     </div>
   </div>
 </template>
 
 <script>
-import MealService from '../services/MealService'
+import MealService from "../services/MealService";
 import FoodService from "../services/FoodService";
-import FoodMealService from "../services/FoodMealService"
+import FoodMealService from "../services/FoodMealService";
 export default {
   name: "recentFoods",
   data() {
@@ -65,85 +66,91 @@ export default {
       mySavedFoods: [],
       showMealSelection: false,
       showAddCancelBtns: false,
-     
+
       mealFoodObject: {
-          mealId: 0, 
-          foodId: 0,
+        mealId: 0,
+        foodId: 0,
       },
       addFoodBanner: false,
-      date:  new Date().getFullYear() +
+      date:
+        new Date().getFullYear() +
         "-" +
-        0 +
         this.getMonth() +
         "-" +
+        0 +
         new Date().getDate(),
       meal: {
         profileId: this.$store.state.profile.profileId,
         mealType: "",
-        mealDate: new Date().getFullYear() +
-        "-" +
-        0 +
-        this.getMonth() +
-        "-" +
-        new Date().getDate(),
-      }
-
+        mealDate:
+          new Date().getFullYear() +
+          "-" +
+          this.getMonth() +
+          "-" +
+          0 +
+          new Date().getDate(),
+      },
     };
-
   },
   created() {
     this.updateList();
   },
   methods: {
-     getMonth() {
+    getMonth() {
       this.month = new Date().getMonth();
       return this.month + 1;
     },
     updateList() {
-      FoodService.getFoodByUsername(this.$store.state.user.username).then((response) => {
-        if (response.status == 200) {
-          this.mySavedFoods = response.data;
+      FoodService.getFoodByUsername(this.$store.state.user.username).then(
+        (response) => {
+          if (response.status == 200) {
+            this.mySavedFoods = response.data;
+          }
+          if (this.mySavedFoods.length < 1) {
+            this.addFoodBanner = true;
+          }
         }
-        if(this.mySavedFoods.length < 1){
-            this.addFoodBanner = true
+      );
+    },
+    addSavedFood(foodId) {
+      this.showMealSelection = true;
+      this.showAddCancelBtns = true;
+      this.mealFoodObject.foodId = foodId;
+    },
+    assignMealType() {
+      MealService.getMealIdByMealDetails(
+        this.meal.mealType,
+        this.date,
+        this.$store.state.profile.profileId
+      ).then((response) => {
+        if (response.status == 200) {
+          this.mealFoodObject.mealId = response.data;
+     
+          if (this.mealFoodObject.mealId === 0) {
+            MealService.addMeal(this.meal).then((response) => {
+              this.mealFoodObject.mealId = response.data.mealId;
+          
+            });
+          }
         }
       });
     },
-    addSavedFood(foodId){
-        this.showMealSelection=true;
-           this.showAddCancelBtns = true;
-        this.mealFoodObject.foodId = foodId;
+    addFood() {
 
-    } ,
-    assignMealType(){
-   
-       MealService.getMealIdByMealDetails(this.meal.mealType, this.date,
-        this.$store.state.profile.profileId).then((response)=> {
-          if(response.status==200){
-            this.mealFoodObject.mealId = response.data;
-            return;
-          }
-          
-            MealService.addMeal(this.meal)
-            this.assignMealType()
+      //check and see if there is a meal id for this profile, date, meal type. if not,
+      //insert profileid, mealtype, and date and return meal id
+      //set the returned meal id to mealFoodObject.mealId
+      this.showMealSelection = false;
+      this.showAddCancelBtns = false;
+      FoodMealService.addFoodMeal(this.mealFoodObject);
 
-          
-        })
+    },
+    cancel() {
+      this.showMealSelection = false;
+      this.showAddCancelBtns = false;
+    },
   },
-  addFood(){
-    //check and see if there is a meal id for this profile, date, meal type. if not,
-    //insert profileid, mealtype, and date and return meal id
-    //set the returned meal id to mealFoodObject.mealId
-       this.showMealSelection= false
-       this.showAddCancelBtns = false
-       FoodMealService.addFoodMeal(this.mealFoodObject)
-  },
-  cancel(){
-       this.showMealSelection= false
-       this.showAddCancelBtns = false
-  }
-  },
- 
+
 };
 </script>
 
@@ -157,15 +164,14 @@ th {
   padding-right: 30px;
   padding-top: 20px;
 }
-#navBtns{
-    margin-top: 20px;
-    margin-left: 76%;
-    padding: 10px;
+#navBtns {
+  margin-top: 20px;
+  margin-left: 76%;
+  padding: 10px;
 }
 
-button{
+button {
   border-radius: 4px;
   color: blue;
-  
 }
 </style>

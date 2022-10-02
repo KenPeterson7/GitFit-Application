@@ -68,7 +68,7 @@ public class JdbcMealDao implements MealDao{
 
     @Override
     public int findMealIdByMeal(String mealType, LocalDate mealDate, int profileId) {
-
+    try {
         String sql =
                 "SELECT meal_id " +
                         "FROM meal " +
@@ -79,7 +79,11 @@ public class JdbcMealDao implements MealDao{
         mealId = jdbcTemplate.queryForObject(sql, int.class,
                 mealType, mealDate, profileId);
 
+
         return mealId;
+    } catch (Exception e){
+        return 0;
+    }
     }
 
     private Meal mapRowToMeal(SqlRowSet rs) {
