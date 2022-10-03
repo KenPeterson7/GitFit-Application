@@ -2,10 +2,79 @@
   <div>
     <div id="profileMain" v-if="!editing && profileExists">
       <div id="profileHeader">
+        <router-link v-bind:to="{name: 'profilePicture'}">
         <img
           id="profilePic"
           src="../../public/Images/blank-profile-picture.webp"
+          v-if="profile.profilePic==''"
         />
+        <img
+          id="profilePic"
+          src="../../public/Images/avatar1.png"
+          v-if="profile.profilePic=='avatar1'"
+        />
+        <img
+          id="profilePic"
+          src="../../public/Images/avatar2.png"
+          v-if="profile.profilePic=='avatar2'"
+        />
+        <img
+          id="profilePic"
+          src="../../public/Images/avatar3.png"
+          v-if="profile.profilePic=='avatar3'"
+        />
+        <img
+          id="profilePic"
+          src="../../public/Images/avatar4.png"
+          v-if="profile.profilePic=='avatar4'"
+        />
+        <img
+          id="profilePic"
+          src="../../public/Images/avatar5.png"
+          v-if="profile.profilePic=='avatar5'"
+        />
+        <img
+          id="profilePic"
+          src="../../public/Images/avatar6.png"
+          v-if="profile.profilePic=='avatar6'"
+        />
+        <img
+          id="profilePic"
+          src="../../public/Images/avatar7.png"
+          v-if="profile.profilePic=='avatar7'"
+        />
+        <img
+          id="profilePic"
+          src="../../public/Images/avatar8.png"
+          v-if="profile.profilePic=='avatar8'"
+        />
+        <img
+          id="profilePic"
+          src="../../public/Images/avatar9.png"
+          v-if="profile.profilePic=='avatar9'"
+        />
+        <img
+          id="profilePic"
+          src="../../public/Images/avatar10.png"
+          v-if="profile.profilePic=='avatar10'"
+        />
+        <img
+          id="profilePic"
+          src="../../public/Images/avatar11.png"
+          v-if="profile.profilePic=='avatar11'"
+        />
+        <img
+          id="profilePic"
+          src="../../public/Images/avatar12.png"
+          v-if="profile.profilePic=='avatar12'"
+        />
+        <img
+          id="profilePic"
+          src="../../public/Images/avatar13.png"
+          v-if="profile.profilePic=='avatar13'"
+        />
+        
+        </router-link>
         <div>
           <h1>Name: {{ profile.displayName }}</h1>
           <div id="star-container">
@@ -30,9 +99,9 @@
         <h3>Gender: {{ profile.gender }}</h3>
         <h3>Age: {{ profile.age }}</h3>
         <h3>DOB: {{ profile.birthday }}</h3>
-        <div>
+        <div class="buttonTray">
           <button v-on:click="editProfile()">Edit Profile</button>
-          <button>Change Password</button>
+          <router-link v-bind:to="{name: 'changePassword'}"><button>Change Password</button></router-link>
         </div>
       </div>
     </div>
@@ -85,6 +154,8 @@
 </template>
 
 <script>
+
+
 import CreateProfile from "../components/CreateProfile.vue";
 import ProfileService from "../services/ProfileService";
 
@@ -200,6 +271,9 @@ export default {
 
       return Math.round(goal);
     },
+    getProfilePic() {
+      return this.profile.profilePic;
+    }
   },
 };
 </script>
@@ -210,8 +284,14 @@ export default {
 }
 
 #profilePic {
-  max-height: 200px;
-  padding: 10px;
+  max-height: 250px;
+  margin: 20px;
+  border-radius: 50px;
+  
+}
+
+#profileHeader div {
+  margin-top: 20px;
 }
 
 #star-container {
