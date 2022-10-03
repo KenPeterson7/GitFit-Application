@@ -150,8 +150,8 @@ button {
 tr{
    display: grid;
 
-  /* grid-template-columns: 400px 50px 50px 70px 50px 120px 120px ; */
-  grid-template-columns: 30% 20% 20% 10% 20% 20% 20%;
+  grid-template-columns: 380px 140px 105px 110px 200px 120px 120px ; 
+  /* grid-template-columns: 30% 20% 20% 10% 20% 20% 20%; */
   grid-template-areas: "name foodType calories size servings edit delete"
 }
 
