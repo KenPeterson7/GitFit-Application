@@ -11,6 +11,8 @@ import LogWorkout from '../views/LogWorkout.vue'
 import RecentFoods from '../views/RecentFoods.vue'
 import FoodForm from '../views/AddFoodForm.vue'
 import QuickAddMeals from '../views/QuickAddMeals.vue'
+import ProfilePicture from '../views/ProfilePicture.vue'
+import ChangePassword from '../views/ChangePassword.vue'
 
 
 
@@ -111,10 +113,22 @@ const router = new Router({
       }
 
     },
-
-
-
-    
+    {
+      path: '/profile/avatar',
+      name: 'profilePicture',
+      component: ProfilePicture,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/profile/password',
+      name: 'changePassword',
+      component: ChangePassword,
+      meta: {
+        requiresAuth: true
+      }
+    }   
 
   ]
 })
