@@ -46,6 +46,55 @@
               v-bind:class="{picSelected: selectedPicture == 'avatar6'}"
               />
           </div>
+          <div class="avatarPic" id="pic7">
+              <img 
+              src="../../public/Images/avatar7.png"
+              v-on:click="selectedPicture='avatar7'"
+              v-bind:class="{picSelected: selectedPicture == 'avatar7'}"
+              />
+          </div>
+          <div class="avatarPic" id="pic8">
+              <img 
+              src="../../public/Images/avatar8.png"
+              v-on:click="selectedPicture='avatar8'"
+              v-bind:class="{picSelected: selectedPicture == 'avatar8'}"
+              />
+          </div>
+          <div class="avatarPic" id="pic9">
+              <img 
+              src="../../public/Images/avatar9.png"
+              v-on:click="selectPicture('avatar9')"
+              v-bind:class="{picSelected: selectedPicture == 'avatar9'}"
+              />
+          </div>
+          <div class="avatarPic" id="pic10">
+              <img 
+              src="../../public/Images/avatar10.png"
+              v-on:click="selectPicture('avatar10')"
+              v-bind:class="{picSelected: selectedPicture == 'avatar10'}"
+              />
+          </div>
+          <div class="avatarPic" id="pic11">
+              <img 
+              src="../../public/Images/avatar11.png"
+              v-on:click="selectPicture('avatar11')"
+              v-bind:class="{picSelected: selectedPicture == 'avatar11'}"
+              />
+          </div>
+          <div class="avatarPic" id="pic12">
+              <img 
+              src="../../public/Images/avatar12.png"
+              v-on:click="selectPicture('avatar12')"
+              v-bind:class="{picSelected: selectedPicture == 'avatar12'}"
+              />
+          </div>
+          <div class="avatarPic" id="pic13">
+              <img 
+              src="../../public/Images/avatar13.png"
+              v-on:click="selectPicture('avatar13')"
+              v-bind:class="{picSelected: selectedPicture == 'avatar13'}"
+              />
+          </div>
            
       </div>
         <div class="buttonTray">

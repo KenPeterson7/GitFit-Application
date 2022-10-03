@@ -38,8 +38,42 @@
           src="../../public/Images/avatar6.png"
           v-if="profile.profilePic=='avatar6'"
         />
-
-
+        <img
+          id="profilePic"
+          src="../../public/Images/avatar7.png"
+          v-if="profile.profilePic=='avatar7'"
+        />
+        <img
+          id="profilePic"
+          src="../../public/Images/avatar8.png"
+          v-if="profile.profilePic=='avatar8'"
+        />
+        <img
+          id="profilePic"
+          src="../../public/Images/avatar9.png"
+          v-if="profile.profilePic=='avatar9'"
+        />
+        <img
+          id="profilePic"
+          src="../../public/Images/avatar10.png"
+          v-if="profile.profilePic=='avatar10'"
+        />
+        <img
+          id="profilePic"
+          src="../../public/Images/avatar11.png"
+          v-if="profile.profilePic=='avatar11'"
+        />
+        <img
+          id="profilePic"
+          src="../../public/Images/avatar12.png"
+          v-if="profile.profilePic=='avatar12'"
+        />
+        <img
+          id="profilePic"
+          src="../../public/Images/avatar13.png"
+          v-if="profile.profilePic=='avatar13'"
+        />
+        
         </router-link>
         <div>
           <h1>Name: {{ profile.displayName }}</h1>
@@ -250,10 +284,14 @@ export default {
 }
 
 #profilePic {
-  max-height: 200px;
-  padding: 10px;
-  margin-left: 10px;
-  margin-right: 10px;
+  max-height: 250px;
+  margin: 20px;
+  border-radius: 50px;
+  
+}
+
+#profileHeader div {
+  margin-top: 20px;
 }
 
 #star-container {
