@@ -9,7 +9,7 @@
 export default {
     data(){
         return{
-            yesterday: new Date("01/12/2021")
+            yesterday: new Date()
         }
     }
 

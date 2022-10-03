@@ -63,6 +63,11 @@ public class AuthenticationController {
         }
     }
 
+    @RequestMapping(value ="/profile/password", method = RequestMethod.PUT)
+    public void update(@RequestBody User user) {
+        userDao.update(user.getId(), user.getUsername(), user.getPassword(), "ROLE_USER");
+    }
+
     /**
      * Object to return as body in JWT Authentication.
      */

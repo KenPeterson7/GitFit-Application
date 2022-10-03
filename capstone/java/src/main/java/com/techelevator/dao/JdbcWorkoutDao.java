@@ -24,8 +24,9 @@ public class JdbcWorkoutDao implements WorkoutDao{
     public Workout addWorkout(Workout workout) {
 
         String sql =
-                "INSERT INTO workout (profile_id, name_of_workout, type_of_workout, duration, workout_date) " +
-                        "VALUES(?, ?, ?, ? , ?) " +
+                "INSERT INTO workout (profile_id, name_of_workout, type_of_workout, " +
+                        "duration, workout_date, calories_burned) " +
+                        "VALUES(?, ?, ?, ? , ?, ?) " +
                         "RETURNING workout_id ;";
 
         Integer newId = jdbcTemplate.queryForObject(sql, Integer.class,
@@ -33,7 +34,8 @@ public class JdbcWorkoutDao implements WorkoutDao{
                 workout.getNameOfWorkout(),
                 workout.getTypeOfWorkout(),
                 workout.getDuration(),
-                workout.getWorkoutDate());
+                workout.getWorkoutDate(),
+                workout.getCaloriesBurned());
 
         workout.setWorkoutId(newId);
 
@@ -46,7 +48,7 @@ public class JdbcWorkoutDao implements WorkoutDao{
         String sql =
                 "UPDATE workout " +
                         "SET profile_id = ?, name_of_workout = ?, type_of_workout = ?," +
-                        "duration = ?, workout_date = ? " +
+                        "duration = ?, workout_date = ?, calories_burned = ? " +
                         "WHERE workout_id = ? ;";
 
         return jdbcTemplate.update(sql,
@@ -55,6 +57,7 @@ public class JdbcWorkoutDao implements WorkoutDao{
                 modifiedWorkout.getTypeOfWorkout(),
                 modifiedWorkout.getDuration(),
                 modifiedWorkout.getWorkoutDate(),
+                modifiedWorkout.getCaloriesBurned(),
                 workoutId) == 1;
     }
 
@@ -114,6 +117,39 @@ public class JdbcWorkoutDao implements WorkoutDao{
         return workout;
     }
 
+    @Override
+    public List<Workout> getAllWorkouts() {
+        List<Workout> workoutList = new ArrayList<>();
+        String sql =
+                "SELECT * " +
+                        "FROM workout ;";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
+        while( results.next() ) {
+            Workout workout = mapRowToWorkout(results);
+            workoutList.add(workout);
+        }
+        return workoutList;
+    }
+
+    @Override
+    public List<Workout> listOfAllWorkoutsByLastFiveDates(String username) {
+
+        List<Workout> workoutList = new ArrayList<>();
+        String sql =
+                "SELECT * " +
+                        "FROM workout " +
+                        "JOIN profile ON profile.profile_id = workout.profile_id " +
+                        "WHERE profile.username = ? " +
+                        "ORDER BY workout_date DESC " +
+                        "LIMIT 5 ;";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, username);
+        while( results.next() ) {
+            Workout workout = mapRowToWorkout(results);
+            workoutList.add(workout);
+        }
+        return workoutList;
+    }
+
 
     private Workout mapRowToWorkout(SqlRowSet rs ){
         Workout workout = new Workout();
@@ -123,6 +159,7 @@ public class JdbcWorkoutDao implements WorkoutDao{
         workout.setDuration(rs.getInt("duration"));
         workout.setProfileId(rs.getInt("profile_id"));
         workout.setWorkoutDate(Objects.requireNonNull(rs.getDate("workout_date")).toLocalDate());
+        workout.setCaloriesBurned(rs.getDouble("calories_burned"));
         return workout;
     }
 

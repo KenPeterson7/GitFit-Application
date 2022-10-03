@@ -34,7 +34,7 @@ public class JdbcProfileDao implements ProfileDao{
     @Override
     public boolean updateProfile(Profile profile, int profileId) {
         String sql = "Update Profile set age = ?, height = ?, current_weight = ?, desired_weight = ?, birthday = ?, \n" +
-                "profile_pic = ?::bytea, current_star_streak = ?, high_start_streak = ?, username = ?, displayname = ?, gender = ?, activity_level = ? \n" +
+                "profile_pic = ?, current_star_streak = ?, high_start_streak = ?, username = ?, displayname = ?, gender = ?, activity_level = ? \n" +
                 "where profile_id = ?";
         return jdbcTemplate.update(sql, profile.getAge(), profile.getHeight(), profile.getCurrentWeight(), profile.getDesiredWeight(),
                 profile.getBirthday(), profile.getProfilePic(), profile.getStarStreak(), profile.getHighStarStreak(), profile.getUsername(),

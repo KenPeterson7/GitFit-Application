@@ -10,7 +10,13 @@ import Profile from '../views/Profile.vue'
 import LogWorkout from '../views/LogWorkout.vue'
 import RecentFoods from '../views/RecentFoods.vue'
 import FoodForm from '../views/AddFoodForm.vue'
+<<<<<<< HEAD
 import QuickAddMeals from '../views/QuickAddMeals.vue'
+=======
+import ChangePassword from '../views/ChangePassword.vue'
+import ProfilePicture from '../views/ProfilePicture.vue'
+
+>>>>>>> ddeb04e37376509544195e12d482518ef173546a
 
 
 
@@ -103,6 +109,7 @@ const router = new Router({
       }
     },
     {
+<<<<<<< HEAD
       path: '/quickAddMeals',
       name: 'quickAddMeals',
       component: QuickAddMeals,
@@ -111,6 +118,24 @@ const router = new Router({
       }
 
     },
+=======
+      path: '/profile/password',
+      name: 'changePassword',
+      component: ChangePassword,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/profile/avatar',
+      name: 'profilePicture',
+      component: ProfilePicture,
+      meta: {
+        requiresAuth: true
+      }
+    },
+   
+>>>>>>> ddeb04e37376509544195e12d482518ef173546a
 
 
 

@@ -49,7 +49,9 @@ public class FoodController {
         return foodDao.listOfAllFoodsByDate(date);
     }
 @RequestMapping(path = "/food/{username}/{md}/{mt}", method = RequestMethod.GET)
-    public List<Food> listOfFoodsByUsernameDateMealType(@PathVariable("username") String username, @PathVariable("md") String date, @PathVariable("mt") String mealType){
+    public List<Food> listOfFoodsByUsernameDateMealType(@PathVariable("username") String username,
+                                                        @PathVariable("md") String date,
+                                                        @PathVariable("mt") String mealType){
     LocalDate newDate = LocalDate.parse(date);
 
     return foodDao.listOfFoodsByUserNameDateMealType(username, newDate, mealType);
@@ -63,6 +65,14 @@ public class FoodController {
     public int getFoodIdByFoodName(@PathVariable("foodName") String foodName) {
         return foodDao.findFoodIdByFood(foodName);
     }
+
+    @RequestMapping(path = "/food/user/recent/{username}/{mt}", method = RequestMethod.GET)
+    public List<Food> getListOfLastFiveMeals(@PathVariable("username") String username,
+                                             @PathVariable("mt") String mealType) {
+
+        return foodDao.listOfLastFiveMeals(username, mealType);
+    }
+
 
 //    @RequestMapping(path = "/food/breakfast", method = RequestMethod.GET)
 //    public List<Food> getListOfAllBreakfastFoods() {

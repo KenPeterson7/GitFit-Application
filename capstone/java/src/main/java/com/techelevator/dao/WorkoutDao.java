@@ -20,6 +20,12 @@ public interface WorkoutDao {
     // get one workout by workout_id
     Workout getWorkoutByWorkoutId(int workoutId);
 
+    List<Workout> getAllWorkouts();
+
+    List<Workout> listOfAllWorkoutsByLastFiveDates(String username);
+
+
+
 
 
 }

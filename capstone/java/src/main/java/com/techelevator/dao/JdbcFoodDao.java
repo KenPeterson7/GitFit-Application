@@ -15,6 +15,7 @@ public class JdbcFoodDao implements FoodDao{
     private JdbcTemplate jdbcTemplate;
 
     public JdbcFoodDao(JdbcTemplate jdbcTemplate){
+
         this.jdbcTemplate = jdbcTemplate;
     }
 
@@ -126,6 +127,28 @@ public class JdbcFoodDao implements FoodDao{
         foodId = jdbcTemplate.queryForObject(sql, int.class, foodName);
 
         return foodId;
+    }
+
+    @Override
+    public List<Food> listOfLastFiveMeals(String username, String mealType) {
+
+        List<Food> newFoodList = new ArrayList<Food>();
+
+        String sql =
+                "select * from food\n" +
+                        "join food_meal on food_meal.food_id = food.food_id " +
+                        "join meal on meal.meal_id = food_meal.meal_id " +
+                        "join profile on profile.profile_id = meal.profile_id " +
+                        "where profile.username = ?  and meal_type = ? " +
+                        "ORDER BY meal.meal_date DESC " +
+                        "LIMIT 5 ;";
+
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, username, mealType);
+        while( results.next() ) {
+            Food food = mapRowToFood(results);
+            newFoodList.add(food);
+        }
+        return newFoodList;
     }
 
 
