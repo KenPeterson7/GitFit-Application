@@ -64,8 +64,8 @@ public class AuthenticationController {
     }
 
     @RequestMapping(value ="/profile/password", method = RequestMethod.PUT)
-    public void update(@RequestBody User user) {
-        userDao.update(user.getId(), user.getUsername(), user.getPassword(), "ROLE_USER");
+    public void update(@RequestBody RegisterUserDTO updateUser) {
+        userDao.update(updateUser.getUsername(), updateUser.getPassword(), updateUser.getRole());
     }
 
     /**
