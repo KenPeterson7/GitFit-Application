@@ -3,18 +3,25 @@
     <div id="componentDiv">
       <h1>{{ getName() }}</h1>
       <h2>Calories Remaining: {{ getRemainingCalories() }}</h2>
+      <br>
       <div>
         <h2>Recent Meals:</h2>
-        <ul>
-          <li>Meal A</li>
-          <li>Meal B</li>
-          <li>Meal C</li>
-        </ul>
+        <ol id = "recentMeals">
+          <li >
+            Meal Type: 
+            <ul>
+              <li>Food Included: </li>
+              <li>Total Calories: </li>
+              <li>Meal Date: </li>
+            </ul>
+            <br />
+          </li>
+        </ol>
       </div>
       <div>
         <h2>Recent Workouts:</h2>
 
-        <ol>
+        <ol id = "recentWorkouts">
           <li v-for="workout in recentWorkouts" :key="workout.id">
             Workout Name: {{ workout.nameOfWorkout }}
             <ul>
@@ -30,6 +37,7 @@
 </template>
 
 <script>
+import FoodService from '../services/FoodService';
 import ProfileService from "../services/ProfileService";
 import WorkoutService from "../services/WorkoutService";
 // import FoodService from "../services/FoodService";
@@ -86,6 +94,9 @@ export default {
         }
       });
     },
+    getLastThreeMeals() {
+      FoodService.getPastThreeMeals(this.$store.state.user.username, )
+    }
   },
 };
 </script>
@@ -140,4 +151,13 @@ nav button {
   color: blue;
   border-radius: 5px;
 }
+
+#recentWorkouts{
+  font-weight: bold;
+}
+
+#recentMeals{
+  font-weight: bold;
+}
+
 </style>
