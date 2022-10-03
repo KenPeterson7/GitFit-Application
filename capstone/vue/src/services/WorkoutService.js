@@ -20,5 +20,8 @@ export default {
     },
     deleteWorkout(id) {
         return axios.delete(`/workout/${id}`)
+    },
+    getListOfLastThreeWorkouts(username) {
+        return axios.get(`/workout/user/recent/${username}`)
     }
 }

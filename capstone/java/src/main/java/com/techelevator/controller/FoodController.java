@@ -70,7 +70,7 @@ public class FoodController {
     public List<Food> getListOfLastFiveMeals(@PathVariable("username") String username,
                                              @PathVariable("mt") String mealType) {
 
-        return foodDao.listOfLastFiveMeals(username, mealType);
+        return foodDao.listOfLastThreeMeals(username, mealType);
     }
 
 

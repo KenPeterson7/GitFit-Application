@@ -130,7 +130,7 @@ public class JdbcFoodDao implements FoodDao{
     }
 
     @Override
-    public List<Food> listOfLastFiveMeals(String username, String mealType) {
+    public List<Food> listOfLastThreeMeals(String username, String mealType) {
 
         List<Food> newFoodList = new ArrayList<Food>();
 
@@ -141,7 +141,7 @@ public class JdbcFoodDao implements FoodDao{
                         "join profile on profile.profile_id = meal.profile_id " +
                         "where profile.username = ?  and meal_type = ? " +
                         "ORDER BY meal.meal_date DESC " +
-                        "LIMIT 5 ;";
+                        "LIMIT 3 ;";
 
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, username, mealType);
         while( results.next() ) {

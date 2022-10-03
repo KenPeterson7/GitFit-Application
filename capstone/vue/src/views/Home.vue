@@ -12,12 +12,18 @@
         </ul>
       </div>
       <div>
-        <h2>Recent Activities:</h2>
-        <ul>
-          <li>Activity A</li>
-          <li>Activity B</li>
-          <li>Activity C</li>
-        </ul>
+        <h2>Recent Workouts:</h2>
+
+        <ol>
+          <li v-for="workout in recentWorkouts" :key="workout.id">
+            Workout Name: {{ workout.nameOfWorkout }}
+            <ul>
+              <li>Workout Type: {{ workout.typeOfWorkout }}</li>
+              <li>Workout Date: {{ workout.workoutDate }}</li>
+            </ul>
+            <br />
+          </li>
+        </ol>
       </div>
     </div>
   </div>
@@ -25,6 +31,9 @@
 
 <script>
 import ProfileService from "../services/ProfileService";
+import WorkoutService from "../services/WorkoutService";
+// import FoodService from "../services/FoodService";
+// import MealService from "../services/MealService";
 
 export default {
   components: {},
@@ -33,10 +42,14 @@ export default {
     return {
       name: this.$store.state.profile.displayName,
       caloriesRemaining: this.$store.state.goal.daily_caloric_goal,
+      recentWorkouts: [],
+      recentMeals: [],
+      recentFoods: [],
     };
   },
   created() {
     this.populateStore();
+    this.getLastThreeWorkouts();
   },
   methods: {
     populateStore() {
@@ -59,11 +72,20 @@ export default {
       );
     },
     getName() {
-      return this.$store.state.profile.displayName
+      return this.$store.state.profile.displayName;
     },
     getRemainingCalories() {
-      return this.$store.state.goal.daily_caloric_goal
-    }
+      return this.$store.state.goal.daily_caloric_goal;
+    },
+    getLastThreeWorkouts() {
+      WorkoutService.getListOfLastThreeWorkouts(
+        this.$store.state.user.username
+      ).then((response) => {
+        if (response.status == 200) {
+          this.recentWorkouts = response.data;
+        }
+      });
+    },
   },
 };
 </script>
