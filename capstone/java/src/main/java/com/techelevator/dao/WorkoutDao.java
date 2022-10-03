@@ -22,10 +22,6 @@ public interface WorkoutDao {
 
     List<Workout> getAllWorkouts();
 
-    List<Workout> listOfAllWorkoutsByLastFiveDates(String username);
-
-
-
-
+    List<Workout> listOfLastThreeWorkouts(String username);
 
 }
