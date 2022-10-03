@@ -67,10 +67,10 @@ public class FoodController {
     }
 
     @RequestMapping(path = "/food/user/recent/{username}/{mt}", method = RequestMethod.GET)
-    public List<Food> getListOfLastFiveMeals(@PathVariable("username") String username,
+    public List<Food> getListOfLastThreeMeals(@PathVariable("username") String username,
                                              @PathVariable("mt") String mealType) {
 
-        return foodDao.listOfLastFiveMeals(username, mealType);
+        return foodDao.listOfLastThreeMeals(username, mealType);
     }
 
 

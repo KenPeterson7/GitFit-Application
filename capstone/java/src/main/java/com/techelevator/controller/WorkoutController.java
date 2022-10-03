@@ -61,9 +61,9 @@ public class WorkoutController {
     }
 
     @RequestMapping(path = "/workout/user/recent/{username}", method = RequestMethod.GET)
-    public List<Workout> getListOfAllWorkoutsByLastFiveDates(@PathVariable("username") String username) {
+    public List<Workout> getListOfLastFiveWorkouts(@PathVariable("username") String username) {
 
-        return workoutDao.listOfAllWorkoutsByLastFiveDates(username);
+        return workoutDao.listOfLastThreeWorkouts(username);
     }
 
 }

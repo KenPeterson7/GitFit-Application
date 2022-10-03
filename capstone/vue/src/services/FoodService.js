@@ -16,7 +16,7 @@ export default {
     getFoodByUserMealDate(username, md, mt){
         return axios.get(`/food/${username}/${md}/${mt}`)
     },
-    getPastFiveMeals(username, mt){
+    getPastThreeMeals(username, mt){
         return axios.get(`/food/user/recent/${username}/${mt}`)
     }
 

@@ -132,7 +132,7 @@ public class JdbcWorkoutDao implements WorkoutDao{
     }
 
     @Override
-    public List<Workout> listOfAllWorkoutsByLastFiveDates(String username) {
+    public List<Workout> listOfLastThreeWorkouts(String username) {
 
         List<Workout> workoutList = new ArrayList<>();
         String sql =
@@ -141,7 +141,7 @@ public class JdbcWorkoutDao implements WorkoutDao{
                         "JOIN profile ON profile.profile_id = workout.profile_id " +
                         "WHERE profile.username = ? " +
                         "ORDER BY workout_date DESC " +
-                        "LIMIT 5 ;";
+                        "LIMIT 3 ;";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, username);
         while( results.next() ) {
             Workout workout = mapRowToWorkout(results);
