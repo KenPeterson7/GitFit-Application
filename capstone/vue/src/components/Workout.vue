@@ -1,7 +1,7 @@
 <template>
 <div>
   <div id="workout">
-    <h1>Workouts & Activities</h1>
+    <!-- <h1>Workouts & Activities</h1> -->
     <table id="workoutTable">
       <thead id="header">
         <tr>
@@ -42,8 +42,7 @@
       <button v-on:click="cancel()">Cancel</button>
     </form>
   </div>
-  <span><strong>Total Calories Burned: </strong>{{ total }}</span>
-  <button id="addWorkout">Add Workout</button>
+  <span id="totalCalories"><strong>Total Calories Burned: </strong>{{ total }}</span>
 </div>
 </template>
 
@@ -111,11 +110,7 @@ export default {
 </script>
 
 <style>
-#addWorkout {
-  margin-top: 75px;
-   margin-left: 1000px;
-   margin-bottom: 520px;
-}
+
 
 #editedWorkout{
   background: lightskyblue;
@@ -137,12 +132,18 @@ strong {
   font-size: 22px;
 }
 
-#workout {
-  margin-bottom: 50px;
-  
+#totalCalories {
+  margin-top: 75px;
+   margin-left: 10px;
 }
+
+#workout {
+  margin-bottom: 500px;
+}
+
 #workoutTable {
   margin-left: 22.5%;
+  margin-top: 100px;
 }
 
 #workoutTable th {

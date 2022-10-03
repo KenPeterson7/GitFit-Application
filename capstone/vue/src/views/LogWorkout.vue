@@ -1,5 +1,9 @@
 <template>
+<div class="logWorkout">
+  <h1>Workouts & Activities</h1>
+  <router-link v-bind:to="{name: 'addWorkout'}"><button id="addWorkout">Add Workout</button></router-link>
   <workout />
+</div>
 </template>
 
 <script>
@@ -11,5 +15,8 @@ export default {
 </script>
 
 <style>
+  #addWorkout{
+    margin-left: 1600px;
+  }
 
 </style>

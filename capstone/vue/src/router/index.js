@@ -13,6 +13,7 @@ import FoodForm from '../views/AddFoodForm.vue'
 import QuickAddMeals from '../views/QuickAddMeals.vue'
 import ProfilePicture from '../views/ProfilePicture.vue'
 import ChangePassword from '../views/ChangePassword.vue'
+import AddWorkout from '../views/AddWorkout.vue'
 
 
 
@@ -128,7 +129,15 @@ const router = new Router({
       meta: {
         requiresAuth: true
       }
-    }   
+    },
+    {
+      path: '/addWorkout',
+      name: 'addWorkout',
+      component: AddWorkout,
+      meta: {
+        requiresAuth: true
+      }
+    } 
 
   ]
 })
