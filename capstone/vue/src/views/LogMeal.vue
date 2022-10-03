@@ -34,7 +34,7 @@
       ><button id="add">Add Food</button></router-link
     >
     <button v-on:click="updateCalories()"> See Calories Consumed:</button>
-    <p v-if="seeCalories">  {{this.calories}}</p>
+    <h3 v-if="seeCalories">  {{this.calories}}</h3>
   </div>
 </template>
 
@@ -158,6 +158,9 @@ button{
 #add{
  margin-left: 45%;
  margin-top: 30px;
+}
+h3{
+  text-align: center;
 }
 
 
