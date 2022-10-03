@@ -31,9 +31,8 @@
         <option>Dinner</option>
         <option>Snacks</option>
       </select>
-      <button v-on:click="assignMealType()">Confirm</button>
-      <button v-on:click="logFood(newFood)">Confirm 2</button>
-      <button type="submit" v-on:click="addNewFood()">Save</button>
+      <button v-on:click="assignMealType(newFood)">Save</button>
+  
       <button v-on:click="cancel()">Cancel</button>
     </form>
   </div>
@@ -75,8 +74,8 @@ export default {
         if (response.status === 201) {
           this.mealFoodObject.foodId = response.data.foodId;
           console.log(this.mealFoodObject.foodId);
-          this.assignMealType();
           
+           this.addNewFood();
           //check and see if meal has an entry for that meal type, profile id, date
           // if yes, assign that returned meal id to foodmeal.mealId
           //if not enter an entry to the meal table and return that id
@@ -84,7 +83,8 @@ export default {
         }
       });
     },
-    assignMealType() {
+    assignMealType(newFood) {
+      console.log(newFood)
       MealService.getMealIdByMealDetails(
         this.meal.mealType,
         this.meal.mealDate,
@@ -99,7 +99,8 @@ export default {
               this.mealFoodObject.mealId = response.data.mealId;
             });
           }
-          this.addNewFood();
+         
+         this.logFood(newFood)
         }
       });
     },

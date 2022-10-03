@@ -44,10 +44,10 @@
         <option>Dinner</option>
         <option>Snacks</option>
       </select>
-      <button v-on:click="assignMealType()">Confirm</button>
+ 
     </div>
     <div id="addCancel" v-if="showAddCancelBtns">
-      <button v-on:click="addFood()">Save Food</button>
+      <button v-on:click="assignMealType()">Save Food</button>
       <button v-on:click="cancel()">Cancel</button>
     </div>
     <div id="foodBanner" v-if="addFoodBanner">
@@ -135,6 +135,7 @@ export default {
           
             });
           }
+          this.addFood();
         }
       });
     },

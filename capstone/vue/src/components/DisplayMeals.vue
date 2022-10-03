@@ -1,11 +1,12 @@
 <template>
   <div>
+
     <div id="foodTable">
       <table
         id="foodTable"
        
       >
-        <thead id="header">
+        <!-- <thead id="header">
           <th></th>
           <th></th>
           <th></th>
@@ -13,26 +14,26 @@
           <th></th>
           <th></th>
           <th></th>
-        </thead>
-        <tbody>
+        </thead> -->
+        <!-- <tbody> -->
           <tr  v-for="(food, index) in foodList"
         v-bind:key="index">
-        <td class="first">{{ food.foodName }}</td>
+        <td id="name">{{ food.foodName }}</td>
       
 
-          <td>{{ food.foodType }}</td>
-          <td>{{ food.caloricAmount }}</td>
-          <td>{{ food.size }}</td>
-          <td class="last">{{ food.numberOfServings }}</td>
+          <td id = "foodType">{{ food.foodType }}</td>
+          <td id = "calories">{{ food.caloricAmount }}</td>
+          <td id = "size">{{ food.size }}</td>
+          <td id = "servings">{{ food.numberOfServings }}</td>
 
-          <button v-on:click="editFood(food)">Edit Food</button>
+          <button id = "edit" v-on:click="editFood(food)">Edit Food</button>
           
             <button id="delete" v-on:click="deleteFood(food.foodId)">
               Delete Food
             </button>
           
           </tr>
-        </tbody>
+        <!-- </tbody> -->
       </table>
     </div>
     <div id="editForm" v-if="showForm">
@@ -140,24 +141,47 @@ export default {
 
 <style scoped>
 
-#delete {
-  color: red;
-}
+
 button {
 
   border-radius: 4px;
   color: blue;
 }
-.first{
-padding-left: 30px;
-  padding-right: 320px;
+tr{
+   display: grid;
 
+  /* grid-template-columns: 400px 50px 50px 70px 50px 120px 120px ; */
+  grid-template-columns: 30% 20% 20% 10% 20% 20% 20%;
+  grid-template-areas: "name foodType calories size servings edit delete"
 }
-td{
-  padding-right: 85px;
+
+#name{
+  grid-area: name;
 }
-.last{
-  padding-right: 200px;
+#foodType{
+  grid-area: foodType;
 }
+#calories{
+  grid-area: calories;
+}
+#size{
+  grid-area: size;
+}
+#servings{
+  grid-area: servings
+}
+#edit{
+  grid-area: edit;
+}
+#delete {
+  grid-area: delete;
+  color: red;
+}
+
+
+
+
+
+
 
 </style>
