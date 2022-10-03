@@ -75,6 +75,8 @@ export default {
         if (response.status === 201) {
           this.mealFoodObject.foodId = response.data.foodId;
           console.log(this.mealFoodObject.foodId);
+          this.assignMealType();
+          
           //check and see if meal has an entry for that meal type, profile id, date
           // if yes, assign that returned meal id to foodmeal.mealId
           //if not enter an entry to the meal table and return that id
@@ -91,11 +93,13 @@ export default {
         if (response.status == 200) {
           this.mealFoodObject.mealId = response.data;
 
+
           if (this.mealFoodObject.mealId === 0) {
             MealService.addMeal(this.meal).then((response) => {
               this.mealFoodObject.mealId = response.data.mealId;
             });
           }
+          this.addNewFood();
         }
       });
     },
