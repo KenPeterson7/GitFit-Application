@@ -19,7 +19,7 @@ CREATE TABLE profile (
    current_weight numeric NOT NULL,
    desired_weight numeric NOT NULL,
    birthday date NOT NULL,
-   profile_pic BYTEA,
+   profile_pic varchar,
    current_star_streak int NOT NULL,
    high_start_streak int NOT NULL,
    username varchar(50) NOT NULL UNIQUE,
@@ -131,13 +131,13 @@ INSERT INTO food (food_name, food_type, size, number_servings, caloric_amount)
 VALUES ('pear', 'fruit', '10', 1, 40);
 
 INSERT INTO meal (meal_type, meal_date, profile_id)
-VALUES ('breakfast', '2022-09-29', 2001);
+VALUES ('Breakfast', '2022-09-29', 2001);
 INSERT INTO meal (meal_type, meal_date, profile_id)
-VALUES ('lunch', '2022-09-29', 2001);
+VALUES ('Lunch', '2022-09-29', 2001);
 INSERT INTO meal (meal_type, meal_date, profile_id)
-VALUES ('dinner', '2022-09-30', 2001);
+VALUES ('Dinner', '2022-09-30', 2001);
 INSERT INTO meal (meal_type, meal_date, profile_id)
-VALUES ('snacks', '2022-09-30', 2001);
+VALUES ('Snacks', '2022-09-30', 2001);
 
 insert into goal(profile_id, daily_caloric_goal) values(2001, 300);
 insert into goal(profile_id, daily_caloric_goal) values(2002, 350);

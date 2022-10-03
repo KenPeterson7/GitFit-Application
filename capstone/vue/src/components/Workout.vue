@@ -33,6 +33,7 @@ export default {
   data() {
     return {
       mySavedWorkouts: [],
+      calories: '',
     };
   },
   created() {
@@ -48,8 +49,10 @@ export default {
           }
         });
     },
+    
   },
-};
+  
+  };
 </script>
 
 <style>
