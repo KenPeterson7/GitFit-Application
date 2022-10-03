@@ -1,4 +1,5 @@
 <template>
+<div>
   <div id="workout">
     <h1>Workouts & Activities</h1>
     <table id="workoutTable">
@@ -9,6 +10,7 @@
           <th>Duration of Workout:</th>
           <th>Date of Workout:</th>
           <th>Calories Burned:</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -18,11 +20,30 @@
           <td>{{ workout.duration }}</td>
           <td>{{ workout.workoutDate }}</td>
           <td>{{ workout.caloriesBurned }}</td>
+          <td><button id="editWorkout" v-on:click="editWorkout(workout)">Edit Workout</button></td>
         </tr>
       </tbody>
     </table>
-    <span>Total Calories Burned:</span>
+    <button id="addWorkout">Add Workout</button>
+    <span><strong>Total Calories Burned: </strong>{{ total }}</span>
   </div>
+  <div id="editWorkout" v-if="showForm">
+    <form v-on:submit.prevent>
+      <label for="nameOfWorkout">Name of Workout: </label>
+      <input type="text" id="nameOfWorkout" v-model="myModifiedWorkout.nameOfWorkout" />
+      <label for="typeOfWorkout">Type of Workout: </label>
+      <input type="text" id="typeOfWorkout" v-model="myModifiedWorkout.typeOfWorkout" />
+      <label for="durationOfWorkout">Duration of Workout: </label>
+      <input type="text" id="durationOfWorkout" v-model="myModifiedWorkout.duration" />
+      <label for="dateOfWorkout">Date of Workout: </label>
+      <input type="date" id="dateOfWorkout" v-model="myModifiedWorkout.workoutDate" />
+      <label for="caloriesBurned">Calories Burned: </label>
+      <input type="text" id="caloriesBurned" v-model="myModifiedWorkout.caloriesBurned" />
+      <button type="submit" v-on:click="saveEditedWorkout(myModifiedWorkout)">Save</button>
+      <button v-on:click="cancel()">Cancel</button>
+    </form>
+  </div>
+</div>
 </template>
 
 <script>
@@ -32,8 +53,18 @@ export default {
   name: "workout",
   data() {
     return {
-      mySavedWorkouts: [],
-      calories: '',
+      showForm: false,
+      myModifiedWorkout: {},
+      mySavedWorkouts: [
+        {
+          profileId: "",
+          nameOfWorkout: "",
+          typeOfWorkout: "",
+          duration: "",
+          workoutDate: "",
+          caloriesBurned: "",
+        },
+      ],
     };
   },
   created() {
@@ -49,18 +80,55 @@ export default {
           }
         });
     },
-    
+    editWorkout(workout) {
+      this.showForm = true;
+      this.myModifiedWorkout = workout;
+    },
+    saveEditedWorkout(workout) {
+      workoutService
+        .updateWorkout(workout.workoutId, workout)
+        .then((response) => {
+          if (response.status == 200) {
+            this.showForm = false;
+          }
+        });
+    },
+    cancel() {
+      this.showForm = false;
+    }
   },
-  
-  };
+  computed: {
+    total: function () {
+      let sum = 0;
+      for (let i = 0; i < this.mySavedWorkouts.length; i++) {
+        sum += this.mySavedWorkouts[i].caloriesBurned;
+      }
+      return sum;
+    },
+  },
+};
 </script>
 
 <style>
+#addWorkout {
+  position: fixed;
+  margin-top: 420px;
+  margin-left: 1170px;
+}
+
+ #editWorkout {
+  height: 30px;
+}
 
 span {
   position: fixed;
-    margin-top: 20px;
-    padding-top: 425px;
+  margin-top: 20px;
+  padding-top: 400px;
+  margin-right: 100px;
+}
+
+strong {
+  font-size: 22px;
 }
 
 #workout {
