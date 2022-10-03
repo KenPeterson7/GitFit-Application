@@ -19,7 +19,7 @@ CREATE TABLE profile (
    current_weight numeric NOT NULL,
    desired_weight numeric NOT NULL,
    birthday date NOT NULL,
-   profile_pic BYTEA,
+   profile_pic varchar,
    current_star_streak int NOT NULL,
    high_start_streak int NOT NULL,
    username varchar(50) NOT NULL UNIQUE,
