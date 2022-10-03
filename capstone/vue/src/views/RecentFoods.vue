@@ -29,6 +29,9 @@
       <router-link v-bind:to="{ name: 'addFoodForm' }">
         <button id="addBtn">Add New Food</button>
       </router-link>
+      <router-link v-bind:to="{name: 'quickAddMeals'}">
+      <button>Quick Add Recent Meals</button>
+      </router-link>
     </div>
 
     <div id="mealSelection" v-if="showMealSelection">
@@ -166,7 +169,7 @@ th {
 }
 #navBtns {
   margin-top: 20px;
-  margin-left: 76%;
+  margin-left: 59%;
   padding: 10px;
 }
 

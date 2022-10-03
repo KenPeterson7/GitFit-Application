@@ -10,6 +10,7 @@ import Profile from '../views/Profile.vue'
 import LogWorkout from '../views/LogWorkout.vue'
 import RecentFoods from '../views/RecentFoods.vue'
 import FoodForm from '../views/AddFoodForm.vue'
+import QuickAddMeals from '../views/QuickAddMeals.vue'
 
 
 
@@ -100,6 +101,15 @@ const router = new Router({
       meta: {
         requiresAuth: true
       }
+    },
+    {
+      path: '/quickAddMeals',
+      name: 'quickAddMeals',
+      component: QuickAddMeals,
+      meta: {
+        requiresAuth: true
+      }
+
     },
 
 

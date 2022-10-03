@@ -101,6 +101,7 @@ export default {
     },
     addNewFood() {
       FoodMealService.addFoodMeal(this.mealFoodObject);
+
       this.$router.push({ name: "recentFoods" });
     },
     cancel() {
