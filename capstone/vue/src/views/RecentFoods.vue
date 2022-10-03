@@ -29,6 +29,9 @@
       <router-link v-bind:to="{ name: 'addFoodForm' }">
         <button id="addBtn">Add New Food</button>
       </router-link>
+      <router-link v-bind:to="{name: 'quickAddMeals'}">
+      <button>Quick Add Recent Meals</button>
+      </router-link>
     </div>
 
     <div id="mealSelection" v-if="showMealSelection">
@@ -41,10 +44,10 @@
         <option>Dinner</option>
         <option>Snacks</option>
       </select>
-      <button v-on:click="assignMealType()">Confirm</button>
+ 
     </div>
     <div id="addCancel" v-if="showAddCancelBtns">
-      <button v-on:click="addFood()">Save Food</button>
+      <button v-on:click="assignMealType()">Save Food</button>
       <button v-on:click="cancel()">Cancel</button>
     </div>
     <div id="foodBanner" v-if="addFoodBanner">
@@ -132,6 +135,7 @@ export default {
           
             });
           }
+          this.addFood();
         }
       });
     },
@@ -166,7 +170,7 @@ th {
 }
 #navBtns {
   margin-top: 20px;
-  margin-left: 76%;
+  margin-left: 59%;
   padding: 10px;
 }
 

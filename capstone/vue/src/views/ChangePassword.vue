@@ -54,10 +54,9 @@ export default {
         this.registrationErrors = true;
         this.registrationErrorMsg = 'Password & Confirm Password do not match.';
       } else {
-          let user = this.$store.state.user;
-          user.password = this.user.password;
+          
         authService
-          .updatePassword(user)
+          .updatePassword(this.user)
           .then((response) => {
             if (response.status == 200) {
               this.$router.push({
