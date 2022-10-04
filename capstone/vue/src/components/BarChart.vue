@@ -1,8 +1,8 @@
 <template>
   <div>
-    <h1 class="chartTitle">
+    <h3 class="chartTitle">
       Weekly Caloric Intake {{ weekAgo }} - {{ today }}
-    </h1>
+    </h3>
     <Bar
       :chart-options="chartOptions"
       :chart-data="chartData"
@@ -28,7 +28,7 @@ import {
   CategoryScale,
   LinearScale,
 } from "chart.js";
-import FoodService from '../services/FoodService.js'
+import FoodService from "../services/FoodService.js";
 
 ChartJS.register(
   Title,
@@ -53,11 +53,11 @@ export default {
     },
     width: {
       type: Number,
-      default: 1000,
+      default: 25,
     },
     height: {
       type: Number,
-      default: 400,
+      default: 10,
     },
     cssClasses: {
       default: "",
@@ -80,23 +80,25 @@ export default {
         .slice(0, 10),
       chartData: {
         labels: this.getChartLabels(),
-        // [
-        //   "Sunday",
-        //   "Monday",
-        //   "Tuesday",
-        //   "Wednesday",
-        //   "Thursday",
-        //   "Friday",
-        //   "Saturday",
-        // ],
         datasets: [
           {
             label: "Daily Caloric Intake",
-            data: 
-            this.getData(),
-            // [1750, 1690, 1868, 2000, 1985, 1775, 1825],
-            backgroundColor: "rgba(0,125,255,0.7)",
-            borderColor: "rgb(0,125,255)",
+            data: this.getData(),
+            backgroundColor: () => {
+              let backgroundColors = [];
+              let goal = this.$store.state.goal.daily_caloric_goal;
+              this.chartData.datasets[0].data.forEach((dataPoint) => {
+                if (dataPoint > 1.2 * goal) {
+                  backgroundColors.push("rgba(225,0,0,0.7)");
+                } else if (dataPoint < 0.8 * goal) {
+                  backgroundColors.push("rgba(225,225,0,0.7)");
+                } else {
+                  backgroundColors.push("rgba(0,125,255,0.7)");
+                }
+              });
+              return backgroundColors;
+            },
+            borderColor: "rgb(00,00,00)",
             borderWidth: 2,
           },
         ],
@@ -107,32 +109,36 @@ export default {
     };
   },
   methods: {
-      getChartLabels() {
-          let days = [];
-          for (let i = 6; i > -1; i--) {
-              let day = new Date();
-              day.setDate(day.getDate() - i);
-              days.push(day.toString().slice(0,10));
-          }
-          return days;
-      },
-      getData() {
-          let data = [];
-          let user = this.$store.state.user.username
-          for (let i = 6; i > -1; i--) {
-              let day = new Date();
-              day.setDate(day.getDate() - i);
-              day = day.toJSON().slice(0,10);
-                FoodService.getWeeklyCalories(user, day).then((response) => {
-                    if(response.status == 200) {
-                        data.push(response.data);
-                    }
-          });
-          }
-          
-          return data;
+    getChartLabels() {
+      let days = [];
+      for (let i = 6; i > -1; i--) {
+        let day = new Date();
+        day.setDate(day.getDate() - i);
+        days.push(day.toString().slice(0, 10));
       }
-  }
+      return days;
+    },
+    getData() {
+      let data = [];
+      let user = this.$store.state.user.username;
+      let day = new Date().toJSON().slice(0, 10);
+
+      FoodService.getCaloriesForWeek(user, day).then((response) => {
+        if (response.status == 200) {
+          let returnedData = response.data;
+
+          for (let i = 0; i < 7; i++) {
+            data.push(returnedData[i]);
+          }
+        }
+      });
+
+      return data;
+    },
+    getColors() {
+      return this.barColors;
+    },
+  },
 };
 </script>
 
@@ -140,5 +146,4 @@ export default {
 .chartTitle {
   text-align: center;
 }
-
 </style>

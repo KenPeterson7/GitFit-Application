@@ -3,7 +3,11 @@
     <div id="componentDiv">
       <h1>{{ getName() }}</h1>
       <h2>Calories Remaining: {{ getRemainingCalories() }}</h2>
+      
       <br>
+      <div id=chart>
+      <bar-chart />
+      </div>
       <div>
         <h2>Recent Meals:</h2>
         <ol id = "recentMeals">
@@ -58,12 +62,13 @@
 import FoodService from '../services/FoodService';
 import ProfileService from "../services/ProfileService";
 import WorkoutService from "../services/WorkoutService";
-
+import BarChart from '../components/BarChart.vue'
 // import FoodService from "../services/FoodService";
 // import MealService from "../services/MealService";
 
 export default {
   name: "home",
+  components: {BarChart},
   data() {
     return {
        profile: "",
@@ -193,10 +198,10 @@ export default {
 <style scoped>
 .home {
   display: flex;
-  height: 700px;
+  /* height: 700px; */
 }
 
-.home nav {
+/* .home nav {
   min-width: 150px;
   border-right: 1px;
   border-right-style: solid;
@@ -205,7 +210,7 @@ export default {
 
   border-radius: 5px;
   text-align: center;
-}
+} */
 
 h1 {
   text-decoration: underline;
@@ -216,30 +221,34 @@ h3 {
   padding-right: 20px;
 }
 
-#componentDiv {
-  flex-grow: 8;
+#chart{
+  
+}
+
+/* #componentDiv {
+  flex-grow: 8; 
   background-image: url("../../public/Images/gym-background2.png");
   background-color: lightgray;
   background-blend-mode: screen;
   background-size: cover;
   background-repeat: no-repeat;
-}
+} */
 
-.selected {
+/* .selected {
   background-color: rgb(0, 67, 127);
   color: white;
-}
+} */
 
 div {
   margin-left: 2.5px;
 }
 
-nav button {
+/* nav button {
   margin: 15px;
   width: 75%;
   color: blue;
   border-radius: 5px;
-}
+} */
 
 #recentWorkouts{
   font-weight: bold;
