@@ -174,9 +174,6 @@ h3 {
   padding-right: 20px;
 }
 
-#chart{
-  
-}
 
 /* #componentDiv {
   flex-grow: 8; 
