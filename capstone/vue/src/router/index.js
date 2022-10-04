@@ -13,6 +13,7 @@ import FoodForm from '../views/AddFoodForm.vue'
 import QuickAddMeals from '../views/QuickAddMeals.vue'
 import ProfilePicture from '../views/ProfilePicture.vue'
 import ChangePassword from '../views/ChangePassword.vue'
+import Progress from '../components/BarChart.vue'
 
 
 
@@ -128,6 +129,15 @@ const router = new Router({
       meta: {
         requiresAuth: true
       }
+    },
+    {
+      path: '/progress',
+      name: 'progress',
+      component: Progress,
+      meta: {
+        requiresAuth: true
+      }
+
     }   
 
   ]

@@ -44,7 +44,6 @@ import WorkoutService from "../services/WorkoutService";
 // import MealService from "../services/MealService";
 
 export default {
-  components: {},
   name: "home",
   data() {
     return {

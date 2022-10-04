@@ -6,6 +6,9 @@ export default {
     },
     addMeal(meal){
         return axios.post(`/meal`, meal)
+    },
+    getWeeklyCalories(){
+        return axios.get()
     }
 
 }
