@@ -47,7 +47,7 @@ CREATE SEQUENCE seq_food_id
   NO MAXVALUE;
 CREATE TABLE food(
    food_id int NOT NULL DEFAULT nextval('seq_food_id'),
-   food_name  varchar(50) UNIQUE,
+   food_name  varchar(50),
    food_type varchar(50),
    size varchar(50) NOT NULL,
    number_servings int NOT NULL,
