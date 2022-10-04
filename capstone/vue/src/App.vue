@@ -108,6 +108,7 @@ export default {
  
   display:flex;
   flex-direction: column;
+  overflow-y: scroll;
 }
 .inner-router-view{
   height: fit-content;
