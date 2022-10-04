@@ -3,23 +3,23 @@
     <form id="newProfileForm" v-on:submit.prevent="saveProfile()">
       <div class="form-group">
         <label for="name">Name: </label>
-        <input id="name" type="text" v-model="newProfile.displayName" />
+        <input id="name" type="text" v-model="newProfile.displayName" required/>
       </div>
       <div class="form-group">
         <label for="age">Age: </label>
-        <input id="age" type="number" v-model="newProfile.age" />
+        <input id="age" type="number" v-model="newProfile.age" required/>
       </div>
       <div class="form-group">
         <label for="birthday">Birthday: </label>
-        <input id="birthday" type="date" v-model="newProfile.birthday" />
+        <input id="birthday" type="date" v-model="newProfile.birthday" required/>
       </div>
       <div class="form-group">
         <label for="height">Height (in inches): </label>
-        <input id="height" type="number" v-model="newProfile.height" />
+        <input id="height" type="number" v-model="newProfile.height" required/>
       </div>
       <div class="form-group">
         <label for="gender">Gender Assigned at Birth: </label>
-        <select id="gender" v-model="newProfile.gender">
+        <select id="gender" v-model="newProfile.gender" required>
           <option>-</option>
           <option>M</option>
           <option>F</option>
@@ -37,6 +37,7 @@
           id="currentWeight"
           type="number"
           v-model="newProfile.currentWeight"
+          required
         />
       </div>
       <div class="form-group">
@@ -45,11 +46,12 @@
           id="desiredWeight"
           type="number"
           v-model="newProfile.desiredWeight"
+          required
         />
       </div>
       <div class="form-group">
         <label for="activityLevel">Activity Level: </label>
-        <select id="activityLevel" v-model="newProfile.activityLevel">
+        <select id="activityLevel" v-model="newProfile.activityLevel" required>
           <option>-</option>
           <option>Sedentary</option>
           <option>Light</option>
@@ -64,6 +66,7 @@
           id="calorieGoal"
           type="number"
           v-model="newGoal.daily_caloric_goal"
+          required
         />
         <h6 v-if="requiredDataEntered()" v-on:click="calculateCalorieGoal()">
           Calculate Suggested Calorie Goal
@@ -102,7 +105,7 @@ export default {
   methods: {
     saveProfile() {
         ProfileService.addProfile(this.newProfile).then((response) => {
-            if (response.status == 200) {
+            if (response.status == 201) {
                 this.newGoal.profile_id = response.data.profileId;
                 
             }

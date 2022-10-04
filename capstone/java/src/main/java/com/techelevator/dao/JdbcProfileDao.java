@@ -21,7 +21,7 @@ public class JdbcProfileDao implements ProfileDao{
     public Profile createProfile(Profile profile) {
         String sql = "insert into Profile(age, height, current_weight, desired_weight, birthday, profile_pic, current_star_streak, high_start_streak, " +
                 "username, displayName, gender, activity_level)\n" +
-                "values(?, ?, ?, ?, ?, ?::bytea, ?, ?, ?, ?, ?, ?) returning profile_id";
+                "values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) returning profile_id";
         Integer newProfileId = jdbcTemplate.queryForObject(sql, Integer.class, profile.getAge(), profile.getHeight(), profile.getCurrentWeight(),
                 profile.getDesiredWeight(), profile.getBirthday(), profile.getProfilePic(), profile.getStarStreak(), profile.getHighStarStreak(),
                 profile.getUsername(), profile.getDisplayName(), profile.getGender(), profile.getActivityLevel());
@@ -56,7 +56,7 @@ public class JdbcProfileDao implements ProfileDao{
     @Override
     public boolean updateCurrentStar(Profile profile, int profileId) {
         String sql = "Update Profile set age = ?, height = ?, current_weight = ?, desired_weight = ?, birthday = ?, \n" +
-                "profile_pic = ?::bytea, current_star_streak = ?, high_start_streak = ?, username = ?, displayname = ?, gender = ?, activity_level = ? \n" +
+                "profile_pic = ?, current_star_streak = ?, high_start_streak = ?, username = ?, displayname = ?, gender = ?, activity_level = ? \n" +
                 "where profile_id = ?";
         return jdbcTemplate.update(sql, profile.getAge(), profile.getHeight(), profile.getCurrentWeight(), profile.getDesiredWeight(), profile.getBirthday(), profile.getProfilePic(),
                 profile.getStarStreak(), profile.getHighStarStreak(), profile.getUsername(), profile.getDisplayName(), profile.getGender(), profile.getActivityLevel(), profileId) == 1;

@@ -1,7 +1,7 @@
 <template>
 <div>
   <div id="workout">
-    <h1>Workouts & Activities</h1>
+    <!-- <h1>Workouts & Activities</h1> -->
     <table id="workoutTable">
       <thead id="header">
         <tr>
@@ -20,14 +20,13 @@
           <td>{{ workout.duration }}</td>
           <td>{{ workout.workoutDate }}</td>
           <td>{{ workout.caloriesBurned }}</td>
-          <td><button id="editWorkout" v-on:click="editWorkout(workout)">Edit Workout</button></td>
+          <td><button id="editWorkout" v-on:click="editWorkout(workout)">Modify Workout</button></td>
         </tr>
       </tbody>
     </table>
-    <button id="addWorkout">Add Workout</button>
-    <span><strong>Total Calories Burned: </strong>{{ total }}</span>
+    
   </div>
-  <div id="editWorkout" v-if="showForm">
+  <div id="editedWorkout" v-if="showForm" >
     <form v-on:submit.prevent>
       <label for="nameOfWorkout">Name of Workout: </label>
       <input type="text" id="nameOfWorkout" v-model="myModifiedWorkout.nameOfWorkout" />
@@ -43,6 +42,7 @@
       <button v-on:click="cancel()">Cancel</button>
     </form>
   </div>
+  <span id="totalCalories"><strong>Total Calories Burned: </strong>{{ total }}</span>
 </div>
 </template>
 
@@ -110,32 +110,40 @@ export default {
 </script>
 
 <style>
-#addWorkout {
-  position: fixed;
-  margin-top: 420px;
-  margin-left: 1170px;
+
+
+#editedWorkout{
+  background: lightskyblue;
+}
+
+input[type=text]{
+  padding: 10px;
+  border: 2px solid #212;
+  border-radius: 2px;
+  box-shadow: #212121;
+  height: 30px;
 }
 
  #editWorkout {
   height: 30px;
 }
 
-span {
-  position: fixed;
-  margin-top: 20px;
-  padding-top: 400px;
-  margin-right: 100px;
-}
-
 strong {
   font-size: 22px;
 }
 
-#workout {
-  height: 600px;
+#totalCalories {
+  margin-top: 75px;
+   margin-left: 10px;
 }
+
+#workout {
+  margin-bottom: 500px;
+}
+
 #workoutTable {
   margin-left: 22.5%;
+  margin-top: 100px;
 }
 
 #workoutTable th {
