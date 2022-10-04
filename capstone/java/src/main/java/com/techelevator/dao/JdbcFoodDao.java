@@ -151,81 +151,49 @@ public class JdbcFoodDao implements FoodDao{
         return newFoodList;
     }
 
+    @Override
+    public List<Food> getLastMeal(String username, String mealType) {
 
-//    @Override
-//    public List<Food> listOfAllBreakfastFoods() {
-//
-//        List<Food> breakfastList = new ArrayList<Food>();
-//        String sql =
-//                "SELECT * " +
-//        "FROM food " +
-//        "JOIN food_meal ON food_meal.food_id = food.food_id " +
-//        "JOIN meal ON meal.meal_id = food_meal.meal_id " +
-//                        "JOIN profile ON profile.profile_id = meal.profile_id " +
-//        "WHERE meal.meal_date = ? AND  food.meal_type = 'breakfast' AND profile.username = ? ;";
-//
-//        SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
-//        while( results.next() ) {
-//            Food food = mapRowToFood(results);
-//            breakfastList.add(food);
-//        }
-//        return breakfastList;
-//    }
-//
-//    @Override
-//    public List<Food> listOfAllLunchFoods() {
-//
-//        List<Food> lunchList = new ArrayList<Food>();
-//        String sql =
-//                "SELECT * " +
-//                        "FROM food " +
-//                        "JOIN food_meal ON food_meal.food_id = food.food_id " +
-//                        "JOIN meal ON meal.meal_id = food_meal.meal_id " +
-//                        "WHERE meal.meal_date = ? AND  food.meal_type = 'lunch' ;";
-//
-//        SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
-//        while( results.next() ) {
-//            Food food = mapRowToFood(results);
-//            lunchList.add(food);
-//        }
-//        return lunchList;
-//    }
-//
-//    @Override
-//    public List<Food> listOfAllDinnerFoods() {
-//        List<Food> dinnerList = new ArrayList<Food>();
-//        String sql =
-//                "SELECT * " +
-//                        "FROM food " +
-//                        "JOIN food_meal ON food_meal.food_id = food.food_id " +
-//                        "JOIN meal ON meal.meal_id = food_meal.meal_id " +
-//                        "WHERE meal.meal_date = ? AND  food.meal_type = 'dinner' ;";
-//
-//        SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
-//        while( results.next() ) {
-//            Food food = mapRowToFood(results);
-//            dinnerList.add(food);
-//        }
-//        return dinnerList;
-//    }
-//
-//    @Override
-//    public List<Food> listOfAllSnackFoods() {
-//        List<Food> snackList = new ArrayList<Food>();
-//        String sql =
-//                "SELECT * " +
-//                        "FROM food " +
-//                        "JOIN food_meal ON food_meal.food_id = food.food_id " +
-//                        "JOIN meal ON meal.meal_id = food_meal.meal_id " +
-//                        "WHERE meal.meal_date = ? AND  food.meal_type = 'snack' ;";
-//
-//        SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
-//        while( results.next() ) {
-//            Food food = mapRowToFood(results);
-//            snackList.add(food);
-//        }
-//        return snackList;
-//    }
+        List<Food> newFoodList = new ArrayList<Food>();
+
+        String sql =
+                "select * from food\n" +
+                        "join food_meal on food_meal.food_id = food.food_id " +
+                        "join meal on meal.meal_id = food_meal.meal_id " +
+                        "join profile on profile.profile_id = meal.profile_id " +
+                        "where profile.username = ?  and meal_type = ? " +
+                        "ORDER BY meal.meal_date DESC ;";
+
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, username, mealType);
+        while( results.next() ) {
+            Food food = mapRowToFood(results);
+            newFoodList.add(food);
+        }
+        return newFoodList;
+    }
+
+    @Override
+    public int totalCaloriesPerDay(String username, LocalDate date) {
+
+        try {
+            String sql =
+                    "SELECT SUM(caloric_amount) AS total_calories\n" +
+                            "FROM food\n" +
+                            "JOIN food_meal ON food_meal.food_id = food.food_id\n" +
+                            "JOIN meal ON meal.meal_id = food_meal.meal_id\n" +
+                            "JOIN profile ON profile.profile_id = meal.profile_id\n" +
+                            "WHERE profile.username = ? AND meal.meal_date = ? ;";
+
+            int totalCalories;
+            totalCalories = jdbcTemplate.queryForObject(sql, int.class, username, date);
+
+            return totalCalories;
+        } catch (Exception e) {
+            return 0;
+        }
+
+    }
+
 
 
     private Food mapRowToFood(SqlRowSet rs) {

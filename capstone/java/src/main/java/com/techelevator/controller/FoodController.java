@@ -73,6 +73,24 @@ public class FoodController {
         return foodDao.listOfLastThreeMeals(username, mealType);
     }
 
+    @RequestMapping(path = "/food/user/lastMeal/{username}/{mt}", method = RequestMethod.GET)
+    public List<Food> getLastMeal(@PathVariable("username") String username,
+                                              @PathVariable("mt") String mealType) {
+
+        return foodDao.getLastMeal(username, mealType);
+    }
+
+    @RequestMapping(path = "/food/totalCalories/{username}/{date}", method = RequestMethod.GET)
+    public int getTotalCaloriesPerDay(@PathVariable("username")String username,
+                                      @PathVariable("date")String mealDate) {
+
+        LocalDate date = LocalDate.parse(mealDate);
+
+        return foodDao.totalCaloriesPerDay(username, date);
+    }
+
+
+
 
 //    @RequestMapping(path = "/food/breakfast", method = RequestMethod.GET)
 //    public List<Food> getListOfAllBreakfastFoods() {

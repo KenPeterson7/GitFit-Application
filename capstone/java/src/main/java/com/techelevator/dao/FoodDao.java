@@ -1,6 +1,7 @@
 package com.techelevator.dao;
 
 import com.techelevator.model.Food;
+import org.apache.tomcat.jni.Local;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -22,6 +23,10 @@ public interface FoodDao {
     int findFoodIdByFood(String foodName);
 
     List<Food> listOfLastThreeMeals(String username, String mealType);
+
+    List<Food> getLastMeal(String username, String mealType);
+
+    int totalCaloriesPerDay(String username, LocalDate date);
 
 
 //
