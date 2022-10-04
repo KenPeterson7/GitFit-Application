@@ -7,12 +7,30 @@
       <div>
         <h2>Recent Meals:</h2>
         <ol id = "recentMeals">
-          <li >
-            Meal Type: 
+          <li v-for="food in recentBreakfast" :key="food.id" >
+            Meal Type: Breakfast
             <ul>
-              <li>Food Included: </li>
-              <li>Total Calories: </li>
-              <li>Meal Date: </li>
+              <li>Food Included: {{ food.foodName }}</li>
+              <li>Total Calories: {{ food.caloricAmount }}</li>
+              <li>Meal Date: ??? </li>
+            </ul>
+            <br />
+          </li>
+          <li v-for="food in recentLunch" :key="food.id" >
+            Meal Type: Lunch
+            <ul>
+              <li>Food Included: {{ food.foodName }}</li>
+              <li>Total Calories: {{ food.caloricAmount }}</li>
+              <li>Meal Date: ??? </li>
+            </ul>
+            <br />
+          </li>
+          <li v-for="food in recentDinner" :key="food.id" >
+            Meal Type: Dinner
+            <ul>
+              <li>Food Included: {{ food.foodName }}</li>
+              <li>Total Calories: {{ food.caloricAmount }}</li>
+              <li>Meal Date: ??? </li>
             </ul>
             <br />
           </li>
@@ -52,12 +70,17 @@ export default {
       caloriesRemaining: this.$store.state.goal.daily_caloric_goal,
       recentWorkouts: [],
       recentMeals: [],
-      recentFoods: [],
+      recentBreakfast: [],
+      recentLunch: [],
+      recentDinner: [],
     };
   },
   created() {
     this.populateStore();
     this.getLastThreeWorkouts();
+    this.getLastBreakfast();
+    this.getLastLunch();
+    this.getLastDinner();
   },
   methods: {
     populateStore() {
@@ -94,11 +117,30 @@ export default {
         }
       });
     },
-    getLastThreeMeals() {
-      FoodService.getPastThreeMeals(this.$store.state.user.username, )
+    getLastBreakfast() {
+      FoodService.getLastMeal(this.$store.state.user.username, "Breakfast").then((response) => {
+        if (response.status == 200) {
+          this.recentBreakfast = response.data;
     }
+     });
   },
-};
+  getLastLunch() {
+      FoodService.getLastMeal(this.$store.state.user.username, "Lunch").then((response) => {
+        if (response.status == 200) {
+          this.recentLunch = response.data;
+    }
+     });
+  },
+  getLastDinner() {
+      FoodService.getLastMeal(this.$store.state.user.username, "Dinner").then((response) => {
+        if (response.status == 200) {
+          this.recentDinner = response.data;
+    }
+     });
+  },
+}
+}
+
 </script>
 
 <style scoped>
