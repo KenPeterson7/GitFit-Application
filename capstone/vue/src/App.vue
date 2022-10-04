@@ -76,6 +76,7 @@ export default {
 #nav {
   display: flex;
   justify-content: space-between;
+  height: 7vh;
 }
 
 .main-view {
@@ -85,7 +86,7 @@ export default {
 .main-view nav {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: 93vh;
 
   min-width: 180px;
   border-right: 1px;
@@ -103,7 +104,7 @@ export default {
   background-color: lightgray;
   background-blend-mode: screen;
    background-size: cover; 
-     height: 100vh;
+     height: 93vh;
  
   display:flex;
   flex-direction: column;

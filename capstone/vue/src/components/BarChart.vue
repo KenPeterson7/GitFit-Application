@@ -1,8 +1,8 @@
 <template>
   <div>
-    <h1 class="chartTitle">
+    <h3 class="chartTitle">
       Weekly Caloric Intake {{ weekAgo }} - {{ today }}
-    </h1>
+    </h3>
     <Bar
       :chart-options="chartOptions"
       :chart-data="chartData"
@@ -53,11 +53,11 @@ export default {
     },
     width: {
       type: Number,
-      default: 1000,
+      default: 25,
     },
     height: {
       type: Number,
-      default: 400,
+      default: 10,
     },
     cssClasses: {
       default: "",
