@@ -150,7 +150,7 @@ export default {
       for (let i = 0; i < this.mySavedWorkouts.length; i++) {
         sum += this.mySavedWorkouts[i].caloriesBurned;
       }
-      return sum;
+      return sum.toFixed(2);
     },
   },
 };
