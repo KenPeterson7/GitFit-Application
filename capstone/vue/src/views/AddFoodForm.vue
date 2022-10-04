@@ -42,9 +42,11 @@
 import MealService from "../services/MealService";
 import FoodService from "../services/FoodService";
 import FoodMealService from "../services/FoodMealService";
+import ProfileService from '../services/ProfileService';
 export default {
   data() {
     return {
+      profile: this.$store.state.profile,
       newFood: {},
 
       mealFoodObject: {
@@ -98,7 +100,9 @@ export default {
           if (this.mealFoodObject.mealId === 0) {
             MealService.addMeal(this.meal).then((response) => {
               this.mealFoodObject.mealId = response.data.mealId;
-              console.log(response.data)
+             this.profile.starStreak = this.profile.starStreak +1;
+             this.$store.commit('SET_CURRENT_PROFILE', this.profile)
+              ProfileService.updateProfile(this.profile.profileId, this.profile)
                this.logFood(newFood)
            
             });

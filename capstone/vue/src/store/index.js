@@ -60,6 +60,7 @@ export default new Vuex.Store({
     },
     UPDATE_PROFILE_PICTURE(state, picture) {
       state.profile.profilePic = picture;
-    }
+    },
+    
   }
 })
