@@ -248,8 +248,11 @@ button {
   margin-left: 80%;
  
 }
+table{
+    border-collapse: collapse;
+}
 tr{
-  
+     border-bottom: 1pt solid black;
    display: grid;
 
   grid-template-columns: 530px 140px 105px 110px 400px  ; 

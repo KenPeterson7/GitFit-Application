@@ -115,6 +115,7 @@ export default {
        
     },
     updateCalories(){
+     
       this.breakfastFoods.forEach((food)=> {
         this.calories += food.caloricAmount
        
@@ -129,6 +130,7 @@ export default {
         this.calories+= food.caloricAmount
       })
       this.seeCalories = true
+     
     }
  
   },
@@ -153,8 +155,9 @@ export default {
 button{
   border-radius: 4px;
   color: blue;
-  margin-top: 50px;
-  margin-bottom: 20px;
+  margin-top: 25%;
+
+
   
 }
 

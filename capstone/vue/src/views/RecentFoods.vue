@@ -154,6 +154,12 @@ export default {
 
 
 <style scoped>
+table{
+    border-collapse: collapse;
+}
+tr{
+     border-bottom: 1pt solid black;
+}
 h3 {
   margin-top: 20px;
   text-align: center;
