@@ -24,7 +24,11 @@ export default {
     },
     getWeeklyCalories(username,date){
         return axios.get(`food/totalCalories/${username}/${date}`)
+    },
+    getCaloriesForWeek(username,date) {
+        return axios.get(`food/totalCaloriesLastWeek/${username}/${date}`)
     }
+
 
     
 
