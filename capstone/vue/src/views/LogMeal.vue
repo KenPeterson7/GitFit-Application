@@ -153,8 +153,9 @@ export default {
 button{
   border-radius: 4px;
   color: blue;
-  margin-top: 50px;
-  margin-bottom: 20px;
+  margin-top: 25%;
+
+
   
 }
 

@@ -15,7 +15,7 @@
           <th></th>
           <th></th>
         </thead> -->
-        <!-- <tbody> -->
+        <tbody> 
           <tr  v-for="(food, index) in foodList"
         v-bind:key="index">
         <td id="name">{{ food.foodName }}</td>
@@ -33,7 +33,7 @@
             </button>
           
           </tr>
-        <!-- </tbody> -->
+         </tbody> 
       </table>
     </div>
     <div id="editForm" v-if="showForm">
@@ -140,20 +140,27 @@ export default {
 </script>
 
 <style scoped>
-
+/* tr:nth-child(even){
+    background-color: rgb(190, 189, 189);
+} */
 
 button {
 
   border-radius: 4px;
   color: blue;
 }
+table{
+    border-collapse: collapse;
+}
 tr{
    display: grid;
+   border-bottom: 1pt solid black;
 
   grid-template-columns: 500px 140px 105px 110px 400px 120px 120px ; 
   /* grid-template-columns: 30% 20% 20% 10% 20% 20% 20%; */
   grid-template-areas: "name foodType calories size servings edit delete"
 }
+
 
 #name{
   grid-area: name;
