@@ -73,9 +73,10 @@ export default {
       FoodService.addFood(newFood).then((response) => {
         if (response.status === 201) {
           this.mealFoodObject.foodId = response.data.foodId;
-          console.log(this.mealFoodObject.foodId);
+          console.log(this.mealFoodObject)
+       
           
-           this.addNewFood();
+           this.addNewFood(this.mealFoodObject);
           //check and see if meal has an entry for that meal type, profile id, date
           // if yes, assign that returned meal id to foodmeal.mealId
           //if not enter an entry to the meal table and return that id
@@ -84,7 +85,7 @@ export default {
       });
     },
     assignMealType(newFood) {
-      console.log(newFood)
+    
       MealService.getMealIdByMealDetails(
         this.meal.mealType,
         this.meal.mealDate,
@@ -97,15 +98,20 @@ export default {
           if (this.mealFoodObject.mealId === 0) {
             MealService.addMeal(this.meal).then((response) => {
               this.mealFoodObject.mealId = response.data.mealId;
+              console.log(response.data)
+               this.logFood(newFood)
+           
             });
-          }
+          } else{
          
          this.logFood(newFood)
+          }
         }
       });
     },
-    addNewFood() {
-      FoodMealService.addFoodMeal(this.mealFoodObject);
+    addNewFood(object) {
+    console.log(object)
+      FoodMealService.addFoodMeal(object);
 
       this.$router.push({ name: "recentFoods" });
     },

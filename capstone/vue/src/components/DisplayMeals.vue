@@ -111,6 +111,7 @@ export default {
       FoodService.updateFood(food.foodId, food).then((response) => {
         if (response.status == 200) {
           this.showForm = false;
+           location.reload()
         }
       });
     },
@@ -185,7 +186,7 @@ tr{
   color: red;
 }
 #editForm{
-  margin-left: 40%;
+  margin-left: 35%;
   margin-right: 40%
 }
 
