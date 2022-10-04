@@ -58,6 +58,7 @@
 import FoodService from '../services/FoodService';
 import ProfileService from "../services/ProfileService";
 import WorkoutService from "../services/WorkoutService";
+
 // import FoodService from "../services/FoodService";
 // import MealService from "../services/MealService";
 
@@ -65,6 +66,7 @@ export default {
   name: "home",
   data() {
     return {
+       profile: "",
       name: this.$store.state.profile.displayName,
       caloriesRemaining: this.$store.state.goal.daily_caloric_goal,
       recentWorkouts: [],
@@ -72,6 +74,12 @@ export default {
       recentBreakfast: [],
       recentLunch: [],
       recentDinner: [],
+      todaysCalories: 0,
+      yesterdaysCalories: 0,
+      todaysDate:  this.formatDate(),
+      yesterdaysDate:  this.getPreviousDay(),
+
+  
     };
   },
   created() {
@@ -80,8 +88,27 @@ export default {
     this.getLastBreakfast();
     this.getLastLunch();
     this.getLastDinner();
+    this.populateCalories();
+   
+    this.setRecentStarStreak();
   },
   methods: {
+     formatDate(){
+      const notFormat = new Date();
+     this.date = notFormat.setHours( notFormat.getHours()+(notFormat.getTimezoneOffset()/-60) );
+    this.date = notFormat.toJSON().slice(0, 10);
+    return this.date
+     },
+      getPreviousDay() {
+        let date = new Date();
+      let previous = "";
+      previous= date.setHours( date.getHours()+(date.getTimezoneOffset()/-60) ); 
+       previous = date.setDate(date.getDate() - 1);
+     previous = date.toJSON().slice(0, 10);
+
+      return previous;
+
+    },
     populateStore() {
       ProfileService.getProfile(this.$store.state.user.username).then(
         (response) => {
@@ -93,6 +120,7 @@ export default {
           }
         }
       );
+      this.profile = this.$store.state.profile;
     },
     populateGoal() {
       ProfileService.getGoal(this.$store.state.profile.profileId).then(
@@ -137,6 +165,26 @@ export default {
     }
      });
   },
+  populateCalories(){
+    FoodService.getWeeklyCalories(this.$store.state.user.username, this.todaysDate).then((response)=>{
+      if(response.status == 200){
+        this.todaysCalories = response.data;
+      }
+    })
+    FoodService.getWeeklyCalories(this.$store.state.user.username, this,this.yesterdaysDate).then((response)=> {
+      if(response.status == 200){
+        this.yesterdaysCalories = response.data;
+      }
+    })
+
+  },
+  setRecentStarStreak(){
+    if (this.todaysCalories ===0 && this.yesterdaysCalories === 0){
+         this.profile.starStreak = 0;
+             this.$store.commit('SET_CURRENT_PROFILE', this.profile)
+              ProfileService.updateProfile(this.profile.profileId, this.profile)
+    }
+  }
 }
 }
 
