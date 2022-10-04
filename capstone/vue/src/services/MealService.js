@@ -6,6 +6,6 @@ export default {
     },
     addMeal(meal){
         return axios.post(`/meal`, meal)
-    }
+    },
 
 }
