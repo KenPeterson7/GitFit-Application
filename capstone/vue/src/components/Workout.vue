@@ -1,8 +1,10 @@
 <template>
   <div>
+    
     <div id="workout">
-      <!-- <h1>Workouts & Activities</h1> -->
+      
       <table id="workoutTable">
+        
         <thead id="header">
           <tr>
             <th>Name of Workout:</th>
@@ -10,7 +12,7 @@
             <th>Duration of Workout:</th>
             <th>Date of Workout:</th>
             <th>Calories Burned:</th>
-            <th></th>
+            <th>Update Workout: </th>
           </tr>
         </thead>
         <tbody>
@@ -68,9 +70,9 @@
         <button v-on:click="cancel()">Cancel</button>
       </form>
     </div>
-    <span id="totalCalories"
-      ><strong>Total Calories Burned: </strong>{{ total }}</span
-    >
+  <span id="totalCalories"><strong>Total Calories Burned: </strong>{{total}}</span><br><br>
+    <span id="dailyCalories"><strong>Daily Calorie Burn Average: </strong>{{daily}}</span>
+    
   </div>
 </template>
 
@@ -152,6 +154,15 @@ export default {
       }
       return sum.toFixed(2);
     },
+    daily: function() {
+      let avg = 0;
+      let avgLength = this.mySavedWorkouts.length; 
+      for (let i = 0; i < avgLength; i++) {
+        avg += this.mySavedWorkouts[i].caloriesBurned;
+      }
+
+      return (avg/avgLength).toFixed(2);
+    }
   },
 };
 
@@ -178,23 +189,23 @@ input[type="text"] {
   height: 30px;
 }
 
-strong {
+ strong {
   font-size: 22px;
-  margin-bottom: 500px;
-}
-
-#totalCalories {
   margin-top: 175px;
   margin-left: 10px;
-}
+  
+} 
+
+/* #totalCalories {
+  
+} */
 
 #workout {
-
-  height: 67vh;
+  height: 50vh;
 }
 
 #workoutTable {
-  margin-left: 22.5%;
+  margin-left: 17%;
   margin-top: 100px;
 }
 
@@ -204,5 +215,13 @@ strong {
 
 #workoutTable td {
   text-align: left;
+}
+
+tr:nth-child(even){
+    background-color: lightskyblue;
+}
+
+table, th, td {
+  border: 1px solid;
 }
 </style>
