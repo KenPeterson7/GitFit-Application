@@ -3,11 +3,7 @@
     <h3 id="header">
       My Meals For:
       {{
-        new Date().getMonth()+1 +
-        "/" + 0 +
-        new Date().getDate() +
-        "/" + 
-        new Date().getFullYear()
+       this.date
       }}
     </h3>
     <table id="headerTable">
@@ -18,6 +14,7 @@
         <th>Number-Of-Servings</th>
       </thead>
     </table>
+    <div id="content">
     <h4>BREAKFAST</h4>
     <display-meals v-bind:foodList="breakfastFoods" v-bind:mealType="'Breakfast'"/>
       
@@ -35,6 +32,7 @@
     >
     <button v-on:click="updateCalories()"> See Calories Consumed:</button>
     <h3 v-if="seeCalories">  {{this.calories}}</h3>
+    </div>
   </div>
 </template>
 
@@ -55,14 +53,10 @@ export default {
       lunchFoods: [],
       dinnerFoods: [],
       snackFoods: [],
-       month: 0,
-      date:
-        new Date().getFullYear() +
-        "-" +
-        
-        this.getMonth() +
-        "-" + 0 +
-        new Date().getDate(),
+      
+      date: this.formatDate()
+    
+    
     };
   },
   created() {
@@ -75,10 +69,15 @@ export default {
   },
 
   methods: {
-     getMonth() {
-      this.month = new Date().getMonth();
-      return this.month + 1;
-    },
+     formatDate(){
+      const notFormat = new Date();
+     this.date = notFormat.setHours( notFormat.getHours()+(notFormat.getTimezoneOffset()/-60) );
+    this.date = notFormat.toJSON().slice(0, 10);
+    return this.date
+          
+
+      },
+   
     updateBreakfastList() {
       FoodService.getFoodByUserMealDate(this.$store.state.user.username, this.date, 'Breakfast').then((response)=>{
         if (response.status == 200){
@@ -116,6 +115,7 @@ export default {
        
     },
     updateCalories(){
+     
       this.breakfastFoods.forEach((food)=> {
         this.calories += food.caloricAmount
        
@@ -130,6 +130,7 @@ export default {
         this.calories+= food.caloricAmount
       })
       this.seeCalories = true
+     
     }
  
   },
@@ -141,6 +142,7 @@ export default {
   margin-top: 20px;
  text-align: center;
   color:blue;
+  margin-bottom: 30px;
 
 }
 #headerTable {
@@ -153,14 +155,14 @@ export default {
 button{
   border-radius: 4px;
   color: blue;
+  margin-top: 25%;
+
+
   
 }
-#add{
- margin-left: 38%;
- margin-top: 30px;
-}
-h3{
-  text-align: center;
+
+#content{
+  margin-left: 20px;
 }
 
 

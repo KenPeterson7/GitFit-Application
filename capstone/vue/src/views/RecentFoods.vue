@@ -30,7 +30,7 @@
         <button id="addBtn">Add New Food</button>
       </router-link>
       <router-link v-bind:to="{name: 'quickAddMeals'}">
-      <button>Quick Add Recent Meals</button>
+      <button>Quick Add Yesterday's Meals</button>
       </router-link>
     </div>
 
@@ -76,33 +76,25 @@ export default {
       },
       addFoodBanner: false,
       date:
-        new Date().getFullYear() +
-        "-" +
-        this.getMonth() +
-        "-" +
-        0 +
-        new Date().getDate(),
+       this.formatDate(),
       meal: {
         profileId: this.$store.state.profile.profileId,
         mealType: "",
-        mealDate:
-          new Date().getFullYear() +
-          "-" +
-          this.getMonth() +
-          "-" +
-          0 +
-          new Date().getDate(),
-      },
+        mealDate:this.formatDate()}
     };
   },
   created() {
     this.updateList();
   },
   methods: {
-    getMonth() {
-      this.month = new Date().getMonth();
-      return this.month + 1;
-    },
+   formatDate(){
+      const notFormat = new Date();
+     this.date = notFormat.setHours( notFormat.getHours()+(notFormat.getTimezoneOffset()/-60) );
+    this.date = notFormat.toJSON().slice(0, 10);
+    return this.date
+          
+
+      },
     updateList() {
       FoodService.getFoodByUsername(this.$store.state.user.username).then(
         (response) => {
@@ -132,10 +124,12 @@ export default {
           if (this.mealFoodObject.mealId === 0) {
             MealService.addMeal(this.meal).then((response) => {
               this.mealFoodObject.mealId = response.data.mealId;
-          
-            });
-          }
           this.addFood();
+        
+            });
+          } else{
+           this.addFood();
+          }
         }
       });
     },
@@ -160,6 +154,12 @@ export default {
 
 
 <style scoped>
+table{
+    border-collapse: collapse;
+}
+tr{
+     border-bottom: 1pt solid black;
+}
 h3 {
   margin-top: 20px;
   text-align: center;
@@ -170,12 +170,15 @@ th {
 }
 #navBtns {
   margin-top: 20px;
-  margin-left: 59%;
+  margin-left: 70%;
   padding: 10px;
 }
 
 button {
   border-radius: 4px;
   color: blue;
+}
+#recentFoods{
+    margin-left: 20px;
 }
 </style>

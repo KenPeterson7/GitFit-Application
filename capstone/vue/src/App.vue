@@ -85,6 +85,8 @@ export default {
 .main-view nav {
   display: flex;
   flex-direction: column;
+  height: 100vh;
+
   min-width: 180px;
   border-right: 1px;
   border-right-style: solid;
@@ -100,8 +102,9 @@ export default {
   background-image: url("../public/Images/gym-background2.png");
   background-color: lightgray;
   background-blend-mode: screen;
-  background-size: cover;
-  background-repeat: no-repeat;
+   background-size: cover; 
+     height: 100vh;
+ 
   display:flex;
   flex-direction: column;
 }

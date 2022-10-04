@@ -15,7 +15,7 @@
           <th></th>
           <th></th>
         </thead> -->
-        <!-- <tbody> -->
+        <tbody> 
           <tr  v-for="(food, index) in foodList"
         v-bind:key="index">
         <td id="name">{{ food.foodName }}</td>
@@ -33,7 +33,7 @@
             </button>
           
           </tr>
-        <!-- </tbody> -->
+         </tbody> 
       </table>
     </div>
     <div id="editForm" v-if="showForm">
@@ -86,22 +86,22 @@ export default {
         foodId: 0,
         mealId: 0,
       },
-      month: 0,
+     
       date:
-        new Date().getFullYear() +
-        "-" +
-        
-        this.getMonth() +
-        "-" + 0 +
-        new Date().getDate(),
+     this.formatDate()
     };
   },
 
   methods: {
-    getMonth() {
-      this.month = new Date().getMonth();
-      return this.month + 1;
-    },
+     formatDate(){
+      const notFormat = new Date();
+     this.date = notFormat.setHours( notFormat.getHours()+(notFormat.getTimezoneOffset()/-60) );
+    this.date = notFormat.toJSON().slice(0, 10);
+    return this.date
+          
+
+      },
+   
     editFood(food) {
       this.showForm = true;
       this.clickedFood = food;
@@ -140,20 +140,27 @@ export default {
 </script>
 
 <style scoped>
-
+/* tr:nth-child(even){
+    background-color: rgb(190, 189, 189);
+} */
 
 button {
 
   border-radius: 4px;
   color: blue;
 }
+table{
+    border-collapse: collapse;
+}
 tr{
    display: grid;
+   border-bottom: 1pt solid black;
 
-  grid-template-columns: 380px 140px 105px 110px 200px 120px 120px ; 
+  grid-template-columns: 500px 140px 105px 110px 400px 120px 120px ; 
   /* grid-template-columns: 30% 20% 20% 10% 20% 20% 20%; */
   grid-template-areas: "name foodType calories size servings edit delete"
 }
+
 
 #name{
   grid-area: name;
@@ -176,6 +183,10 @@ tr{
 #delete {
   grid-area: delete;
   color: red;
+}
+#editForm{
+  margin-left: 40%;
+  margin-right: 40%
 }
 
 
