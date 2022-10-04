@@ -28,7 +28,7 @@ import {
   CategoryScale,
   LinearScale,
 } from "chart.js";
-import MealService from '../services/MealService.vue'
+import FoodService from '../services/FoodService.js'
 
 ChartJS.register(
   Title,
@@ -93,8 +93,8 @@ export default {
           {
             label: "Daily Caloric Intake",
             data: 
-            // this.getData(),
-            [1750, 1690, 1868, 2000, 1985, 1775, 1825],
+            this.getData(),
+            // [1750, 1690, 1868, 2000, 1985, 1775, 1825],
             backgroundColor: "rgba(0,125,255,0.7)",
             borderColor: "rgb(0,125,255)",
             borderWidth: 2,
@@ -118,11 +118,18 @@ export default {
       },
       getData() {
           let data = [];
-          MealService.getWeeklyCalories().then((response) => {
-              if(response.status == 200) {
-                  data = response.data;
-              }
+          let user = this.$store.state.user.username
+          for (let i = 6; i > -1; i--) {
+              let day = new Date();
+              day.setDate(day.getDate() - i);
+              day = day.toJSON().slice(0,10);
+                FoodService.getWeeklyCalories(user, day).then((response) => {
+                    if(response.status == 200) {
+                        data.push(response.data);
+                    }
           });
+          }
+          
           return data;
       }
   }

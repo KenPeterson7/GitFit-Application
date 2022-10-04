@@ -21,6 +21,9 @@ export default {
     },
     getLastMeal(username, mt) {
         return axios.get(`food/user/lastMeal/${username}/${mt}`)
+    },
+    getWeeklyCalories(username,date){
+        return axios.get(`food/totalCalories/${username}/${date}`)
     }
 
     
