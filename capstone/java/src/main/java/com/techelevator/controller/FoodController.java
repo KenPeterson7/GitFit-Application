@@ -3,12 +3,14 @@ package com.techelevator.controller;
 
 import com.techelevator.dao.FoodDao;
 import com.techelevator.model.Food;
+import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -88,6 +90,26 @@ public class FoodController {
 
         return foodDao.totalCaloriesPerDay(username, date);
     }
+
+    // have loop start at 6 then go to 0 i--
+    @RequestMapping(path = "/food/totalCaloriesLastWeek/{username}/{date}", method = RequestMethod.GET)
+    public List<Integer> getTotalCaloriesForLastSevenDays(@PathVariable("username")String username,
+                                      @PathVariable("date")String mealDate) {
+
+        LocalDate date = LocalDate.parse(mealDate);
+
+        List<Integer> weeklyCalories = new ArrayList<Integer>();
+
+        // iterate through and add totalCalories to list and return last 7 days
+        for (int i = 6; i >= 0; i--) {
+
+            LocalDate newDate = date.minusDays(i);
+            int totalCalories =  foodDao.totalCaloriesPerDay(username, newDate);
+            weeklyCalories.add(totalCalories);
+        }
+        return weeklyCalories;
+    }
+
 
 
 

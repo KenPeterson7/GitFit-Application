@@ -1,49 +1,77 @@
 <template>
-<div>
-  <div id="workout">
-    <!-- <h1>Workouts & Activities</h1> -->
-    <table id="workoutTable">
-      <thead id="header">
-        <tr>
-          <th>Name of Workout:</th>
-          <th>Type of Workout:</th>
-          <th>Duration of Workout:</th>
-          <th>Date of Workout:</th>
-          <th>Calories Burned:</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="workout in mySavedWorkouts" :key="workout.id">
-          <td>{{ workout.nameOfWorkout }}</td>
-          <td>{{ workout.typeOfWorkout }}</td>
-          <td>{{ workout.duration }}</td>
-          <td>{{ workout.workoutDate }}</td>
-          <td>{{ workout.caloriesBurned }}</td>
-          <td><button id="editWorkout" v-on:click="editWorkout(workout)">Modify Workout</button></td>
-        </tr>
-      </tbody>
-    </table>
-    
+  <div>
+    <div id="workout">
+      <!-- <h1>Workouts & Activities</h1> -->
+      <table id="workoutTable">
+        <thead id="header">
+          <tr>
+            <th>Name of Workout:</th>
+            <th>Type of Workout:</th>
+            <th>Duration of Workout:</th>
+            <th>Date of Workout:</th>
+            <th>Calories Burned:</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="workout in mySavedWorkouts" :key="workout.id">
+            <td>{{ workout.nameOfWorkout }}</td>
+            <td>{{ workout.typeOfWorkout }}</td>
+            <td>{{ workout.duration }}</td>
+            <td>{{ workout.workoutDate }}</td>
+            <td>{{ workout.caloriesBurned }}</td>
+            <td>
+              <button id="editWorkout" v-on:click="editWorkout(workout)">
+                Modify Workout
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div id="editedWorkout" v-if="showForm">
+      <form v-on:submit.prevent>
+        <label for="nameOfWorkout">Name of Workout: </label>
+        <input
+          type="text"
+          id="nameOfWorkout"
+          v-model="myModifiedWorkout.nameOfWorkout"
+        />
+        <label for="typeOfWorkout">Type of Workout: </label>
+        <input
+          type="text"
+          id="typeOfWorkout"
+          v-model="myModifiedWorkout.typeOfWorkout"
+        />
+        <label for="durationOfWorkout">Duration of Workout: </label>
+        <input
+          type="text"
+          id="durationOfWorkout"
+          v-model="myModifiedWorkout.duration"
+        />
+        <label for="dateOfWorkout">Date of Workout: </label>
+        <input
+          class="js-sort-date"
+          type="date"
+          id="dateOfWorkout"
+          v-model="myModifiedWorkout.workoutDate"
+        />
+        <label for="caloriesBurned">Calories Burned: </label>
+        <input
+          type="text"
+          id="caloriesBurned"
+          v-model="myModifiedWorkout.caloriesBurned"
+        />&nbsp;
+        <button type="submit" v-on:click="saveEditedWorkout(myModifiedWorkout)">
+          Save
+        </button>&nbsp;
+        <button v-on:click="cancel()">Cancel</button>
+      </form>
+    </div>
+    <span id="totalCalories"
+      ><strong>Total Calories Burned: </strong>{{ total }}</span
+    >
   </div>
-  <div id="editedWorkout" v-if="showForm" >
-    <form v-on:submit.prevent>
-      <label for="nameOfWorkout">Name of Workout: </label>
-      <input type="text" id="nameOfWorkout" v-model="myModifiedWorkout.nameOfWorkout" />
-      <label for="typeOfWorkout">Type of Workout: </label>
-      <input type="text" id="typeOfWorkout" v-model="myModifiedWorkout.typeOfWorkout" />
-      <label for="durationOfWorkout">Duration of Workout: </label>
-      <input type="text" id="durationOfWorkout" v-model="myModifiedWorkout.duration" />
-      <label for="dateOfWorkout">Date of Workout: </label>
-      <input type="date" id="dateOfWorkout" v-model="myModifiedWorkout.workoutDate" />
-      <label for="caloriesBurned">Calories Burned: </label>
-      <input type="text" id="caloriesBurned" v-model="myModifiedWorkout.caloriesBurned" />
-      <button type="submit" v-on:click="saveEditedWorkout(myModifiedWorkout)">Save</button>
-      <button v-on:click="cancel()">Cancel</button>
-    </form>
-  </div>
-  <span id="totalCalories"><strong>Total Calories Burned: </strong>{{ total }}</span>
-</div>
 </template>
 
 <script>
@@ -69,6 +97,10 @@ export default {
   },
   created() {
     this.getWorkoutsByUsername();
+    
+  },
+  beforeMount() {
+    
   },
   methods: {
     getWorkoutsByUsername() {
@@ -77,6 +109,7 @@ export default {
         .then((response) => {
           if (response.status == 200) {
             this.mySavedWorkouts = response.data;
+            this.sortArray();
           }
         });
     },
@@ -90,11 +123,25 @@ export default {
         .then((response) => {
           if (response.status == 200) {
             this.showForm = false;
+            location.reload()
           }
         });
     },
     cancel() {
       this.showForm = false;
+    },
+    sortArray() {
+      this.mySavedWorkouts.sort(function(a,b){
+        console.log(Date(b.workoutDate) - new Date(a.workoutDate))
+        console.log(a.workoutDate)
+        console.log(b.workoutDate)
+        console.log(new Boolean(new Date(b.workoutDate) - new Date(a.workoutDate)))
+  // Turn your strings into dates, and then subtract them
+  // to get a value that is either negative, positive, or zero.
+  return new Date(a.workoutDate) - new Date(b.workoutDate);
+
+      })
+      console.log(this.mySavedWorkouts)
     }
   },
   computed: {
@@ -107,16 +154,19 @@ export default {
     },
   },
 };
+
 </script>
 
 <style>
 
-
-#editedWorkout{
+#editedWorkout {
+  position: relative;
   background: lightskyblue;
+  top: -140px;
 }
 
-input[type=text]{
+
+input[type="text"] {
   padding: 10px;
   border: 2px solid #212;
   border-radius: 2px;
@@ -124,21 +174,23 @@ input[type=text]{
   height: 30px;
 }
 
- #editWorkout {
+#editWorkout {
   height: 30px;
 }
 
 strong {
   font-size: 22px;
+  margin-bottom: 500px;
 }
 
 #totalCalories {
-  margin-top: 75px;
-   margin-left: 10px;
+  margin-top: 175px;
+  margin-left: 10px;
 }
 
 #workout {
-  margin-bottom: 500px;
+
+  height: 67vh;
 }
 
 #workoutTable {
