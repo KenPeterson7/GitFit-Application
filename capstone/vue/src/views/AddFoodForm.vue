@@ -54,21 +54,21 @@ export default {
       meal: {
         profileId: this.$store.state.profile.profileId,
         mealType: "",
-        mealDate:
-          new Date().getFullYear() +
-          "-" +
-          this.getMonth() +
-          "-" +
-          0 +
-          new Date().getDate(),
+        mealDate: this.formatDate()
       },
     };
   },
   methods: {
-    getMonth() {
-      this.month = new Date().getMonth();
-      return this.month + 1;
-    },
+     formatDate(){
+      const notFormat = new Date();
+      let date = "";
+     date = notFormat.setHours( notFormat.getHours()+(notFormat.getTimezoneOffset()/-60) );
+    date = notFormat.toJSON().slice(0, 10);
+    return date
+          
+
+      },
+  
     logFood(newFood) {
       FoodService.addFood(newFood).then((response) => {
         if (response.status === 201) {

@@ -86,22 +86,22 @@ export default {
         foodId: 0,
         mealId: 0,
       },
-      month: 0,
+     
       date:
-        new Date().getFullYear() +
-        "-" +
-        
-        this.getMonth() +
-        "-" + 0 +
-        new Date().getDate(),
+     this.formatDate()
     };
   },
 
   methods: {
-    getMonth() {
-      this.month = new Date().getMonth();
-      return this.month + 1;
-    },
+     formatDate(){
+      const notFormat = new Date();
+     this.date = notFormat.setHours( notFormat.getHours()+(notFormat.getTimezoneOffset()/-60) );
+    this.date = notFormat.toJSON().slice(0, 10);
+    return this.date
+          
+
+      },
+   
     editFood(food) {
       this.showForm = true;
       this.clickedFood = food;
@@ -150,7 +150,7 @@ button {
 tr{
    display: grid;
 
-  grid-template-columns: 380px 140px 105px 110px 200px 120px 120px ; 
+  grid-template-columns: 500px 140px 105px 110px 400px 120px 120px ; 
   /* grid-template-columns: 30% 20% 20% 10% 20% 20% 20%; */
   grid-template-areas: "name foodType calories size servings edit delete"
 }
@@ -176,6 +176,10 @@ tr{
 #delete {
   grid-area: delete;
   color: red;
+}
+#editForm{
+  margin-left: 40%;
+  margin-right: 40%
 }
 
 
