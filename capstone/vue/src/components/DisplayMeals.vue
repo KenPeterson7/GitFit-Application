@@ -141,9 +141,9 @@ export default {
 </script>
 
 <style scoped>
-/* tr:nth-child(even){
-    background-color: rgb(190, 189, 189);
-} */
+tr:nth-child(odd){
+    background-color: rgba(190, 189, 189,0.6);
+}
 
 button {
 

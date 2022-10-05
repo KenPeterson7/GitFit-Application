@@ -186,4 +186,7 @@ button {
 #recentFoods{
     margin-left: 20px;
 }
+tr:nth-child(odd){
+    background-color: rgba(190, 189, 189,0.6);
+}
 </style>
