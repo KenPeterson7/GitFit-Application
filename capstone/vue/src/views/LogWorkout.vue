@@ -16,7 +16,9 @@ export default {
 
 <style>
   #addWorkout{
-    margin-left: 85%;
+    position: sticky;
+    margin-left: 73.5%;
+    width: 130px;
     
   }
 

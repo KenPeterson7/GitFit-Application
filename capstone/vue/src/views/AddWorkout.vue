@@ -96,6 +96,8 @@ justify-content: center;
 
 #dateOfWorkout {
   margin-left: 0px;
+  width: 360px;
+  height: 30px;
 }
 
 #caloriesBurned {
