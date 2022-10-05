@@ -172,6 +172,7 @@ export default {
 
 #nameOfWorkout {
   margin-left: 30px;
+  
 }
 
 #typeOfWorkout {
@@ -184,6 +185,8 @@ export default {
 
 #dateOfWorkout {
   margin-left: 39px;
+  border: 2px solid;
+  width: 55.4%
 }
 
 #caloriesBurned {
@@ -195,12 +198,14 @@ export default {
 }
 
 #editedWorkout {
+  border: 3px solid;
+  padding: 5px;
   display: flex;
   width: 400px;
   flex-wrap: wrap;
   margin-left: 600px;
   position: relative;
-  background: lightskyblue;
+  background-color: rgba(173, 216, 230, 0.7);
   top: -10px;
   
 }
@@ -216,6 +221,7 @@ input[type="text"] {
 
 #editWorkout {
   height: 30px;
+  margin-left: 25px;
 }
 
  strong {
@@ -244,6 +250,7 @@ input[type="text"] {
 
 #workout {
   height: 45vh;
+  
 }
 
 #workoutTable {
@@ -259,11 +266,17 @@ input[type="text"] {
   text-align: left;
 }
 
-tr:nth-child(even){
-    background-color: lightskyblue;
+tr:nth-child(odd){
+    background-color: rgba(173, 216, 230, 0.7);
 }
 
-table, th, td {
+ #header th {
+  border: 1px solid;
+  background-color: lightgray;
+}
+
+#workoutTable tbody tr td {
   border: 1px solid;
 }
+
 </style>
