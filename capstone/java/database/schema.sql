@@ -1,6 +1,6 @@
 BEGIN TRANSACTION;
-DROP TABLE IF EXISTS users, profile, food, goal, meal, food_meal, workout, daily_intake;
-DROP SEQUENCE IF EXISTS seq_profile_id, seq_food_id, seq_goal_id, seq_meal_id, seq_workout_id, seq_daily_intake_id;
+DROP TABLE IF EXISTS users, profile, food, goal, meal, food_meal, workout;
+DROP SEQUENCE IF EXISTS seq_profile_id, seq_food_id, seq_goal_id, seq_meal_id, seq_workout_id;
 CREATE TABLE users (
    user_id SERIAL NOT NULL,
    username varchar(50) NOT NULL UNIQUE,
@@ -113,7 +113,7 @@ INSERT INTO users (username,password_hash,role) VALUES ('user4','$2a$08$UkVvwpUL
 -- values(25, 72, 225, 210, '1997-01-01', "", 1, 5, 'user', 'Tester', 'M', 'High');
 
 insert into Profile(age, height, current_weight, desired_weight, birthday, profile_pic, current_star_streak, high_start_streak, username, displayname, gender, activity_level)
-values(25, 72, 225, 210, '1997-01-01', '', 1, 5, 'user', 'Tester', 'M', 'High');
+values(52, 72, 200, 170, '1970-01-01', '', 1, 5, 'user', 'Swole-guy42', 'M', 'High');
 
 insert into Profile(age, height, current_weight, desired_weight, birthday, profile_pic, current_star_streak, high_start_streak, username, displayname, gender, activity_level)
 values(35, 60, 280, 250, '1987-01-01', '', 3, 3, 'user2', 'Display Name Test', 'F', 'Low');
@@ -122,48 +122,120 @@ insert into Profile(age, height, current_weight, desired_weight, birthday, profi
 values(22, 81, 262, 215, '2000-01-01', '', 0, 4, 'user3', 'Tech Fitness Display Test', 'M', 'Medium');
 
 INSERT INTO food (food_name, food_type, size, number_servings, caloric_amount)
-VALUES ('steak', 'meat', '50', 1, 500);
+VALUES ('steak', 'meat', '12 oz', 1, 600);
 INSERT INTO food (food_name, food_type, size, number_servings, caloric_amount)
-VALUES ('rice', 'starch', '25', 2, 240);
+VALUES ('rice', 'starch', '10 oz', 2, 300);
 INSERT INTO food (food_name, food_type, size, number_servings, caloric_amount)
-VALUES ('apple', 'fruit', '10', 1, 50);
+VALUES ('apple', 'fruit', 'medium', 1, 50);
 INSERT INTO food (food_name, food_type, size, number_servings, caloric_amount)
-VALUES ('pear', 'fruit', '10', 1, 75);
+VALUES ('pear', 'fruit', 'large', 1, 75);
 INSERT INTO food (food_name, food_type, size, number_servings, caloric_amount)
-VALUES ('chicken', 'meat', '40', 1, 250);
+VALUES ('chicken', 'meat', '4 oz', 2, 300);
 INSERT INTO food (food_name, food_type, size, number_servings, caloric_amount)
-VALUES ('broccoli', 'vegetable', '5', 1, 40);
+VALUES ('broccoli', 'vegetable', '1 cup', 1, 40);
 INSERT INTO food (food_name, food_type, size, number_servings, caloric_amount)
-VALUES ('milk', 'dairy', '1', 1, 20);
+VALUES ('milk', 'dairy', '1 cup', 1, 150);
+INSERT INTO food (food_name, food_type, size, number_servings, caloric_amount)
+VALUES ('protein shake', 'dairy', '1 cup', 1, 200);
+INSERT INTO food (food_name, food_type, size, number_servings, caloric_amount)
+VALUES ('eggs with cheese', 'dairy', '12 oz', 1, 500);
 
 
 INSERT INTO meal (meal_type, meal_date, profile_id)
-VALUES ('Breakfast', '2022-09-29', 2001);
+VALUES ('Breakfast', '2022-09-30', 2001);
 INSERT INTO meal (meal_type, meal_date, profile_id)
-VALUES ('Lunch', '2022-09-29', 2001);
+VALUES ('Lunch', '2022-09-30', 2001);
 INSERT INTO meal (meal_type, meal_date, profile_id)
 VALUES ('Dinner', '2022-09-30', 2001);
 INSERT INTO meal (meal_type, meal_date, profile_id)
 VALUES ('Snacks', '2022-09-30', 2001);
+INSERT INTO meal (meal_type, meal_date, profile_id)
+VALUES ('Breakfast', '2022-10-01', 2001);
+INSERT INTO meal (meal_type, meal_date, profile_id)
+VALUES ('Lunch', '2022-10-01', 2001);
+INSERT INTO meal (meal_type, meal_date, profile_id)
+VALUES ('Dinner', '2022-10-01', 2001);
+INSERT INTO meal (meal_type, meal_date, profile_id)
+VALUES ('Breakfast', '2022-10-02', 2001);
+INSERT INTO meal (meal_type, meal_date, profile_id)
+VALUES ('Lunch', '2022-10-02', 2001);
+INSERT INTO meal (meal_type, meal_date, profile_id)
+VALUES ('Dinner', '2022-10-02', 2001);
+INSERT INTO meal (meal_type, meal_date, profile_id)
+VALUES ('Breakfast', '2022-10-04', 2001);
+INSERT INTO meal (meal_type, meal_date, profile_id)
+VALUES ('Lunch', '2022-10-04', 2001);
+INSERT INTO meal (meal_type, meal_date, profile_id)
+VALUES ('Dinner', '2022-10-04', 2001);
+INSERT INTO meal (meal_type, meal_date, profile_id)
+VALUES ('Breakfast', '2022-10-05', 2001);
+INSERT INTO meal (meal_type, meal_date, profile_id)
+VALUES ('Lunch', '2022-10-05', 2001);
+INSERT INTO meal (meal_type, meal_date, profile_id)
+VALUES ('Dinner', '2022-10-05', 2001);
+INSERT INTO meal (meal_type, meal_date, profile_id)
+VALUES ('Snacks', '2022-10-05', 2001);
 
-insert into goal(profile_id, daily_caloric_goal) values(2001, 300);
+insert into goal(profile_id, daily_caloric_goal) values(2001, 2200);
 insert into goal(profile_id, daily_caloric_goal) values(2002, 350);
 insert into goal(profile_id, daily_caloric_goal) values(2003, 400);
 
-insert into food_meal(meal_id, food_id) values(5001, 4001);
+-- 9/30 Meals
+insert into food_meal(meal_id, food_id) values(5001, 4009);
+insert into food_meal(meal_id, food_id) values(5001, 4008);
 insert into food_meal(meal_id, food_id) values(5002, 4002);
+insert into food_meal(meal_id, food_id) values(5002, 4005);
 insert into food_meal(meal_id, food_id) values(5003, 4003);
+insert into food_meal(meal_id, food_id) values(5003, 4001);
 insert into food_meal(meal_id, food_id) values(5004, 4004);
 
-insert into workout(profile_id, name_of_workout, type_of_workout, duration, workout_date, calories_burned) values(2001, 'Run', 'Cardio', 45, '2022-09-29', 250);
+-- 10/1 Meals
+insert into food_meal(meal_id, food_id) values(5005, 4001);
+insert into food_meal(meal_id, food_id) values(5006, 4002);
+insert into food_meal(meal_id, food_id) values(5007, 4003);
+
+--10/2 meals
+insert into food_meal(meal_id, food_id) values(5008, 4004);
+insert into food_meal(meal_id, food_id) values(5009, 4001);
+insert into food_meal(meal_id, food_id) values(5010, 4002);
+insert into food_meal(meal_id, food_id) values(5008, 4009);
+insert into food_meal(meal_id, food_id) values(5009, 4005);
+insert into food_meal(meal_id, food_id) values(5010, 4001);
+
+--10/4 meals
+insert into food_meal(meal_id, food_id) values(5011, 4003);
+insert into food_meal(meal_id, food_id) values(5012, 4004);
+insert into food_meal(meal_id, food_id) values(5013, 4001);
+insert into food_meal(meal_id, food_id) values(5011, 4009);
+insert into food_meal(meal_id, food_id) values(5012, 4005);
+insert into food_meal(meal_id, food_id) values(5013, 4003);
+insert into food_meal(meal_id, food_id) values(5013, 4007);
+insert into food_meal(meal_id, food_id) values(5013, 4005);
+
+-- 10/5 meals
+insert into food_meal(meal_id, food_id) values(5014, 4002);
+insert into food_meal(meal_id, food_id) values(5015, 4003);
+insert into food_meal(meal_id, food_id) values(5016, 4004);
+insert into food_meal(meal_id, food_id) values(5017, 4004);
+insert into food_meal(meal_id, food_id) values(5014, 4009);
+insert into food_meal(meal_id, food_id) values(5015, 4001);
+insert into food_meal(meal_id, food_id) values(5016, 4007);
+insert into food_meal(meal_id, food_id) values(5017, 4005);
+insert into food_meal(meal_id, food_id) values(5014, 4006);
+insert into food_meal(meal_id, food_id) values(5015, 4008);
+insert into food_meal(meal_id, food_id) values(5016, 4003);
+insert into food_meal(meal_id, food_id) values(5017, 4002);
+insert into food_meal(meal_id, food_id) values(5016, 4001);
+
+insert into workout(profile_id, name_of_workout, type_of_workout, duration, workout_date, calories_burned) values(2001, 'Run', 'Cardio', 45, '2022-09-30', 250);
 insert into workout(profile_id, name_of_workout, type_of_workout, duration, workout_date, calories_burned) values(2001, 'Full Body Workout', 'Strength Training', 90, '2022-09-30', 355.55);
 insert into workout(profile_id, name_of_workout, type_of_workout, duration, workout_date, calories_burned) values(2001, 'Biking', 'Cardio', 120, '2022-09-29', 472.99);
-insert into workout(profile_id, name_of_workout, type_of_workout, duration, workout_date, calories_burned) values(2001, 'Yoga', 'Anaerobic', 60, '2022-09-30', 321.2);
-insert into workout(profile_id, name_of_workout, type_of_workout, duration, workout_date, calories_burned) values(2001, 'Jogging', 'Cardio', 25, '2001-10-10', 285.73);
-insert into workout(profile_id, name_of_workout, type_of_workout, duration, workout_date, calories_burned) values(2001, 'Dance', 'Aerobic', 35, '2017-10-26', 523.45);
-insert into workout(profile_id, name_of_workout, type_of_workout, duration, workout_date, calories_burned) values(2001, 'Soccer', 'Sports', 50, '2021-07-11', 600.23);
-insert into workout(profile_id, name_of_workout, type_of_workout, duration, workout_date, calories_burned) values(2001, 'Basketball', 'Sports', 60, '2022-08-19', 500.45);
-insert into workout(profile_id, name_of_workout, type_of_workout, duration, workout_date, calories_burned) values(2001, 'Walking', 'Cardio', 30, '2022-09-09', 157.68);
+insert into workout(profile_id, name_of_workout, type_of_workout, duration, workout_date, calories_burned) values(2001, 'Yoga', 'Anaerobic', 60, '2022-09-28', 321.2);
+insert into workout(profile_id, name_of_workout, type_of_workout, duration, workout_date, calories_burned) values(2001, 'Jogging', 'Cardio', 25, '2022-10-03', 285.73);
+insert into workout(profile_id, name_of_workout, type_of_workout, duration, workout_date, calories_burned) values(2001, 'Dance', 'Aerobic', 35, '2022-10-01', 523.45);
+insert into workout(profile_id, name_of_workout, type_of_workout, duration, workout_date, calories_burned) values(2001, 'Soccer', 'Sports', 50, '2022-10-02', 600.23);
+insert into workout(profile_id, name_of_workout, type_of_workout, duration, workout_date, calories_burned) values(2001, 'Basketball', 'Sports', 60, '2022-09-26', 500.45);
+insert into workout(profile_id, name_of_workout, type_of_workout, duration, workout_date, calories_burned) values(2001, 'Walking', 'Cardio', 30, '2022-10-05', 157.68);
 
 
 -- CREATE USER final_capstone_owner
