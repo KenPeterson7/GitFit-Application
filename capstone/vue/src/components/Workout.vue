@@ -172,6 +172,7 @@ export default {
 
 #nameOfWorkout {
   margin-left: 30px;
+  
 }
 
 #typeOfWorkout {
@@ -244,6 +245,7 @@ input[type="text"] {
 
 #workout {
   height: 45vh;
+  
 }
 
 #workoutTable {
@@ -263,7 +265,12 @@ tr:nth-child(even){
     background-color: lightskyblue;
 }
 
-table, th, td {
+ #header th {
   border: 1px solid;
 }
+
+#workoutTable tbody tr td {
+  border: 1px solid;
+}
+
 </style>

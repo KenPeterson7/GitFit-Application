@@ -8,7 +8,7 @@
       <div id=chart>
       <bar-chart />
       </div>
-      <div>
+      <!-- <div>
         <h2>Recent Meals:</h2>
         <ol id = "recentMeals">
           <li v-for="food in recentBreakfast" :key="food.id" >
@@ -39,7 +39,7 @@
             <br />
           </li>
         </ol>
-      </div>
+      </div> -->
       <div>
         <h2>Recent Workouts:</h2>
 
