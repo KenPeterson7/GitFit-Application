@@ -1,4 +1,5 @@
 <template>
+<div class="test">
 <form v-on:submit.prevent>
   <div class="field">
     <label for="nameOfWorkout">Name of Workout: </label>
@@ -25,6 +26,10 @@
     <button type="submit" v-on:click="saveWorkout()">Save Workout</button>
   </div>
 </form>
+<div class="image">
+  <img src="../../public/Images/swole-guy1.png" alt="swole-guy">
+</div>
+</div>
 </template>
 
 <script>
@@ -64,13 +69,46 @@ export default {
 </script>
 
 <style scoped>
+
+.test {
+  display: flex;
+align-items: center;
+justify-content: center;
+}
+
+ .image{
+ /* margin-bottom: 500px; */
+ margin-left: 50px;
   
+} 
+  
+  #nameOfWorkout {
+  margin-left: 0px;
+}
+
+#typeOfWorkout {
+  margin-left: 0px;
+}
+
+#durationOfWorkout {
+  margin-left: 0px;
+}
+
+#dateOfWorkout {
+  margin-left: 0px;
+}
+
+#caloriesBurned {
+  margin-left: 0px;
+}
+
 form {
   padding: 20px;
   font-size: 16px;
   width: 400px;
-  margin-left: 600px;
-  height: 94vh;
+  margin-left: 0px;
+  margin-right: 50px;
+  height: 40vh;
 }
 form * {
   box-sizing: border-box;

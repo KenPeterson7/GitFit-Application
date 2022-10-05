@@ -1,8 +1,10 @@
 <template>
   <div>
+    
     <div id="workout">
-      <!-- <h1>Workouts & Activities</h1> -->
+      
       <table id="workoutTable">
+        
         <thead id="header">
           <tr>
             <th>Name of Workout:</th>
@@ -10,7 +12,7 @@
             <th>Duration of Workout:</th>
             <th>Date of Workout:</th>
             <th>Calories Burned:</th>
-            <th></th>
+            <th>Update Workout: </th>
           </tr>
         </thead>
         <tbody>
@@ -31,46 +33,46 @@
     </div>
     <div id="editedWorkout" v-if="showForm">
       <form v-on:submit.prevent>
-        <label for="nameOfWorkout">Name of Workout: </label>
+        <label for="nameOfWorkout">Name of Workout: </label>&nbsp;
         <input
           type="text"
           id="nameOfWorkout"
           v-model="myModifiedWorkout.nameOfWorkout"
-        />
-        <label for="typeOfWorkout">Type of Workout: </label>
+        />&nbsp;<br>
+        <label for="typeOfWorkout">Type of Workout: </label>&nbsp;
         <input
           type="text"
           id="typeOfWorkout"
           v-model="myModifiedWorkout.typeOfWorkout"
-        />
-        <label for="durationOfWorkout">Duration of Workout: </label>
+        />&nbsp;<br>
+        <label for="durationOfWorkout">Duration of Workout: </label>&nbsp;
         <input
           type="text"
           id="durationOfWorkout"
           v-model="myModifiedWorkout.duration"
-        />
-        <label for="dateOfWorkout">Date of Workout: </label>
+        />&nbsp;<br>
+        <label for="dateOfWorkout">Date of Workout: </label>&nbsp;
         <input
           class="js-sort-date"
           type="date"
           id="dateOfWorkout"
           v-model="myModifiedWorkout.workoutDate"
-        />
-        <label for="caloriesBurned">Calories Burned: </label>
+        />&nbsp;<br>
+        <label for="caloriesBurned">Calories Burned: </label>&nbsp;
         <input
           type="text"
           id="caloriesBurned"
           v-model="myModifiedWorkout.caloriesBurned"
-        />&nbsp;
-        <button type="submit" v-on:click="saveEditedWorkout(myModifiedWorkout)">
+        />&nbsp;<br>
+        <button id="saveBtn" type="submit" v-on:click="saveEditedWorkout(myModifiedWorkout)">
           Save
         </button>&nbsp;
-        <button v-on:click="cancel()">Cancel</button>
+        <button id="cancelBtn" v-on:click="cancel()">Cancel</button>
       </form>
     </div>
-    <span id="totalCalories"
-      ><strong>Total Calories Burned: </strong>{{ total }}</span
-    >
+  <span id="totalCalories"><strong>Total Calories Burned: </strong>{{total}}</span><br><br>
+    <span id="dailyCalories"><strong>Daily Calorie Burn Average: </strong>{{daily}}</span>
+    
   </div>
 </template>
 
@@ -152,6 +154,15 @@ export default {
       }
       return sum.toFixed(2);
     },
+    daily: function() {
+      let avg = 0;
+      let avgLength = this.mySavedWorkouts.length; 
+      for (let i = 0; i < avgLength; i++) {
+        avg += this.mySavedWorkouts[i].caloriesBurned;
+      }
+
+      return (avg/avgLength).toFixed(2);
+    }
   },
 };
 
@@ -159,10 +170,39 @@ export default {
 
 <style>
 
+#nameOfWorkout {
+  margin-left: 30px;
+}
+
+#typeOfWorkout {
+  margin-left: 39px;
+}
+
+#durationOfWorkout {
+  margin-left: 10px;
+}
+
+#dateOfWorkout {
+  margin-left: 39px;
+}
+
+#caloriesBurned {
+  margin-left: 45px;
+}
+
+#saveBtn{
+  margin-left: 145px;
+}
+
 #editedWorkout {
+  display: flex;
+  width: 400px;
+  flex-wrap: wrap;
+  margin-left: 600px;
   position: relative;
   background: lightskyblue;
-  top: -140px;
+  top: -10px;
+  
 }
 
 
@@ -178,24 +218,37 @@ input[type="text"] {
   height: 30px;
 }
 
-strong {
+ strong {
   font-size: 22px;
-  margin-bottom: 500px;
-}
-
-#totalCalories {
   margin-top: 175px;
   margin-left: 10px;
+  
+} 
+
+ #totalCalories {
+   display: fixed;
+  position: fixed;
+  top: 50;
+  
+  
 }
 
-#workout {
 
-  height: 67vh;
+#dailyCalories {
+  display: fixed;
+  position: fixed;
+  
+ 
+}
+
+
+#workout {
+  height: 45vh;
 }
 
 #workoutTable {
-  margin-left: 22.5%;
-  margin-top: 100px;
+  margin-left: 17%;
+  margin-top: 10px;
 }
 
 #workoutTable th {
@@ -204,5 +257,13 @@ strong {
 
 #workoutTable td {
   text-align: left;
+}
+
+tr:nth-child(even){
+    background-color: lightskyblue;
+}
+
+table, th, td {
+  border: 1px solid;
 }
 </style>

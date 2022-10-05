@@ -79,10 +79,12 @@ export default {
       recentBreakfast: [],
       recentLunch: [],
       recentDinner: [],
-      todaysCalories: 0,
-      yesterdaysCalories: 0,
-      todaysDate:  this.formatDate(),
-      yesterdaysDate:  this.getPreviousDay(),
+       todaysDate:  new Date().toJSON().slice(0, 10),
+      yesterdaysDate:  new Date().toJSON().slice(0, 10),
+
+      todaysCalories: this.populateTodaysCalories(),
+      yesterdaysCalories: this.populateYesterdaysCalories(),
+     
 
   
     };
@@ -93,7 +95,7 @@ export default {
     this.getLastBreakfast();
     this.getLastLunch();
     this.getLastDinner();
-    this.populateCalories();
+  
    
     this.setRecentStarStreak();
   },
@@ -170,20 +172,24 @@ export default {
     }
      });
   },
-  populateCalories(){
+  populateTodaysCalories(){
     FoodService.getWeeklyCalories(this.$store.state.user.username, this.todaysDate).then((response)=>{
       if(response.status == 200){
         this.todaysCalories = response.data;
       }
     })
-    FoodService.getWeeklyCalories(this.$store.state.user.username, this,this.yesterdaysDate).then((response)=> {
+   
+
+  },
+  populateYesterdaysCalories(){
+ FoodService.getWeeklyCalories(this.$store.state.user.username, this.yesterdaysDate).then((response)=> {
       if(response.status == 200){
         this.yesterdaysCalories = response.data;
       }
     })
-
   },
   setRecentStarStreak(){
+    console.log(this.todaysCalories)
     if (this.todaysCalories ===0 && this.yesterdaysCalories === 0){
          this.profile.starStreak = 0;
              this.$store.commit('SET_CURRENT_PROFILE', this.profile)
