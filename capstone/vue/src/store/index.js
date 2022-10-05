@@ -24,7 +24,7 @@ export default new Vuex.Store({
     user: currentUser || {},
     profile: currentProfile || {},
     goal: currentGoal || {},
-
+    calories: 0
     
   },
   mutations: {
@@ -47,6 +47,7 @@ export default new Vuex.Store({
       state.user = {};
       state.profile = null;
       state.goal = null;
+      state.calories = 0;
       axios.defaults.headers.common = {};
       
     },
@@ -61,6 +62,9 @@ export default new Vuex.Store({
     UPDATE_PROFILE_PICTURE(state, picture) {
       state.profile.profilePic = picture;
     },
+    UPDATE_CALORIES(state, calories) {
+      state.calories = calories;
+    }
     
   }
 })

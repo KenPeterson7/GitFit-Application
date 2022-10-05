@@ -3,12 +3,12 @@
     <div id="componentDiv">
       <h1>{{ getName() }}</h1>
       <h2>Calories Remaining: {{ getRemainingCalories() }}</h2>
-      
-      <br>
-      <div id=chart>
-      <bar-chart />
+
+      <br />
+      <div id="chart">
+        <bar-chart />
       </div>
-      <div>
+      <!-- <div>
         <h2>Recent Meals:</h2>
         <ol id = "recentMeals">
           <li v-for="food in recentBreakfast" :key="food.id" >
@@ -39,11 +39,11 @@
             <br />
           </li>
         </ol>
-      </div>
+      </div> -->
       <div>
         <h2>Recent Workouts:</h2>
 
-        <ol id = "recentWorkouts">
+        <ol id="recentWorkouts">
           <li v-for="workout in recentWorkouts" :key="workout.id">
             Workout Name: {{ workout.nameOfWorkout }}
             <ul>
@@ -59,19 +59,17 @@
 </template>
 
 <script>
-import FoodService from '../services/FoodService';
+import FoodService from "../services/FoodService";
 import ProfileService from "../services/ProfileService";
 import WorkoutService from "../services/WorkoutService";
-import BarChart from '../components/BarChart.vue'
-// import FoodService from "../services/FoodService";
-// import MealService from "../services/MealService";
+import BarChart from "../components/BarChart.vue";
 
 export default {
   name: "home",
-  components: {BarChart},
+  components: { BarChart },
   data() {
     return {
-       profile: "",
+      profile: "",
       name: this.$store.state.profile.displayName,
       caloriesRemaining: this.$store.state.goal.daily_caloric_goal,
       recentWorkouts: [],
@@ -79,42 +77,48 @@ export default {
       recentBreakfast: [],
       recentLunch: [],
       recentDinner: [],
-       todaysDate:  new Date().toJSON().slice(0, 10),
-      yesterdaysDate:  new Date().toJSON().slice(0, 10),
+      todaysDate: new Date().toJSON().slice(0, 10),
+      yesterdaysDate: new Date().toJSON().slice(0, 10),
 
-      todaysCalories: this.populateTodaysCalories(),
-      yesterdaysCalories: this.populateYesterdaysCalories(),
-     
-
-  
+      todaysCalories: '',
+      yesterdaysCalories: '',
+      dateSet: false
     };
   },
   created() {
     this.populateStore();
     this.getLastThreeWorkouts();
-    this.getLastBreakfast();
-    this.getLastLunch();
-    this.getLastDinner();
-  
-   
-    this.setRecentStarStreak();
+    
+    
+
+    
+  },
+  mounted() {
+    this.populateTodaysCalories();
+    this.populateYesterdaysCalories();
+    console.log('spot 1')
+    
+
   },
   methods: {
-     formatDate(){
+    formatDate() {
       const notFormat = new Date();
-     this.date = notFormat.setHours( notFormat.getHours()+(notFormat.getTimezoneOffset()/-60) );
-    this.date = notFormat.toJSON().slice(0, 10);
-    return this.date
-     },
-      getPreviousDay() {
-        let date = new Date();
+      this.date = notFormat.setHours(
+        notFormat.getHours() + notFormat.getTimezoneOffset() / -60
+      );
+      this.date = notFormat.toJSON().slice(0, 10);
+      return this.date;
+    },
+    getPreviousDay() {
+      let date = new Date();
       let previous = "";
-      previous= date.setHours( date.getHours()+(date.getTimezoneOffset()/-60) ); 
-       previous = date.setDate(date.getDate() - 1);
-     previous = date.toJSON().slice(0, 10);
+      previous = date.setHours(
+        date.getHours() + date.getTimezoneOffset() / -60
+      );
+      previous = date.setDate(date.getDate() - 1);
+      previous = date.toJSON().slice(0, 10);
 
       return previous;
-
     },
     populateStore() {
       ProfileService.getProfile(this.$store.state.user.username).then(
@@ -124,6 +128,7 @@ export default {
             this.$router.push("/profile");
           } else {
             this.populateGoal();
+            
           }
         }
       );
@@ -140,7 +145,9 @@ export default {
       return this.$store.state.profile.displayName;
     },
     getRemainingCalories() {
-      return this.$store.state.goal.daily_caloric_goal;
+      return (
+        this.$store.state.goal.daily_caloric_goal - this.$store.state.calories
+      );
     },
     getLastThreeWorkouts() {
       WorkoutService.getListOfLastThreeWorkouts(
@@ -151,54 +158,77 @@ export default {
         }
       });
     },
-    getLastBreakfast() {
-      FoodService.getLastMeal(this.$store.state.user.username, "Breakfast").then((response) => {
+    //   getLastBreakfast() {
+    //     FoodService.getLastMeal(this.$store.state.user.username, "Breakfast").then((response) => {
+    //       if (response.status == 200) {
+    //         this.recentBreakfast = response.data;
+    //   }
+    //    });
+    // },
+    // getLastLunch() {
+    //     FoodService.getLastMeal(this.$store.state.user.username, "Lunch").then((response) => {
+    //       if (response.status == 200) {
+    //         this.recentLunch = response.data;
+    //   }
+    //    });
+    // },
+    // getLastDinner() {
+    //     FoodService.getLastMeal(this.$store.state.user.username, "Dinner").then((response) => {
+    //       if (response.status == 200) {
+    //         this.recentDinner = response.data;
+    //   }
+    //    });
+    // },
+    populateTodaysCalories() {
+      
+      let today = new Date().toJSON().slice(0,10);
+      
+      FoodService.getWeeklyCalories(
+        this.$store.state.user.username,
+        today
+      ).then((response) => {
         if (response.status == 200) {
-          this.recentBreakfast = response.data;
-    }
-     });
-  },
-  getLastLunch() {
-      FoodService.getLastMeal(this.$store.state.user.username, "Lunch").then((response) => {
+          this.todaysCalories = response.data;
+          this.$store.commit("UPDATE_CALORIES", this.todaysCalories);
+          if (this.dateSet) {
+            this.setRecentStarStreak();
+          } else {
+            this.dateSet = true;
+          }
+        }
+      });
+    },
+    populateYesterdaysCalories() {
+      let yesterday = new Date();
+      console.log(yesterday)
+      yesterday.setDate(yesterday.getDate() - 1);
+      console.log(yesterday)
+      yesterday = yesterday.toJSON().slice(0,10);
+      console.log(yesterday)
+      FoodService.getWeeklyCalories(
+        this.$store.state.user.username,
+        yesterday
+      ).then((response) => {
         if (response.status == 200) {
-          this.recentLunch = response.data;
-    }
-     });
-  },
-  getLastDinner() {
-      FoodService.getLastMeal(this.$store.state.user.username, "Dinner").then((response) => {
-        if (response.status == 200) {
-          this.recentDinner = response.data;
-    }
-     });
-  },
-  populateTodaysCalories(){
-    FoodService.getWeeklyCalories(this.$store.state.user.username, this.todaysDate).then((response)=>{
-      if(response.status == 200){
-        this.todaysCalories = response.data;
+          this.yesterdaysCalories = response.data;
+          if (this.dateSet) {
+            this.setRecentStarStreak();
+          } else {
+            this.dateSet = true;
+          }
+        }
+      });
+    },
+    setRecentStarStreak() {
+      console.log(this.todaysCalories + ' today calories');
+      if (this.todaysCalories === 0 && this.yesterdaysCalories === 0) {
+        this.profile.starStreak = 0;
+        this.$store.commit("SET_CURRENT_PROFILE", this.profile);
+        ProfileService.updateProfile(this.profile.profileId, this.profile);
       }
-    })
-   
-
+    },
   },
-  populateYesterdaysCalories(){
- FoodService.getWeeklyCalories(this.$store.state.user.username, this.yesterdaysDate).then((response)=> {
-      if(response.status == 200){
-        this.yesterdaysCalories = response.data;
-      }
-    })
-  },
-  setRecentStarStreak(){
-    console.log(this.todaysCalories)
-    if (this.todaysCalories ===0 && this.yesterdaysCalories === 0){
-         this.profile.starStreak = 0;
-             this.$store.commit('SET_CURRENT_PROFILE', this.profile)
-              ProfileService.updateProfile(this.profile.profileId, this.profile)
-    }
-  }
-}
-}
-
+};
 </script>
 
 <style scoped>
@@ -227,7 +257,6 @@ h3 {
   padding-right: 20px;
 }
 
-
 /* #componentDiv {
   flex-grow: 8; 
   background-image: url("../../public/Images/gym-background2.png");
@@ -253,12 +282,11 @@ div {
   border-radius: 5px;
 } */
 
-#recentWorkouts{
+#recentWorkouts {
   font-weight: bold;
 }
 
-#recentMeals{
+#recentMeals {
   font-weight: bold;
 }
-
 </style>

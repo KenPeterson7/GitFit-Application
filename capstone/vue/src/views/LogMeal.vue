@@ -126,6 +126,7 @@ export default {
       ).then((response) => {
         if (response.status == 200) {
           this.calories = response.data;
+          this.$store.commit('UPDATE_CALORIES', this.calories);
           return this.calories;
         }
       });
