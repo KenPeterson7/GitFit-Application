@@ -75,22 +75,22 @@ CREATE TABLE food_meal(
    CONSTRAINT FK_food_id FOREIGN KEY (food_id) REFERENCES food(food_id)
    );
 
-CREATE SEQUENCE seq_daily_intake_id
-  INCREMENT BY 1
-  START WITH 6001
-  NO MAXVALUE;
-CREATE TABLE daily_intake(
-   daily_intake_id int NOT NULL DEFAULT nextval('seq_daily_intake_id'),
-   profile_id int NOT NULL,
-   log_date date,
-   total_calories int NOT NULL,
-   CONSTRAINT PK_daily_intake PRIMARY KEY (daily_intake_id),
-   CONSTRAINT FK_profile_id FOREIGN KEY (profile_id) REFERENCES profile(profile_id)
-);
+-- CREATE SEQUENCE seq_daily_intake_id
+--   INCREMENT BY 1
+--   START WITH 6001
+--   NO MAXVALUE;
+-- CREATE TABLE daily_intake(
+--    daily_intake_id int NOT NULL DEFAULT nextval('seq_daily_intake_id'),
+--    profile_id int NOT NULL,
+--    log_date date,
+--    total_calories int NOT NULL,
+--    CONSTRAINT PK_daily_intake PRIMARY KEY (daily_intake_id),
+--    CONSTRAINT FK_profile_id FOREIGN KEY (profile_id) REFERENCES profile(profile_id)
+-- );
 
 CREATE SEQUENCE seq_workout_id
   INCREMENT BY 1
-  START WITH 7001
+  START WITH 6001
   NO MAXVALUE;
 CREATE TABLE workout(
    workout_id int NOT NULL DEFAULT nextval('seq_workout_id'),
@@ -128,7 +128,14 @@ VALUES ('rice', 'starch', '25', 2, 240);
 INSERT INTO food (food_name, food_type, size, number_servings, caloric_amount)
 VALUES ('apple', 'fruit', '10', 1, 50);
 INSERT INTO food (food_name, food_type, size, number_servings, caloric_amount)
-VALUES ('pear', 'fruit', '10', 1, 40);
+VALUES ('pear', 'fruit', '10', 1, 75);
+INSERT INTO food (food_name, food_type, size, number_servings, caloric_amount)
+VALUES ('chicken', 'meat', '40', 1, 250);
+INSERT INTO food (food_name, food_type, size, number_servings, caloric_amount)
+VALUES ('broccoli', 'vegetable', '5', 1, 40);
+INSERT INTO food (food_name, food_type, size, number_servings, caloric_amount)
+VALUES ('milk', 'dairy', '1', 1, 20);
+
 
 INSERT INTO meal (meal_type, meal_date, profile_id)
 VALUES ('Breakfast', '2022-09-29', 2001);
@@ -150,8 +157,13 @@ insert into food_meal(meal_id, food_id) values(5004, 4004);
 
 insert into workout(profile_id, name_of_workout, type_of_workout, duration, workout_date, calories_burned) values(2001, 'Run', 'Cardio', 45, '2022-09-29', 250);
 insert into workout(profile_id, name_of_workout, type_of_workout, duration, workout_date, calories_burned) values(2001, 'Full Body Workout', 'Strength Training', 90, '2022-09-30', 355.55);
-insert into workout(profile_id, name_of_workout, type_of_workout, duration, workout_date, calories_burned) values(2002, 'Biking', 'Cardio', 120, '2022-09-29', 472.99);
-insert into workout(profile_id, name_of_workout, type_of_workout, duration, workout_date, calories_burned) values(2002, 'Yoga', 'Anaerobic', 60, '2022-09-30', 321.2);
+insert into workout(profile_id, name_of_workout, type_of_workout, duration, workout_date, calories_burned) values(2001, 'Biking', 'Cardio', 120, '2022-09-29', 472.99);
+insert into workout(profile_id, name_of_workout, type_of_workout, duration, workout_date, calories_burned) values(2001, 'Yoga', 'Anaerobic', 60, '2022-09-30', 321.2);
+insert into workout(profile_id, name_of_workout, type_of_workout, duration, workout_date, calories_burned) values(2001, 'Jogging', 'Cardio', 25, '2001-10-10', 285.73);
+insert into workout(profile_id, name_of_workout, type_of_workout, duration, workout_date, calories_burned) values(2001, 'Dance', 'Aerobic', 35, '2017-10-26', 523.45);
+insert into workout(profile_id, name_of_workout, type_of_workout, duration, workout_date, calories_burned) values(2001, 'Soccer', 'Sports', 50, '2021-07-11', 600.23);
+insert into workout(profile_id, name_of_workout, type_of_workout, duration, workout_date, calories_burned) values(2001, 'Basketball', 'Sports', 60, '2022-08-19', 500.45);
+insert into workout(profile_id, name_of_workout, type_of_workout, duration, workout_date, calories_burned) values(2001, 'Walking', 'Cardio', 30, '2022-09-09', 157.68);
 
 
 -- CREATE USER final_capstone_owner
