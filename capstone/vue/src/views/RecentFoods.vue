@@ -103,6 +103,20 @@ export default {
         (response) => {
           if (response.status == 200) {
             this.mySavedFoods = response.data;
+            let foodArray= [];
+           this.mySavedFoods = this.mySavedFoods.filter((food) => {
+              if (foodArray.includes(food.foodId)){
+                  return false;
+              } else{
+                foodArray.push(food.foodId);
+                console.log(food)
+                console.log(foodArray)
+                return true;
+              }
+
+            })
+
+           
           }
           if (this.mySavedFoods.length < 1) {
             this.addFoodBanner = true;
@@ -197,5 +211,12 @@ button {
 }
 tr:nth-child(odd){
    background-color: rgba(173, 216, 230, 0.7)
+}
+#mealSelection{
+  margin-top: 20px;
+  text-align: center;
+}
+#addCancel{
+   text-align: center;
 }
 </style>
