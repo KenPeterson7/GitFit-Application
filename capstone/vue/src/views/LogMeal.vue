@@ -1,31 +1,31 @@
 <template>
   <div id="mealPage">
-    <h3 id="header">
+    <h1 id="header">
       My Meals For:
       {{ this.date }}
-    </h3>
-    <table id="headerTable">
+    </h1>
+    <!-- <table id="headerTable">
       <thead>
         <th>Food-Type</th>
         <th>Calories</th>
         <th>Size</th>
         <th>Number-Of-Servings</th>
-      </thead>
-    </table>
+      </thead> -->
+    <!-- </table> -->
     <div id="content">
-      <h4>BREAKFAST</h4>
+      <!-- <h3>Breakfast</h3> -->
       <display-meals
         v-bind:foodList="breakfastFoods"
         v-bind:mealType="'Breakfast'"
       />
 
-      <h4>LUNCH</h4>
+      <!-- <h3>Lunch</h3> -->
       <display-meals v-bind:foodList="lunchFoods" v-bind:mealType="'Lunch'" />
 
-      <h4>DINNER</h4>
+      <!-- <h3>Dinner</h3> -->
       <display-meals v-bind:foodList="dinnerFoods" v-bind:mealType="'Dinner'" />
 
-      <h4>SNACKS</h4>
+      <!-- <h3>Snacks</h3> -->
       <display-meals v-bind:foodList="snackFoods" v-bind:mealType="'Snacks'" />
       <h5 id="calories">Calories Consumed Today: {{ this.calories }}</h5>
       <router-link v-bind:to="{ name: 'recentFoods' }"
@@ -139,7 +139,7 @@ export default {
 #header {
   margin-top: 20px;
   text-align: center;
-  color: blue;
+
   margin-bottom: 30px;
 }
 #headerTable {
@@ -151,8 +151,8 @@ export default {
 
 button {
   border-radius: 4px;
-  color: blue;
-  margin-top: 25%;
+
+  margin-top: 20%;
 }
 
 #content {

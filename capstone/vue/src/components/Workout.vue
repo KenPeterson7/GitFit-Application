@@ -278,5 +278,10 @@ tr:nth-child(odd){
 #workoutTable tbody tr td {
   border: 1px solid;
 }
-
+button{
+  border-radius: 4px;
+}
+span{
+    margin-left: 14.7%;
+}
 </style>

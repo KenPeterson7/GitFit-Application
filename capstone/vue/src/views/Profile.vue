@@ -323,7 +323,9 @@ export default {
 #editForm form {
   display: flex;
   flex-direction: column;
-  margin: 20px;
+  margin-top: 30px;
+  margin-right: 35%;
+  margin-left: 35%;
 }
 
 #editForm form label {
@@ -332,5 +334,10 @@ export default {
 
 #editForm form button {
   margin-top: 10px;
+}
+.buttonTray{
+ margin-right: 85.165%; 
+
+
 }
 </style>

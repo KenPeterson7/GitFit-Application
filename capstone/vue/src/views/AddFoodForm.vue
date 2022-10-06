@@ -1,6 +1,6 @@
 <template>
   <div id="newFoodForm">
-    <h3>NEW FOOD</h3>
+    <h1>New Food</h1>
     <form v-on:submit.prevent>
       <label for="foodName"> Food Name: </label>
       <input type="text" id="foodName" v-model="newFood.foodName" />
@@ -142,8 +142,12 @@ export default {
 #newFoodForm form button {
   margin-top: 10px;
 }
-h3 {
+h1 {
   margin-top: 20px;
   text-align: center;
 }
+button{
+  border-radius: 4px;
+}
+
 </style>

@@ -133,4 +133,7 @@ nav button {
 img {
   height: 50px;
 }
+#app{
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div id="recentFoods">
-    <h3>SAVED FOODS</h3>
-
+    <h1>Saved Foods</h1>
+    <div id="table">
     <table id="headerTable">
       <thead>
         <th>Name</th>
@@ -22,15 +22,16 @@
         </tr>
       </tbody>
     </table>
+    </div>
     <div id="navBtns">
       <router-link v-bind:to="{ name: 'myMeals' }">
-        <button id="returnBtn">Back To My Meals</button>
+        <button id="returnBtn">Back To My Meals</button>&nbsp;
       </router-link>
       <router-link v-bind:to="{ name: 'addFoodForm' }">
-        <button id="addBtn">Add New Food</button>
+        <button id="addBtn">Add New Food</button>&nbsp;
       </router-link>
       <router-link v-bind:to="{name: 'quickAddMeals'}">
-      <button>Quick Add Yesterday's Meals</button>
+      <button>Quick Add Yesterday's Meals</button>&nbsp;
       </router-link>
     </div>
 
@@ -47,7 +48,7 @@
  
     </div>
     <div id="addCancel" v-if="showAddCancelBtns">
-      <button v-on:click="assignMealType()">Save Food</button>
+      <button v-on:click="assignMealType()">Save Food</button>&nbsp;
       <button v-on:click="cancel()">Cancel</button>
     </div>
     <div id="foodBanner" v-if="addFoodBanner">
@@ -174,19 +175,24 @@ th {
   padding-top: 20px;
 }
 #navBtns {
+   display: flex;
+  justify-content: center;
   margin-top: 20px;
-  margin-left: 70%;
+
   padding: 10px;
+  
 }
 
 button {
   border-radius: 4px;
-  color: blue;
+  margin-left: 7px;
+
 }
-#recentFoods{
-    margin-left: 20px;
+#table{
+  display: flex;
+  justify-content: center;
 }
 tr:nth-child(odd){
-    background-color: rgba(190, 189, 189,0.6);
+   background-color: rgba(173, 216, 230, 0.7)
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <div id="componentDiv">
-      <h1>{{ getName() }}</h1>
+      <h1>{{ getName() }}</h1><br>
       <h2>Calories Remaining: {{ getRemainingCalories() }}</h2>
 
       <br />
@@ -41,7 +41,7 @@
         </ol>
       </div> -->
       <div>
-        <h2>Recent Workouts:</h2>
+        <h2 id= "workoutHeader">Recent Workouts:</h2>
 
         <ol id="recentWorkouts">
           <li v-for="workout in recentWorkouts" :key="workout.id">
@@ -234,6 +234,8 @@ export default {
 <style scoped>
 .home {
   display: flex;
+  margin-left: 20px;
+  
   /* height: 700px; */
 }
 
@@ -283,10 +285,12 @@ div {
 } */
 
 #recentWorkouts {
-  font-weight: bold;
+ 
+  font-size: 20px;
+}
+#workoutHeader{
+  margin-top: 30px;
 }
 
-#recentMeals {
-  font-weight: bold;
-}
+
 </style>

@@ -15,9 +15,22 @@
           <th></th>
           <th></th>
         </thead> -->
+         <thead v-if="mealType == 'Breakfast'" >
+
+   <tr>
+<th></th>
+           <th>Food-Type</th>
+        <th>Calories</th>
+        <th>Size</th>
+        <th>Number-Of-Servings</th>
+        </tr>
+        </thead> 
+        <h3>{{mealType}}</h3>
         <tbody> 
           <tr  v-for="(food, index) in foodList"
         v-bind:key="index">
+     
+        
         <td id="name">{{ food.foodName }}</td>
       
 
@@ -25,8 +38,9 @@
           <td id = "calories">{{ food.caloricAmount }}</td>
           <td id = "size">{{ food.size }}</td>
           <td id = "servings">{{ food.numberOfServings }}</td>
+          
 
-          <button id = "edit" v-on:click="editFood(food)">Edit Food</button>
+          <button id = "edit" v-on:click="editFood(food)">Edit Food</button>&nbsp;
           
             <button id="delete" v-on:click="deleteFood(food.foodId)">
               Delete Food
@@ -64,7 +78,7 @@
 
         <button type="submit" v-on:click="saveEditedFood(clickedFood)">
           Save
-        </button>
+        </button>&nbsp;
         <button v-on:click="cancel()">Cancel</button>
       </form>
     </div>
@@ -141,14 +155,16 @@ export default {
 </script>
 
 <style scoped>
+
 tr:nth-child(odd){
-    background-color: rgba(190, 189, 189,0.6);
+  background-color: rgba(173, 216, 230, 0.7);
 }
+
 
 button {
 
   border-radius: 4px;
-  color: blue;
+ 
 }
 table{
     border-collapse: collapse;
@@ -157,9 +173,9 @@ tr{
    display: grid;
    border-bottom: 1pt solid black;
 
-  grid-template-columns: 500px 140px 105px 110px 400px 120px 120px ; 
+  grid-template-columns: 500px 140px 105px 110px 400px 120px 7px 120px ; 
   /* grid-template-columns: 30% 20% 20% 10% 20% 20% 20%; */
-  grid-template-areas: "name foodType calories size servings edit delete"
+  grid-template-areas: "name foodType calories size servings edit space delete"
 }
 
 

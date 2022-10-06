@@ -17,9 +17,12 @@ export default {
 <style>
   #addWorkout{
     position: sticky;
-    margin-left: 73.5%;
+    margin-left: 69.65%;
     width: 130px;
     
   }
-
+h1{
+  margin-top: 20px;
+  text-align: center;
+}
 </style>
