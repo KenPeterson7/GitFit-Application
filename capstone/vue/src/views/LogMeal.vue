@@ -152,7 +152,7 @@ export default {
 button {
   border-radius: 4px;
 
-  margin-top: 20%;
+
 }
 
 #content {
